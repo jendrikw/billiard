@@ -20,10 +20,10 @@ class Table {
 
     draw(ctx) {
         ctx.beginPath();
-        ctx.strokeStyle = "green";
+        ctx.fillStyle = "green";
         let x = (ctx.canvas.width - Table.WIDTH) / 2;
         let y = (ctx.canvas.height - Table.HEIGHT) / 2;
-        ctx.strokeRect(x, y, Table.WIDTH, Table.HEIGHT);
+        ctx.fillRect(x, y, Table.WIDTH, Table.HEIGHT);
         ctx.closePath();
     }
 }
@@ -48,8 +48,8 @@ class Ball {
 function onload() {
     let canvas = document.getElementById("canvas");
     let ctx = canvas.getContext("2d");
-    let ball1 = new Ball(200, 200, "red");
-    ball1.draw(ctx);
     let table = new Table();
     table.draw(ctx);
+    let ball1 = new Ball(200, 200, "red");
+    ball1.draw(ctx);
 }

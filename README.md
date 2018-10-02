@@ -1,5 +1,5 @@
 # Billiard-Projekt für den Kurs "Web-Programmierung"
-##Mitglieder:
+## Mitglieder:
 * ich
 * du
 * der andere Typ

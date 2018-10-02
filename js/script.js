@@ -1,13 +1,18 @@
 'use strict';
 
+// converts a dimension of an official pool table to pixel for the canvas
+function scaleRealCmToPx(cm) {
+    return cm * 2.2;
+}
+
 class Table {
 
     static get WIDTH() {
-        return 600;
+        return scaleRealCmToPx(270);
     }
 
     static get HEIGHT() {
-        return 300;
+        return scaleRealCmToPx(270/2);
     }
 
     constructor() {
@@ -33,7 +38,7 @@ class Ball {
 
     draw(ctx) {
         ctx.beginPath();
-        ctx.arc(this.x, this.y, 20, 0, 2 * Math.PI);
+        ctx.arc(this.x, this.y, scaleRealCmToPx(6.15)/2, 0, 2 * Math.PI);
         ctx.fillStyle = this.color;
         ctx.fill();
         ctx.closePath();
@@ -43,9 +48,7 @@ class Ball {
 function onload() {
     let canvas = document.getElementById("canvas");
     let ctx = canvas.getContext("2d");
-    let ball1 = new Ball(100, 100, "red");
-    ball1.x = 100;
-    ball1.y = 100;
+    let ball1 = new Ball(200, 200, "red");
     ball1.draw(ctx);
     let table = new Table();
     table.draw(ctx);

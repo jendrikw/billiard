@@ -48,17 +48,6 @@ class Ball {
         context.fill();
         context.closePath();
     }
-
-    contains(x, y) {
-        let dx = x - this.x;
-        let dy = y - this.y;
-        return Math.sqrt(dx * dx + dy * dy) <= Ball.RADIUS;
-    }
-
-    moveTo(x, y) {
-        this.x = x;
-        this.y = y;
-    }
 }
 
 class Game {
@@ -67,7 +56,7 @@ class Game {
         this.table = new Table();
         this.balls = [];
         for (let i = 0; i <= 15; i++) {
-            this.balls[i] = new Ball(100 + 20 * i,  200, "red");
+            this.balls[i] = new Ball(100 + 20 * i,  200, "red"); // Anders anzeigen (Dreieck).
         }
     }
 

@@ -1,6 +1,5 @@
 'use strict';
 
-// Yannick: Nur zum Test dieses  Kommentar gesetzt.
 // converts a dimension of an official pool table to pixel for the canvas
 function scaleRealCmToPx(cm) {
     return cm * 2.2;

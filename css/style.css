@@ -1,16 +1,24 @@
 body {
-	color: #2ce200;
+  color: #2ce200;
 }
 
 #canvas-container {
-	width: 640px;
-	height: 480px;
-	margin: auto;
-	border: 1px solid black;
+  width: 640px;
+  height: 480px;
+  margin: auto;
+  border: 1px solid black;
 }
 
 canvas {
-	position: absolute;
+  position: absolute;
 }
 
+#main-nav ul li {
+  display: inline;
+}
 
+ul {
+  list-style: none;
+}
+
+/*# sourceMappingURL=style.css.map */

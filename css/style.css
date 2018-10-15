@@ -1,9 +1,24 @@
 body {
-	color: blueviolet;
+  color: #2ce200;
 }
 
-#canvas {
-	border: 1px solid black;
+#canvas-container {
+  width: 640px;
+  height: 480px;
+  margin: auto;
+  border: 1px solid black;
 }
 
+canvas {
+  position: absolute;
+}
 
+#main-nav ul li {
+  display: inline;
+}
+
+ul {
+  list-style: none;
+}
+
+/*# sourceMappingURL=style.css.map */

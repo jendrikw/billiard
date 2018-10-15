@@ -3,3 +3,5 @@
 /META-INF/
 /WEB-INF/
 /impressum.html
+/scss/
+*.map

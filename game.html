@@ -1,16 +1,42 @@
 <!doctype html>
-<html>
+<html lang="de">
 
 <head>
 	<meta charset="utf8">
 	<title>Super Billiard Extreme Deluxe Edition</title>
 	<link type="text/css" rel="stylesheet" href="css/style.css">
 	<script src="js/script.js"></script>
+	<script src="js/Vector.js"></script>
 </head>
 
 <body onload="onload()">
-    <!-- Größe von der Aufgabenstellung vorgegeben -->
-    <canvas id="canvas" width="640" height="480"></canvas>
+	<div class="header-cont">
+		<nav id="main-nav">
+			<ul>
+				<li><a href="index.html">Startpage</a></li>
+				<li>Game</li>
+				<li><a href="help.html">Help</a></li>
+				<li><a href="impressum.html">Impressum</a></li>
+			</ul>
+		</nav>
+	</div>
+	<div class="site-cont">
+		<!-- Größe von der Aufgabenstellung vorgegeben -->
+		<div id="canvas-container">
+			<canvas id="table-canvas" width="640" height="480"></canvas>
+			<canvas id="ball-canvas" width="640" height="480"></canvas>
+			<canvas id="cue-canvas" width="640" height="480"></canvas>
+		</div>
+	</div>
+	<div class="footer-cont">
+		<footer>
+			<div id="footer-links">
+				<a href="index.html">Startpage</a>
+				<a href="help.html">Help</a>
+				<a href="impressum.html">Impressum</a>
+			</div>
+		</footer>
+	</div>
 </body>
 
 </html>

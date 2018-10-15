@@ -67,20 +67,22 @@ class Ball {
         }[number];
     }
 
-    draw() {
+    draw(x, y, color) {
         this.context.beginPath();
-        this.context.arc(this.x, this.y, Ball.RADIUS, 0, 2 * Math.PI);
-        this.context.fillStyle = this.color;
+        this.context.arc(x, y, Ball.RADIUS, 0, 2 * Math.PI);
+        this.context.fillStyle = color;
         this.context.fill();
         this.context.closePath();
     }
     
-    moveBall() {
-    	let ball = new Ball(this.x + 1, this.y + 1, this.color)
-    	// TODO 
-    	
+    drawWithMoving() {
+    	this.context.beginPath();
+    	for(let i = 0; i<200; i+=10) {
+    		this.draw(this.x + i+2, this.y + i, this.color);
+    	}
+        this.context.closePath();
     }
-}
+} 
 
 class Cue {
 
@@ -132,26 +134,26 @@ class Game {
         this.cue = new Cue(this.balls[0]);
     }
 
-    drawAll() {
-        this.table.draw();
-        for (let b of this.balls) {
-            b.draw();
-        }
-    }
+//    drawAll() {
+//        this.table.draw();
+//        for (let b of this.balls) {
+//            b.draw(b.x, b.y, b.color);
+//        }
+//    }
     
-    move() {
-    	let t = setInterval(moveBall, 1000);
-    	let ball = this.balls[0]; 
-    	ball.moveBall();
+    drawAndMoveBalls() {
+    	this.table.draw();
+    	for (let b of this.balls) {
+    		b.drawWithMoving();
+    	}
     }
-    
 }
 
 
 function onload() {
     let game = new Game();
-    game.drawAll();
-    game.move();
+    //game.drawAll();
+    game.drawAndMoveBalls();
 }
 
 function getContext(id) {

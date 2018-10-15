@@ -48,6 +48,12 @@ class Ball {
         context.fill();
         context.closePath();
     }
+    
+    moveBall() {
+    	let ball = new Ball(this.x + 1, this.y + 1, this.color)
+    	// TODO 
+    	
+    }
 }
 
 class Game {
@@ -66,8 +72,15 @@ class Game {
             b.draw(this.context);
         }
     }
-
+    
+    move() {
+    	let t = setInterval(moveBall, 1000);
+    	let ball = this.balls[0]; 
+    	ball.moveBall();
+    }
+    
 }
+
 
 function onload() {
     let canvas = document.getElementById("canvas");
@@ -75,5 +88,5 @@ function onload() {
 
     let game = new Game(context);
     game.drawAll();
-
+    game.move();
 }

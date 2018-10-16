@@ -80,8 +80,10 @@ class Ball {
     }
 
     drawWithMoving() {
+    	
     	this.context.beginPath();
     	for(let i = 0; i<200; i+=10) {
+    		this.context.clearRect(0, 0, canvas.width, canvas.height);
     	    this.moveTo(this.x + 15, this.y + 10);
     		this.draw();
     	}
@@ -142,7 +144,11 @@ class Game {
    drawAll() {
        this.table.draw();
        for (let b of this.balls) {
-           b.draw(b.x, b.y, b.color);
+    	   for(let i = 0; i < 100; i++) {    	
+    		   b.draw();
+    		   b.x += 1;
+    		   b.y += 1;
+    	   }
        }
    }
 
@@ -157,8 +163,8 @@ class Game {
 
 function onload() {
     let game = new Game();
-    game.drawAll();
-    //game.drawAndMoveBalls();
+    //game.drawAll();
+    game.drawAndMoveBalls();
 }
 
 function getContext(id) {

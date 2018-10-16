@@ -21,4 +21,7 @@ ul {
   list-style: none;
 }
 
+audio {
+	display: none;
+}
 /*# sourceMappingURL=style.css.map */

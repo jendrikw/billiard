@@ -1,21 +1,25 @@
 'use strict';
 
 function stopMusic(){
-const music=document.getElementById('audio_with_controls');
-music.pause();
-music.currentTime=0;
-toggleText(music);
-
+	const music=document.getElementById('audio_with_controls');
+	if(music.paused == false)
+	{
+		music.pause();
+		music.currentTime=0;
+	}
+	else{
+		music.play();
+	}
 }
 
-function toggleText(el) 
+function toggleText(button_id) 
 {
-   if (el.firstChild.data == "Musik aus") 
+   if (document.getElementById(button_id).innerText == "Musik aus") 
    {
-       el.firstChild.data = "Musik an";
+       document.getElementById(button_id).innerText = "Musik an";
    }
    else 
    {
-     el.firstChild.data = "Musik aus";
+     document.getElementById(button_id).innerText = "Musik aus";
    }
 }

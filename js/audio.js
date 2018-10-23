@@ -2,7 +2,7 @@
 
 function stopMusic() {
     const music = document.getElementById('audio_with_controls');
-    if (!music.paused) {
+    if (music.paused) {
         music.play();
     } else {
         music.pause();

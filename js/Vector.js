@@ -8,9 +8,9 @@ class Vector {
     }
 
     normalize() {
-        const len = this.length();
-        this.x /= len;
-        this.y /= len;
+        const length = this.length();
+        this.x /= length;
+        this.y /= length;
     }
 
     length() {

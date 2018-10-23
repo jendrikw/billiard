@@ -43,4 +43,6 @@ ul {
   list-style: none;
 }
 
-/*# sourceMappingURL=style.css.map */
+#cue-img {
+  display: none;
+}

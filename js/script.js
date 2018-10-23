@@ -98,6 +98,7 @@ class Cue {
         this.mouseDown = false;
         this.increasePowerTimer = null;
         this.vectBallMouse = null;
+        this.img = document.getElementById("cue-img");
         this.context.canvas.addEventListener("mousemove", e => this.onCanvasMouseMove(e));
         this.context.canvas.addEventListener("mousedown", e => this.onCanvasMouseDown(e));
         this.context.canvas.addEventListener("mouseup", e => this.onCanvasMouseUp(e));
@@ -107,19 +108,21 @@ class Cue {
     onCanvasMouseMove(event) {
         if (!this.mouseDown) {
             // move cue around the ball
+            const mouseX = event.layerX;
+            const mouseY = event.layerY;
+            let theta = Math.atan((mouseY - this.whiteBall.y) / (mouseX - this.whiteBall.x));
+            if (mouseX - this.whiteBall.x < 0) {
+                theta += Math.PI;
+            }
+            const cueImgLength = this.img.naturalWidth;
+            const scaleFactor = Cue.LENGTH / cueImgLength;
+
             this.clear();
-            const dx = event.layerX - this.whiteBall.x;
-            const dy = event.layerY - this.whiteBall.y;
-            this.vectBallMouse = new Vector(dx, dy);
-            this.vectBallMouse.normalize();
-            const startX = this.whiteBall.x + Cue.BALL_CUE_DISTANCE * this.vectBallMouse.x;
-            const startY = this.whiteBall.y + Cue.BALL_CUE_DISTANCE * this.vectBallMouse.y;
-            const endX = this.whiteBall.x + (Cue.BALL_CUE_DISTANCE + Cue.LENGTH) * this.vectBallMouse.x;
-            const endY = this.whiteBall.y + (Cue.BALL_CUE_DISTANCE + Cue.LENGTH) * this.vectBallMouse.y;
-            this.context.beginPath();
-            this.context.moveTo(startX, startY);
-            this.context.lineTo(endX, endY);
-            this.context.stroke();
+            this.context.save();
+            this.context.translate(this.whiteBall.x, this.whiteBall.y);
+            this.context.rotate(theta);
+            this.context.drawImage(this.img, Cue.BALL_CUE_DISTANCE, -this.img.naturalHeight * scaleFactor / 2, Cue.LENGTH + Cue.BALL_CUE_DISTANCE, this.img.naturalHeight * scaleFactor);
+            this.context.restore();
         }
     }
 
@@ -186,7 +189,9 @@ class Cue {
     }
 
     clear() {
-        this.context.clearRect(0,0, this.context.canvas.width, this.context.canvas.height);
+        // this clears the canvas
+        // noinspection SillyAssignmentJS
+        this.context.canvas.width = this.context.canvas.width;
     }
 
     static get BALL_CUE_DISTANCE() {
@@ -194,7 +199,7 @@ class Cue {
     }
 
     static get LENGTH() {
-        return 80;
+        return 120;
     }
 
 }

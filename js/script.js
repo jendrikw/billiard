@@ -98,12 +98,13 @@ class Cue {
         this.mouseDown = false;
         this.increasePowerTimer = null;
         this.vectBallMouse = null;
-        this.context.canvas.addEventListener("mousemove", e => this.onMouseMove(e));
-        this.context.canvas.addEventListener("mousedown", e => this.onMouseDown(e));
-        this.context.canvas.addEventListener("mouseup", e => this.onMouseUp(e));
+        this.context.canvas.addEventListener("mousemove", e => this.onCanvasMouseMove(e));
+        this.context.canvas.addEventListener("mousedown", e => this.onCanvasMouseDown(e));
+        this.context.canvas.addEventListener("mouseup", e => this.onCanvasMouseUp(e));
+        window.addEventListener("mousemove", e => this.onWindowMouseMove(e));
     }
 
-    onMouseMove(event) {
+    onCanvasMouseMove(event) {
         if (!this.mouseDown) {
             // move cue around the ball
             this.clear();
@@ -122,7 +123,18 @@ class Cue {
         }
     }
 
-    onMouseDown(event) {
+    onWindowMouseMove(event) {
+        if (event.target !== this.context.canvas) {
+            this.power = 0;
+            this.vectBallMouse = null;
+            this.mouseDown = false;
+            if (this.increasePowerTimer) {
+                clearInterval(this.increasePowerTimer);
+            }
+        }
+    }
+
+    onCanvasMouseDown(event) {
         this.mouseDown = true;
         this.power = 0;
         const dx = event.layerX - this.whiteBall.x;
@@ -144,7 +156,7 @@ class Cue {
         }, 16)
     }
 
-    onMouseUp(event) {
+    onCanvasMouseUp(event) {
         if (this.increasePowerTimer) {
             clearInterval(this.increasePowerTimer);
         }
@@ -157,7 +169,7 @@ class Cue {
                 this.vectBallMouse = null;
                 this.mouseDown = false;
                 console.log(event);
-                this.onMouseMove(event);
+                this.onCanvasMouseMove(event);
                 return;
                 // todo: move ball
             }

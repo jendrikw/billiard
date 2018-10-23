@@ -1,7 +1,7 @@
 'use strict';
 
 function toggleMusic() {
-    const music = document.getElementById('audio-controls');
+    const music = document.getElementById('music');
     if (music.paused) {
         music.play();
     } else {

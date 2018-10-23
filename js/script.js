@@ -80,11 +80,11 @@ class Ball {
     }
 
     drawWithMoving() {
-    	this.context.beginPath();
-    	for(let i = 0; i<200; i+=10) {
-    	    this.moveTo(this.x + 15, this.y + 10);
-    		this.draw();
-    	}
+        this.context.beginPath();
+        for (let i = 0; i < 200; i += 10) {
+            this.moveTo(this.x + 15, this.y + 10);
+            this.draw();
+        }
         this.context.closePath();
     }
 }
@@ -139,18 +139,18 @@ class Game {
         this.cue = new Cue(this.balls[0]);
     }
 
-   drawAll() {
-       this.table.draw();
-       for (let b of this.balls) {
-           b.draw(b.x, b.y, b.color);
-       }
-   }
+    drawAll() {
+        this.table.draw();
+        for (let b of this.balls) {
+            b.draw(b.x, b.y, b.color);
+        }
+    }
 
     drawAndMoveBalls() {
-    	this.table.draw();
-    	for (let b of this.balls) {
-    		b.drawWithMoving();
-    	}
+        this.table.draw();
+        for (let b of this.balls) {
+            b.drawWithMoving();
+        }
     }
 }
 

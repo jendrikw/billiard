@@ -7,6 +7,7 @@
 	<link type="text/css" rel="stylesheet" href="css/style.css">
 	<script src="js/script.js"></script>
 	<script src="js/Vector.js"></script>
+	<script src="js/audio.js"></script>
 </head>
 
 <body onload="onload()">
@@ -34,10 +35,11 @@
 				<a href="index.html">Startpage</a>
 				<a href="help.html">Help</a>
 				<a href="impressum.html">Impressum</a>
+				<button id="contolMusic" onclick="stopMusic(); toggleText(this.id);">Musik aus</button>
 			</div>
 		</footer>
 	</div>
-	<audio id="audio_with_controls" controls src="MusicVol01.wav" type="audio/wav" autoplay loop>
+	<audio id="audio_with_controls" controls src="MusicVol02.wav" type="audio/wav" autoplay loop>
 </body>
 
 </html>

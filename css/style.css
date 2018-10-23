@@ -13,12 +13,28 @@ canvas {
   position: absolute;
 }
 
+#main-nav {
+  background-color: springgreen;
+  padding: 0.5%;
+  width: 50%;
+  margin: auto;
+}
+#main-nav ul {
+  list-style: none;
+  padding: inherit;
+  margin: 0;
+}
 #main-nav ul li {
   display: inline;
+  padding: 0 1%;
+  border: solid 1px black;
 }
 
 ul {
   list-style: none;
 }
 
+audio {
+	display: none;
+}
 /*# sourceMappingURL=style.css.map */

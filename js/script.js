@@ -80,13 +80,12 @@ class Ball {
     }
 
     drawWithMoving() {
-    	
-    	this.context.beginPath();
-    	for(let i = 0; i<200; i+=10) {
-    		this.context.clearRect(0, 0, canvas.width, canvas.height);
-    	    this.moveTo(this.x + 15, this.y + 10);
-    		this.draw();
     	}
+        this.context.beginPath();
+        for (let i = 0; i < 200; i += 10) {
+            this.moveTo(this.x + 15, this.y + 10);
+            this.draw();
+        }
         this.context.closePath();
     }
 }
@@ -96,32 +95,91 @@ class Cue {
     constructor(whiteBall) {
         this.whiteBall = whiteBall;
         this.context = getContext("cue-canvas");
+        this.power = 0;
+        this.mouseDown = false;
+        this.increasePowerTimer = null;
+        this.vectBallMouse = null;
         this.context.canvas.addEventListener("mousemove", e => this.onMouseMove(e));
         this.context.canvas.addEventListener("mousedown", e => this.onMouseDown(e));
+        this.context.canvas.addEventListener("mouseup", e => this.onMouseUp(e));
     }
 
     onMouseMove(event) {
-        this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height);
-        const dx = event.offsetX - this.whiteBall.x;
-        const dy = event.offsetY - this.whiteBall.y;
-        const vectBallMouse = new Vector(dx, dy);
-        vectBallMouse.normalize();
-        const startX = this.whiteBall.x + Cue.BALL_CUE_DISTANCE * vectBallMouse.x;
-        const startY = this.whiteBall.y + Cue.BALL_CUE_DISTANCE * vectBallMouse.y;
-        const endX = this.whiteBall.x + (Cue.BALL_CUE_DISTANCE + Cue.LENGTH) * vectBallMouse.x;
-        const endY = this.whiteBall.y + (Cue.BALL_CUE_DISTANCE + Cue.LENGTH) * vectBallMouse.y;
-        this.context.beginPath();
-        this.context.moveTo(startX, startY);
-        this.context.lineTo(endX, endY);
-        this.context.stroke();
+        if (!this.mouseDown) {
+            // move cue around the ball
+            this.clear();
+            const dx = event.layerX - this.whiteBall.x;
+            const dy = event.layerY - this.whiteBall.y;
+            this.vectBallMouse = new Vector(dx, dy);
+            this.vectBallMouse.normalize();
+            const startX = this.whiteBall.x + Cue.BALL_CUE_DISTANCE * this.vectBallMouse.x;
+            const startY = this.whiteBall.y + Cue.BALL_CUE_DISTANCE * this.vectBallMouse.y;
+            const endX = this.whiteBall.x + (Cue.BALL_CUE_DISTANCE + Cue.LENGTH) * this.vectBallMouse.x;
+            const endY = this.whiteBall.y + (Cue.BALL_CUE_DISTANCE + Cue.LENGTH) * this.vectBallMouse.y;
+            this.context.beginPath();
+            this.context.moveTo(startX, startY);
+            this.context.lineTo(endX, endY);
+            this.context.stroke();
+        }
     }
 
     onMouseDown(event) {
-        console.log(event);
+        this.mouseDown = true;
+        this.power = 0;
+        const dx = event.layerX - this.whiteBall.x;
+        const dy = event.layerY - this.whiteBall.y;
+        this.vectBallMouse = new Vector(dx, dy);
+        this.vectBallMouse.normalize();
+
+        this.increasePowerTimer = setInterval(() => {
+            this.power += 0.5;
+            this.clear();
+            const startX = this.whiteBall.x + (Cue.BALL_CUE_DISTANCE + this.power) * this.vectBallMouse.x;
+            const startY = this.whiteBall.y + (Cue.BALL_CUE_DISTANCE + this.power) * this.vectBallMouse.y;
+            const endX = this.whiteBall.x + (Cue.BALL_CUE_DISTANCE + Cue.LENGTH + this.power) * this.vectBallMouse.x;
+            const endY = this.whiteBall.y + (Cue.BALL_CUE_DISTANCE + Cue.LENGTH + this.power) * this.vectBallMouse.y;
+            this.context.beginPath();
+            this.context.moveTo(startX, startY);
+            this.context.lineTo(endX, endY);
+            this.context.stroke();
+        }, 16)
+    }
+
+    onMouseUp(event) {
+        if (this.increasePowerTimer) {
+            clearInterval(this.increasePowerTimer);
+        }
+        this.increasePowerTimer = null;
+        this.shootTimer = setInterval(() => {
+            this.power -= 5;
+            if (this.power < 0) {
+                clearInterval(this.shootTimer);
+                this.power = 0;
+                this.vectBallMouse = null;
+                this.mouseDown = false;
+                console.log(event);
+                this.onMouseMove(event);
+                return;
+                // todo: move ball
+            }
+            this.clear();
+            const startX = this.whiteBall.x + (this.power) * this.vectBallMouse.x;
+            const startY = this.whiteBall.y + (this.power) * this.vectBallMouse.y;
+            const endX = this.whiteBall.x + (Cue.LENGTH + this.power) * this.vectBallMouse.x;
+            const endY = this.whiteBall.y + (Cue.LENGTH + this.power) * this.vectBallMouse.y;
+            this.context.beginPath();
+            this.context.moveTo(startX, startY);
+            this.context.lineTo(endX, endY);
+            this.context.stroke();
+        }, 16);
+    }
+
+    clear() {
+        this.context.clearRect(0,0, this.context.canvas.width, this.context.canvas.height);
     }
 
     static get BALL_CUE_DISTANCE() {
-        return 40;
+        return 20;
     }
 
     static get LENGTH() {
@@ -141,30 +199,26 @@ class Game {
         this.cue = new Cue(this.balls[0]);
     }
 
-   drawAll() {
-       this.table.draw();
-       for (let b of this.balls) {
-    	   for(let i = 0; i < 100; i++) {    	
-    		   b.draw();
-    		   b.x += 1;
-    		   b.y += 1;
-    	   }
-       }
-   }
+    drawAll() {
+        this.table.draw();
+        for (let b of this.balls) {
+            b.draw(b.x, b.y, b.color);
+        }
+    }
 
     drawAndMoveBalls() {
-    	this.table.draw();
-    	for (let b of this.balls) {
-    		b.drawWithMoving();
-    	}
+        this.table.draw();
+        for (let b of this.balls) {
+            b.drawWithMoving();
+        }
     }
 }
 
 
 function onload() {
     let game = new Game();
-    //game.drawAll();
-    game.drawAndMoveBalls();
+    game.drawAll();
+    //game.drawAndMoveBalls();
 }
 
 function getContext(id) {

@@ -1,7 +1,7 @@
 'use strict';
 
 // converts a dimension of an official pool table to pixel for the canvas
-function scaleRealCmToPx(cm) {
+function scaleRealCentimetersToPixel(cm) {
     return cm * 2.2;
 }
 
@@ -9,14 +9,6 @@ class Table {
 
     constructor() {
         this.context = getContext("table-canvas");
-    }
-
-    static get WIDTH() {
-        return scaleRealCmToPx(270);
-    }
-
-    static get HEIGHT() {
-        return scaleRealCmToPx(270 / 2);
     }
 
     draw() {
@@ -29,6 +21,9 @@ class Table {
     }
 }
 
+Table.WIDTH = scaleRealCentimetersToPixel(270);
+Table.HEIGHT = scaleRealCentimetersToPixel(270 / 2);
+
 
 class Ball {
 
@@ -40,10 +35,6 @@ class Ball {
             this.color = "white";
         }
         this.moveTo(x, y);
-    }
-
-    static get RADIUS() {
-        return scaleRealCmToPx(6.15) / 2;
     }
 
     static getColorForNumber(number) {
@@ -88,6 +79,9 @@ class Ball {
         this.context.closePath();
     }
 }
+
+Ball.RADIUS = scaleRealCentimetersToPixel(6.15) / 2;
+
 
 class Cue {
 
@@ -185,6 +179,7 @@ Cue.BALL_CUE_DISTANCE = 20;
 Cue.IMG = null; // set in onload
 Cue.WIDTH = null; // set in onload
 
+
 class Game {
     constructor() {
         this.table = new Table();
@@ -213,11 +208,11 @@ class Game {
 
 
 function onload() {
-    let game = new Game();
-    game.drawAll();
-
     Cue.IMG = document.getElementById("cue-img");
     Cue.WIDTH = Cue.IMG.naturalHeight * (Cue.LENGTH / Cue.IMG.naturalWidth);
+
+    let game = new Game();
+    game.drawAll();
 }
 
 function getContext(id) {

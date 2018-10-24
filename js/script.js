@@ -119,7 +119,6 @@ class Cue {
             this.context.translate(this.whiteBall.x, this.whiteBall.y);
             this.context.rotate(theta);
             this.drawWithDistance(Cue.BALL_CUE_DISTANCE);
-            this.context.drawImage(Cue.IMG, Cue.BALL_CUE_DISTANCE, -Cue.WIDTH / 2, Cue.LENGTH + Cue.BALL_CUE_DISTANCE, Cue.WIDTH);
         }
     }
 
@@ -145,10 +144,6 @@ class Cue {
         }, 16)
     }
 
-    drawWithDistance(distance) {
-        this.context.drawImage(Cue.IMG, distance, -Cue.WIDTH / 2, Cue.LENGTH + Cue.BALL_CUE_DISTANCE, Cue.WIDTH);
-    }
-
     onCanvasMouseUp(event) {
         if (this.increasePowerTimer) {
             clearInterval(this.increasePowerTimer);
@@ -168,6 +163,10 @@ class Cue {
             this.clear();
             this.drawWithDistance(this.power + Ball.RADIUS);
         }, 16);
+    }
+
+    drawWithDistance(distance) {
+        this.context.drawImage(Cue.IMG, distance, -Cue.WIDTH / 2, Cue.LENGTH + Cue.BALL_CUE_DISTANCE, Cue.WIDTH);
     }
 
     clear() {

@@ -189,9 +189,12 @@ class Cue {
     }
 
     clear() {
-        // this clears the canvas
-        // noinspection SillyAssignmentJS
-        this.context.canvas.width = this.context.canvas.width;
+        this.context.save();
+        // reset transformations
+        this.context.setTransform(1, 0, 0, 1, 0, 0);
+        // Will always clear the right space
+        this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height);
+        this.context.restore();
     }
 
     static get BALL_CUE_DISTANCE() {

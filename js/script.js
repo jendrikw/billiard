@@ -12,12 +12,24 @@ class Table {
     }
 
     draw() {
-        this.context.beginPath();
-        this.context.fillStyle = "green";
         let x = (this.context.canvas.width - Table.WIDTH) / 2;
         let y = (this.context.canvas.height - Table.HEIGHT) / 2;
-        this.context.fillRect(x, y, Table.WIDTH, Table.HEIGHT);
-        this.context.closePath();
+		var eckloch = document.getElementById('eckloch');
+        var bandenloch = document.getElementById('bandenloch');
+		
+		this.context.beginPath();
+		
+		this.context.fillStyle = "green";
+		this.context.fillRect(x, y, Table.WIDTH, Table.HEIGHT);
+		
+		this.context.drawImage(eckloch, x-22, y-20, this.context.canvas.width/4, 75);
+		this.context.drawImage(bandenloch, this.context.canvas.width/4, y-20, this.context.canvas.width/4, 75);
+        
+		
+		this.context.rotate(90*Math.PI/180);
+		this.context.drawImage(bandenloch,0,0,this.context.canvas.width/4, 75); 
+		
+		this.context.closePath();
     }
 }
 

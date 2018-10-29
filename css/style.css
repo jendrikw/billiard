@@ -1,5 +1,9 @@
+a {
+  text-decoration: none;
+}
+
 body {
-  color: #2ce200;
+  color: #ffb649;
 }
 
 #canvas-container {
@@ -14,27 +18,34 @@ canvas {
 }
 
 #main-nav {
-  background-color: springgreen;
-  padding: 0.5%;
-  width: 50%;
+  background-color: green;
+  padding: 6px;
+  width: calc(640px + 2 * 1px - 2 * 6px); /* width of canvas + border of canvas - padding */
   margin: auto;
 }
 #main-nav ul {
-  list-style: none;
-  padding: inherit;
+  padding: 0 20px;
   margin: 0;
+  font-size: 0;
+  
 }
 #main-nav ul li {
-  display: inline;
-  padding: 0 1%;
+  box-sizing: border-box;
+  display: inline-block;
   border: solid 1px black;
+  margin: 0 2px;
+  width: calc(25% - 4px);
+  text-align: center;
+  font-size: 1rem;
+}
+#main-nav ul li a {
+  color: #ffb649;
 }
 
 ul {
   list-style: none;
 }
 
-audio {
-	display: none;
+#cue-img {
+  display: none;
 }
-/*# sourceMappingURL=style.css.map */

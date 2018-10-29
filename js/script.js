@@ -1,7 +1,7 @@
 'use strict';
 
 // converts a dimension of an official pool table to pixel for the canvas
-function scaleRealCmToPx(cm) {
+function scaleRealCentimetersToPixel(cm) {
     return cm * 2.2;
 }
 
@@ -9,14 +9,6 @@ class Table {
 
     constructor() {
         this.context = getContext("table-canvas");
-    }
-
-    static get WIDTH() {
-        return scaleRealCmToPx(270);
-    }
-
-    static get HEIGHT() {
-        return scaleRealCmToPx(270 / 2);
     }
 
     draw() {
@@ -28,6 +20,9 @@ class Table {
         this.context.closePath();
     }
 }
+
+Table.WIDTH = scaleRealCentimetersToPixel(270);
+Table.HEIGHT = scaleRealCentimetersToPixel(270 / 2);
 
 
 class Ball {
@@ -41,10 +36,6 @@ class Ball {
             this.color = "white";
         }
         this.moveTo(x, y);
-    }
-
-    static get RADIUS() {
-        return scaleRealCmToPx(6.15) / 2;
     }
 
     static getColorForNumber(number) {
@@ -82,6 +73,9 @@ class Ball {
     }
 }
 
+Ball.RADIUS = scaleRealCentimetersToPixel(6.15) / 2;
+
+
 class Cue {
 
     constructor(whiteBall) {
@@ -90,54 +84,54 @@ class Cue {
         this.power = 0;
         this.mouseDown = false;
         this.increasePowerTimer = null;
-        this.vectBallMouse = null;
-        this.context.canvas.addEventListener("mousemove", e => this.onMouseMove(e));
-        this.context.canvas.addEventListener("mousedown", e => this.onMouseDown(e));
-        this.context.canvas.addEventListener("mouseup", e => this.onMouseUp(e));
+        this.shootTimer = null;
+        this.context.canvas.addEventListener("mousemove", e => this.onCanvasMouseMove(e));
+        this.context.canvas.addEventListener("mousedown", () => this.onCanvasMouseDown());
+        this.context.canvas.addEventListener("mouseup", e => this.onCanvasMouseUp(e));
+        window.addEventListener("mousemove", e => this.onWindowMouseMove(e));
     }
 
-    onMouseMove(event) {
+    onCanvasMouseMove(event) {
         if (!this.mouseDown) {
             // move cue around the ball
+            const mouseX = event.layerX;
+            const mouseY = event.layerY;
+            let theta = Math.atan((mouseY - this.whiteBall.y) / (mouseX - this.whiteBall.x));
+            if (mouseX - this.whiteBall.x < 0) {
+                theta += Math.PI;
+            }
+
             this.clear();
-            const dx = event.layerX - this.whiteBall.x;
-            const dy = event.layerY - this.whiteBall.y;
-            this.vectBallMouse = new Vector(dx, dy);
-            this.vectBallMouse.normalize();
-            const startX = this.whiteBall.x + Cue.BALL_CUE_DISTANCE * this.vectBallMouse.x;
-            const startY = this.whiteBall.y + Cue.BALL_CUE_DISTANCE * this.vectBallMouse.y;
-            const endX = this.whiteBall.x + (Cue.BALL_CUE_DISTANCE + Cue.LENGTH) * this.vectBallMouse.x;
-            const endY = this.whiteBall.y + (Cue.BALL_CUE_DISTANCE + Cue.LENGTH) * this.vectBallMouse.y;
-            this.context.beginPath();
-            this.context.moveTo(startX, startY);
-            this.context.lineTo(endX, endY);
-            this.context.stroke();
+            this.context.setTransform(1, 0, 0, 1, 0, 0);
+            this.context.translate(this.whiteBall.x, this.whiteBall.y);
+            this.context.rotate(theta);
+            this.drawWithDistance(Cue.BALL_CUE_DISTANCE);
         }
     }
 
-    onMouseDown(event) {
+    onWindowMouseMove(event) {
+        if (event.target !== this.context.canvas) {
+            // mouse outside of canvas
+            this.power = 0;
+            this.mouseDown = false;
+            if (this.increasePowerTimer) {
+                clearInterval(this.increasePowerTimer);
+            }
+        }
+    }
+
+    onCanvasMouseDown() {
         this.mouseDown = true;
         this.power = 0;
-        const dx = event.layerX - this.whiteBall.x;
-        const dy = event.layerY - this.whiteBall.y;
-        this.vectBallMouse = new Vector(dx, dy);
-        this.vectBallMouse.normalize();
-
         this.increasePowerTimer = setInterval(() => {
             this.power += 0.5;
+
             this.clear();
-            const startX = this.whiteBall.x + (Cue.BALL_CUE_DISTANCE + this.power) * this.vectBallMouse.x;
-            const startY = this.whiteBall.y + (Cue.BALL_CUE_DISTANCE + this.power) * this.vectBallMouse.y;
-            const endX = this.whiteBall.x + (Cue.BALL_CUE_DISTANCE + Cue.LENGTH + this.power) * this.vectBallMouse.x;
-            const endY = this.whiteBall.y + (Cue.BALL_CUE_DISTANCE + Cue.LENGTH + this.power) * this.vectBallMouse.y;
-            this.context.beginPath();
-            this.context.moveTo(startX, startY);
-            this.context.lineTo(endX, endY);
-            this.context.stroke();
+            this.drawWithDistance(this.power + Ball.RADIUS);
         }, 16)
     }
 
-    onMouseUp(event) {
+    onCanvasMouseUp(event) {
         if (this.increasePowerTimer) {
             clearInterval(this.increasePowerTimer);
         }
@@ -147,10 +141,9 @@ class Cue {
             if (this.power < 0) {
                 clearInterval(this.shootTimer);
                 this.power = 0;
-                this.vectBallMouse = null;
                 this.mouseDown = false;
-                console.log(event);
-                this.onMouseMove(event);
+                // redraw because the angle might have changed
+                this.onCanvasMouseMove(event);
                 return;
                 
             }
@@ -170,19 +163,26 @@ class Cue {
         }, 16);
     }
 
+    drawWithDistance(distance) {
+        this.context.drawImage(Cue.IMG, distance, -Cue.WIDTH / 2, Cue.LENGTH + Cue.BALL_CUE_DISTANCE, Cue.WIDTH);
+    }
+
     clear() {
-        this.context.clearRect(0,0, this.context.canvas.width, this.context.canvas.height);
-    }
-
-    static get BALL_CUE_DISTANCE() {
-        return 20;
-    }
-
-    static get LENGTH() {
-        return 80;
+        this.context.save();
+        // reset transformations
+        this.context.setTransform(1, 0, 0, 1, 0, 0);
+        // Will always clear the right space
+        this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height);
+        this.context.restore();
     }
 
 }
+
+Cue.LENGTH = 120;
+Cue.BALL_CUE_DISTANCE = 20;
+Cue.IMG = null; // set in onload
+Cue.WIDTH = null; // set in onload
+
 
 class Game {
     constructor() {
@@ -205,6 +205,9 @@ class Game {
 
 
 function onload() {
+    Cue.IMG = document.getElementById("cue-img");
+    Cue.WIDTH = Cue.IMG.naturalHeight * (Cue.LENGTH / Cue.IMG.naturalWidth);
+
     let game = new Game();
     game.drawAll();
 }

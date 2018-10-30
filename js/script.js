@@ -31,8 +31,8 @@ class Table {
 		//Reflect.reflect('bandenloch');
 		//rotate(Math.PI/2);
 		
-		this.context.drawImage(bandenloch,this.context.canvas.width/2,topOfBand,this.context.canvas.width/4, 75); //top right 
-		this.context.drawImage(eckloch, (this.context.canvas.width/4)*3, topOfBand, this.context.canvas.width/4, 75); //top right
+		//this.context.drawImage(bandenloch,this.context.canvas.width/2,topOfBand,this.context.canvas.width/4, 75); //top right 
+		//this.context.drawImage(eckloch, (this.context.canvas.width/4)*3, topOfBand, this.context.canvas.width/4, 75); //top right
 		
 		this.context.closePath();
     }

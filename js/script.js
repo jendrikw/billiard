@@ -174,7 +174,7 @@ class Cue {
 
 }
 
-Cue.LENGTH = 120;
+Cue.LENGTH = 150;
 Cue.BALL_CUE_DISTANCE = 20;
 Cue.IMG = null; // set in onload
 Cue.WIDTH = null; // set in onload

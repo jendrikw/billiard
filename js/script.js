@@ -14,26 +14,26 @@ class Table {
     draw() {
         let x = (this.context.canvas.width - Table.WIDTH) / 2;
         let y = (this.context.canvas.height - Table.HEIGHT) / 2;
-		
+
 		var eckloch = document.getElementById('eckloch');
         var bandenloch = document.getElementById('bandenloch');
-		
+
 		var topOfBand = y-25;
 		var buttonOfBand = y-25;
 		this.context.beginPath();
-		
+
 		this.context.fillStyle = "green";
 		this.context.fillRect(x, y, Table.WIDTH, Table.HEIGHT);
-		
+
 		this.context.drawImage(eckloch, 0, topOfBand, this.context.canvas.width/4, 75); //top left
 		this.context.drawImage(bandenloch, this.context.canvas.width/4, topOfBand, this.context.canvas.width/4, 75); //top left
 		//reflect
 		//Reflect.reflect('bandenloch');
 		//rotate(Math.PI/2);
-		
-		//this.context.drawImage(bandenloch,this.context.canvas.width/2,topOfBand,this.context.canvas.width/4, 75); //top right 
+
+		//this.context.drawImage(bandenloch,this.context.canvas.width/2,topOfBand,this.context.canvas.width/4, 75); //top right
 		//this.context.drawImage(eckloch, (this.context.canvas.width/4)*3, topOfBand, this.context.canvas.width/4, 75); //top right
-		
+
 		this.context.closePath();
     }
 }
@@ -162,19 +162,10 @@ class Cue {
                 // redraw because the angle might have changed
                 this.onCanvasMouseMove(event);
                 return;
-                
+                // todo: move ball
             }
             this.clear();
-            const startX = this.whiteBall.x + (this.power) * this.vectBallMouse.x;
-            const startY = this.whiteBall.y + (this.power) * this.vectBallMouse.y;
-            const endX = this.whiteBall.x + (Cue.LENGTH + this.power) * this.vectBallMouse.x;
-            const endY = this.whiteBall.y + (Cue.LENGTH + this.power) * this.vectBallMouse.y;
-            this.context.beginPath();
-            this.context.moveTo(startX, startY);
-            this.context.lineTo(endX, endY);
-            this.context.stroke();
-            
-            // todo: move ball
+            this.drawWithDistance(this.power + Ball.RADIUS);
             this.whiteBall.moveTo(this.whiteBall.x + 4, this.whiteBall.y + 4);
             this.whiteBall.draw();
         }, 16);

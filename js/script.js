@@ -14,20 +14,25 @@ class Table {
     draw() {
         let x = (this.context.canvas.width - Table.WIDTH) / 2;
         let y = (this.context.canvas.height - Table.HEIGHT) / 2;
+		
 		var eckloch = document.getElementById('eckloch');
         var bandenloch = document.getElementById('bandenloch');
 		
+		var topOfBand = y-25;
+		var buttonOfBand = y-25;
 		this.context.beginPath();
 		
 		this.context.fillStyle = "green";
 		this.context.fillRect(x, y, Table.WIDTH, Table.HEIGHT);
 		
-		this.context.drawImage(eckloch, x-22, y-20, this.context.canvas.width/4, 75);
-		this.context.drawImage(bandenloch, this.context.canvas.width/4, y-20, this.context.canvas.width/4, 75);
-        
+		this.context.drawImage(eckloch, 0, topOfBand, this.context.canvas.width/4, 75); //top left
+		this.context.drawImage(bandenloch, this.context.canvas.width/4, topOfBand, this.context.canvas.width/4, 75); //top left
+		//reflect
+		//Reflect.reflect('bandenloch');
+		//rotate(Math.PI/2);
 		
-		this.context.rotate(90*Math.PI/180);
-		this.context.drawImage(bandenloch,0,0,this.context.canvas.width/4, 75); 
+		this.context.drawImage(bandenloch,this.context.canvas.width/2,topOfBand,this.context.canvas.width/4, 75); //top right 
+		this.context.drawImage(eckloch, (this.context.canvas.width/4)*3, topOfBand, this.context.canvas.width/4, 75); //top right
 		
 		this.context.closePath();
     }
@@ -227,3 +232,10 @@ function onload() {
 function getContext(id) {
     return document.getElementById(id).getContext("2d");
 }
+
+/*
+//rotaiting pictures on website
+function rotateAnimation(img, degrees){
+	img.style.MozTransform = "rotate("+degrees+"deg)";
+}
+*/

@@ -42,10 +42,6 @@ ul {
   list-style: none;
 }
 
-#cue-img {
-  display: none;
-}
-
-.hidden img{
+.hidden {
     display: none;
 }

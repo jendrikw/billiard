@@ -12,27 +12,25 @@ class Table {
     }
 
     draw() {
-        let x = (this.context.canvas.width - Table.WIDTH) / 2;
+        const width = this.context.canvas.width;
+        let x = (width - Table.WIDTH) / 2;
         let y = (this.context.canvas.height - Table.HEIGHT) / 2;
 
-		var eckloch = document.getElementById('eckloch');
-        var bandenloch = document.getElementById('bandenloch');
+        const eckloch = document.getElementById('eckloch');
+        const bandenloch = document.getElementById('bandenloch');
+        const topOfBand = y - 25;
 
-		var topOfBand = y-25;
-		var buttonOfBand = y-25;
-		this.context.beginPath();
-
+        this.context.beginPath();
 		this.context.fillStyle = "green";
 		this.context.fillRect(x, y, Table.WIDTH, Table.HEIGHT);
 
-		this.context.drawImage(eckloch, 0, topOfBand, this.context.canvas.width/4, 75); //top left
-		this.context.drawImage(bandenloch, this.context.canvas.width/4, topOfBand, this.context.canvas.width/4, 75); //top left
-		//reflect
-		//Reflect.reflect('bandenloch');
-		//rotate(Math.PI/2);
+		this.context.drawImage(eckloch, 0, topOfBand, width / 4, 75); //top left
+		this.context.drawImage(bandenloch, width / 4, topOfBand, width / 4, 75); //top left
 
-		//this.context.drawImage(bandenloch,this.context.canvas.width/2,topOfBand,this.context.canvas.width/4, 75); //top right
-		//this.context.drawImage(eckloch, (this.context.canvas.width/4)*3, topOfBand, this.context.canvas.width/4, 75); //top right
+        this.context.translate(width / 2, topOfBand);
+		this.context.scale(-1, 1);
+		this.context.drawImage(bandenloch, -width/4, 0, width / 4, 75); //top right
+		this.context.drawImage(eckloch, -width/2, 0, width/4, 75); //top right
 
 		this.context.closePath();
     }

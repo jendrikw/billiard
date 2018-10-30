@@ -12,27 +12,91 @@ class Table {
     }
 
     draw() {
-        const width = this.context.canvas.width;
-        let x = (width - Table.WIDTH) / 2;
-        let y = (this.context.canvas.height - Table.HEIGHT) / 2;
-
-        const eckloch = document.getElementById('eckloch');
-        const bandenloch = document.getElementById('bandenloch');
-        const topOfBand = y - 25;
+        const canvasWidth = this.context.canvas.width;
+        let xLeft = (canvasWidth - Table.WIDTH) / 2;
+        let xRight = xLeft + Table.WIDTH;
+        let yTop = (this.context.canvas.height - Table.HEIGHT) / 2;
+        let yBottom = yTop + Table.HEIGHT;
+        const borderWidth = 20;
 
         this.context.beginPath();
 		this.context.fillStyle = "green";
-		this.context.fillRect(x, y, Table.WIDTH, Table.HEIGHT);
+		this.context.fillRect(xLeft, yTop, Table.WIDTH, Table.HEIGHT);
 
-		this.context.drawImage(eckloch, 0, topOfBand, width / 4, 75); //top left
-		this.context.drawImage(bandenloch, width / 4, topOfBand, width / 4, 75); //top left
+		// top
+		const topGradient = this.context.createLinearGradient(0, yTop - borderWidth, 0, yTop);
+        topGradient.addColorStop(0, "#432918");
+        topGradient.addColorStop(1, "#7d4e24");
+        this.context.fillStyle = topGradient;
+        this.context.fillRect(xLeft, yTop - borderWidth, Table.WIDTH, borderWidth + 1); // 1 for antialiasing
 
-        this.context.translate(width / 2, topOfBand);
-		this.context.scale(-1, 1);
-		this.context.drawImage(bandenloch, -width/4, 0, width / 4, 75); //top right
-		this.context.drawImage(eckloch, -width/2, 0, width/4, 75); //top right
+        // right
+        const rightGradient = this.context.createLinearGradient(xRight + borderWidth, 0, xRight, 0);
+        rightGradient.addColorStop(0, "#432918");
+        rightGradient.addColorStop(1, "#7d4e24");
+        this.context.fillStyle = rightGradient;
+        this.context.fillRect(xRight, yTop, borderWidth, Table.HEIGHT);
 
-		this.context.closePath();
+        // bottom
+        const bottomGradient = this.context.createLinearGradient(0, yBottom + borderWidth, 0, yBottom);
+        bottomGradient.addColorStop(0, "#432918");
+        bottomGradient.addColorStop(1, "#7d4e24");
+        this.context.fillStyle = bottomGradient;
+        this.context.fillRect(xLeft, yBottom - 1, Table.WIDTH, borderWidth + 1); // 1 for antialiasing
+
+        // left
+        const leftGradient = this.context.createLinearGradient(xLeft - borderWidth, 0, xLeft, 0);
+        leftGradient.addColorStop(0, "#432918");
+        leftGradient.addColorStop(1, "#7d4e24");
+        this.context.fillStyle = leftGradient;
+        this.context.fillRect(xLeft - borderWidth, yTop, borderWidth, Table.HEIGHT);
+
+        // top left corner
+        const topLeftCornerGradient = this.context.createRadialGradient(xLeft, yTop, borderWidth, xLeft, yTop, 0);
+        topLeftCornerGradient.addColorStop(0.1, "#432918");
+        topLeftCornerGradient.addColorStop(0.9, "#7d4e24");
+        this.context.fillStyle = topLeftCornerGradient;
+        this.context.moveTo(xLeft, yTop + 1);
+        this.context.lineTo(xLeft - borderWidth, yTop + 1);
+        this.context.arcTo(xLeft - borderWidth, yTop - borderWidth, xLeft, yTop - borderWidth, borderWidth);
+        this.context.lineTo(xLeft, yTop);
+        this.context.fill();
+
+        // top right corner
+        const topRightCornerGradient = this.context.createRadialGradient(xRight, yTop, borderWidth, xRight, yTop, 0);
+        topRightCornerGradient.addColorStop(0.1, "#432918");
+        topRightCornerGradient.addColorStop(0.9, "#7d4e24");
+        this.context.fillStyle = topRightCornerGradient;
+        this.context.beginPath();
+        this.context.moveTo(xRight, yTop + 1);
+        this.context.lineTo(xRight + borderWidth, yTop + 1);
+        this.context.arcTo(xRight + borderWidth, yTop - borderWidth, xRight, yTop - borderWidth, borderWidth);
+        this.context.lineTo(xRight, yTop);
+        this.context.fill();
+
+        // bottom right corner
+        const bottomRightCornerGradient = this.context.createRadialGradient(xRight, yBottom, borderWidth, xRight, yBottom, 0);
+        bottomRightCornerGradient.addColorStop(0.1, "#432918");
+        bottomRightCornerGradient.addColorStop(0.9, "#7d4e24");
+        this.context.fillStyle = bottomRightCornerGradient;
+        this.context.beginPath();
+        this.context.moveTo(xRight, yBottom - 1);
+        this.context.lineTo(xRight + borderWidth, yBottom - 1);
+        this.context.arcTo(xRight + borderWidth, yBottom + borderWidth, xRight, yBottom + borderWidth, borderWidth);
+        this.context.lineTo(xRight, yBottom - 1);
+        this.context.fill();
+
+        // bottom left corner
+        const bottomLeftCornerGradient = this.context.createRadialGradient(xLeft, yBottom, borderWidth, xLeft, yBottom, 0);
+        bottomLeftCornerGradient.addColorStop(0.1, "#432918");
+        bottomLeftCornerGradient.addColorStop(0.9, "#7d4e24");
+        this.context.fillStyle = bottomLeftCornerGradient;
+        this.context.beginPath();
+        this.context.moveTo(xLeft, yBottom - 1);
+        this.context.lineTo(xLeft - borderWidth, yBottom - 1);
+        this.context.arcTo(xLeft - borderWidth, yBottom + borderWidth, xLeft, yBottom + borderWidth, borderWidth);
+        this.context.lineTo(xLeft, yBottom - 1);
+        this.context.fill();
     }
 }
 

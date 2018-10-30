@@ -39,7 +39,8 @@ Table.HEIGHT = scaleRealCentimetersToPixel(270 / 2);
 
 class Ball {
 
-    constructor(x, y, number) {
+    constructor(game,x, y, number) {
+    	this.game = game;
         this.context = getContext("ball-canvas");
         if (number !== undefined) {
             this.color = Ball.getColorForNumber(number);
@@ -75,19 +76,11 @@ class Ball {
     }
 
     draw() {
+    	//this.context.clearRect(0,0, this.context.canvas.width, this.context.canvas.height);
         this.context.beginPath();
         this.context.fillStyle = this.color;
         this.context.arc(this.x, this.y, Ball.RADIUS, 0, 2 * Math.PI);
         this.context.fill();
-        this.context.closePath();
-    }
-
-    drawWithMoving() {
-        this.context.beginPath();
-        for (let i = 0; i < 200; i += 10) {
-            this.moveTo(this.x + 15, this.y + 10);
-            this.draw();
-        }
         this.context.closePath();
     }
 }
@@ -164,10 +157,21 @@ class Cue {
                 // redraw because the angle might have changed
                 this.onCanvasMouseMove(event);
                 return;
-                // todo: move ball
+                
             }
             this.clear();
-            this.drawWithDistance(this.power + Ball.RADIUS);
+            const startX = this.whiteBall.x + (this.power) * this.vectBallMouse.x;
+            const startY = this.whiteBall.y + (this.power) * this.vectBallMouse.y;
+            const endX = this.whiteBall.x + (Cue.LENGTH + this.power) * this.vectBallMouse.x;
+            const endY = this.whiteBall.y + (Cue.LENGTH + this.power) * this.vectBallMouse.y;
+            this.context.beginPath();
+            this.context.moveTo(startX, startY);
+            this.context.lineTo(endX, endY);
+            this.context.stroke();
+            
+            // todo: move ball
+            this.whiteBall.moveTo(this.whiteBall.x + 4, this.whiteBall.y + 4);
+            this.whiteBall.draw();
         }, 16);
     }
 
@@ -186,7 +190,7 @@ class Cue {
 
 }
 
-Cue.LENGTH = 120;
+Cue.LENGTH = 150;
 Cue.BALL_CUE_DISTANCE = 20;
 Cue.IMG = null; // set in onload
 Cue.WIDTH = null; // set in onload
@@ -196,24 +200,17 @@ class Game {
     constructor() {
         this.table = new Table();
         this.balls = [];
-        this.balls[0] = new Ball(300, 300);
+        this.balls[0] = new Ball(this, 300, 300);
         for (let i = 1; i <= 15; i++) {
-            this.balls[i] = new Ball(100 + 20 * i, 200, i + 1);
+            this.balls[i] = new Ball(this, 100 + 20 * i, 200, i + 1);
         }
         this.cue = new Cue(this.balls[0]);
     }
 
-    drawAll() {
+     drawAll() {
         this.table.draw();
         for (let b of this.balls) {
-            b.draw(b.x, b.y, b.color);
-        }
-    }
-
-    drawAndMoveBalls() {
-        this.table.draw();
-        for (let b of this.balls) {
-            b.drawWithMoving();
+            b.draw();
         }
     }
 }

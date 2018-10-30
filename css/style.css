@@ -20,20 +20,23 @@ canvas {
 #main-nav {
   background-color: green;
   padding: 6px;
-  width: 630px;
+  width: calc(640px + 2 * 1px - 2 * 6px); /* width of canvas + border of canvas - padding */
   margin: auto;
 }
 #main-nav ul {
-  list-style: none;
-  padding: 0 20px 0 20px;
+  padding: 0 20px;
   margin: 0;
+  font-size: 0;
+  
 }
 #main-nav ul li {
+  box-sizing: border-box;
   display: inline-block;
-  padding: 0 3px;
   border: solid 1px black;
-  width: 23%;
+  margin: 0 2px;
+  width: calc(25% - 4px);
   text-align: center;
+  font-size: 1rem;
 }
 #main-nav ul li a {
   color: #ffb649;

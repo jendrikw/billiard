@@ -13,9 +13,7 @@ function onload() {
     game.drawAll();
 }
 
-function getContext(id) {
-    return document.getElementById(id).getContext("2d");
-}
+
 
 /*
 //rotaiting pictures on website

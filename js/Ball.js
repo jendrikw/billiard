@@ -1,3 +1,5 @@
+'use strict';
+
 class Ball {
 
     constructor(game,x, y, number) {

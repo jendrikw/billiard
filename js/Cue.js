@@ -16,7 +16,7 @@ class Cue {
         this.theta = null;
         this.context.canvas.addEventListener("mousemove", e => this.onCanvasMouseMove(e));
         this.context.canvas.addEventListener("mousedown", () => this.onCanvasMouseDown());
-        this.context.canvas.addEventListener("mouseup", e => this.onCanvasMouseUp(e));
+        this.context.canvas.addEventListener("mouseup", () => this.onCanvasMouseUp());
         window.addEventListener("mousemove", e => this.onWindowMouseMove(e));
         whiteBall.onStopMoving = () => this.onCanvasMouseMove(new MouseEvent("move", { clientX: this.mouseClientX, clientY: this.mouseClientY }));
     }
@@ -63,7 +63,7 @@ class Cue {
         }, 16)
     }
 
-    onCanvasMouseUp(event) {
+    onCanvasMouseUp() {
 		let traegheit = 2.5;
     	this.power = Math.sqrt(this.distance)*traegheit;
         if (this.increaseDistanceTimer) {

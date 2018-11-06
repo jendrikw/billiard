@@ -10,7 +10,11 @@ class Ball {
         } else {
             this.color = "white";
         }
-        this.moveTo(x, y);
+        this.x = x;
+        this.y = y;
+        this.vx = 0;
+        this.vy = 0;
+        this.theta = null;
     }
 
     static getColorForNumber(number) {
@@ -33,18 +37,31 @@ class Ball {
         }[number];
     }
 
-    moveTo(x, y) {
-        this.x = x;
-        this.y = y;
-    }
-
     draw() {
-    	//this.context.clearRect(0,0, this.context.canvas.width, this.context.canvas.height);
         this.context.beginPath();
         this.context.fillStyle = this.color;
         this.context.arc(this.x, this.y, Ball.RADIUS, 0, 2 * Math.PI);
         this.context.fill();
         this.context.closePath();
+    }
+    	
+    moveStep() {
+    	this.vx += Math.cos(this.theta);
+		this.vy += Math.sin(this.theta);
+		console.log(this.vx, this.vy);
+    	this.x += this.vx;
+    	this.y += this.vy;
+    	this.game.drawBalls();
+    	if (Math.abs(this.vx) > 1 && Math.abs(this.vy) > 1) {
+    		window.requestAnimationFrame(() => this.moveStep());
+    	}
+    }
+    
+    bump(theta, power) {
+    	this.theta = theta;
+		this.vx = power * -Math.cos(theta);
+		this.vy = power * -Math.sin(theta);
+    	this.moveStep();
     }
 }
 

@@ -6,9 +6,11 @@ class Cue {
         this.whiteBall = whiteBall;
         this.context = getContext("cue-canvas");
         this.power = 0;
+        this.distance = 0;
         this.mouseDown = false;
-        this.increasePowerTimer = null;
+        this.increaseDistanceTimer = null;
         this.shootTimer = null;
+        this.theta = null;
         this.context.canvas.addEventListener("mousemove", e => this.onCanvasMouseMove(e));
         this.context.canvas.addEventListener("mousedown", () => this.onCanvasMouseDown());
         this.context.canvas.addEventListener("mouseup", e => this.onCanvasMouseUp(e));
@@ -20,15 +22,15 @@ class Cue {
             // move cue around the ball
             const mouseX = event.layerX;
             const mouseY = event.layerY;
-            let theta = Math.atan((mouseY - this.whiteBall.y) / (mouseX - this.whiteBall.x));
+            this.theta = Math.atan((mouseY - this.whiteBall.y) / (mouseX - this.whiteBall.x));
             if (mouseX - this.whiteBall.x < 0) {
-                theta += Math.PI;
+                this.theta += Math.PI;
             }
 
             this.clear();
             this.context.setTransform(1, 0, 0, 1, 0, 0);
             this.context.translate(this.whiteBall.x, this.whiteBall.y);
-            this.context.rotate(theta);
+            this.context.rotate(this.theta);
             this.drawWithDistance(Cue.BALL_CUE_DISTANCE);
         }
     }
@@ -36,45 +38,44 @@ class Cue {
     onWindowMouseMove(event) {
         if (event.target !== this.context.canvas) {
             // mouse outside of canvas
-            this.power = 0;
+            this.distance = 0;
             this.mouseDown = false;
-            if (this.increasePowerTimer) {
-                clearInterval(this.increasePowerTimer);
+            if (this.increaseDistanceTimer) {
+                clearInterval(this.increaseDistanceTimer);
             }
         }
     }
 
     onCanvasMouseDown() {
         this.mouseDown = true;
-        this.power = 0;
-        this.increasePowerTimer = setInterval(() => {
-            this.power += 0.5;
+        this.distance = 0;
+        this.increaseDistanceTimer = setInterval(() => {
+            this.distance += 0.5;
 
             this.clear();
-            this.drawWithDistance(this.power + Ball.RADIUS);
+            this.drawWithDistance(this.distance + Ball.RADIUS);
         }, 16)
     }
 
     onCanvasMouseUp(event) {
-        if (this.increasePowerTimer) {
-            clearInterval(this.increasePowerTimer);
+    	this.power = this.distance;
+        if (this.increaseDistanceTimer) {
+            clearInterval(this.increaseDistanceTimer);
         }
-        this.increasePowerTimer = null;
+        this.increaseDistanceTimer = null;
         this.shootTimer = setInterval(() => {
-            this.power -= 5;
-            if (this.power < 0) {
+            this.distance -= 5;
+            if (this.distance < 0) {
                 clearInterval(this.shootTimer);
-                this.power = 0;
+                this.distance = 0;
                 this.mouseDown = false;
                 // redraw because the angle might have changed
                 this.onCanvasMouseMove(event);
-                return;
-                // todo: move ball
+                // move ball
+                this.whiteBall.bump(this.theta, this.power);
             }
             this.clear();
-            this.drawWithDistance(this.power + Ball.RADIUS);
-            this.whiteBall.moveTo(this.whiteBall.x + 4, this.whiteBall.y + 4);
-            this.whiteBall.draw();
+            this.drawWithDistance(this.distance + Ball.RADIUS);
         }, 16);
     }
 

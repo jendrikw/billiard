@@ -5,9 +5,12 @@ class Cue {
     constructor(whiteBall) {
         this.whiteBall = whiteBall;
         this.context = getContext("cue-canvas");
+        this.canvas = this.context.canvas;
         this.power = 0;
         this.distance = 0;
         this.mouseDown = false;
+        this.mouseClientX = null; // relative to the page
+        this.mouseClientY = null;
         this.increaseDistanceTimer = null;
         this.shootTimer = null;
         this.theta = null;
@@ -15,15 +18,18 @@ class Cue {
         this.context.canvas.addEventListener("mousedown", () => this.onCanvasMouseDown());
         this.context.canvas.addEventListener("mouseup", e => this.onCanvasMouseUp(e));
         window.addEventListener("mousemove", e => this.onWindowMouseMove(e));
+        whiteBall.onStopMoving = () => this.onCanvasMouseMove(new MouseEvent("move", { clientX: this.mouseClientX, clientY: this.mouseClientY }));
     }
 
     onCanvasMouseMove(event) {
-        if (!this.mouseDown) {
+        this.mouseClientX = event.clientX;
+        this.mouseClientY = event.clientY;
+        if (!this.mouseDown && !this.whiteBall.isMoving) {
+            const mouseCanvasX = event.clientX - this.canvas.offsetLeft;
+            const mouseCanvasY = event.clientY - this.canvas.offsetTop;
             // move cue around the ball
-            const mouseX = event.layerX;
-            const mouseY = event.layerY;
-            this.theta = Math.atan((mouseY - this.whiteBall.y) / (mouseX - this.whiteBall.x));
-            if (mouseX - this.whiteBall.x < 0) {
+            this.theta = Math.atan((mouseCanvasY - this.whiteBall.y) / (mouseCanvasX - this.whiteBall.x));
+            if (mouseCanvasX - this.whiteBall.x < 0) {
                 this.theta += Math.PI;
             }
 
@@ -70,13 +76,14 @@ class Cue {
                 clearInterval(this.shootTimer);
                 this.distance = 0;
                 this.mouseDown = false;
-                // redraw because the angle might have changed
-                this.onCanvasMouseMove(event);
+                // remove cue (can't touch the ball if it's moving)
+                this.clear();
                 // move ball
                 this.whiteBall.bump(this.theta, this.power);
+            } else {
+                this.clear();
+                this.drawWithDistance(this.distance + Ball.RADIUS);
             }
-            this.clear();
-            this.drawWithDistance(this.distance + Ball.RADIUS);
         }, 16);
     }
 

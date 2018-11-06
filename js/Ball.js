@@ -13,6 +13,8 @@ class Ball {
         this.x = x;
         this.y = y;
         this.v = null;
+        this.isMoving = false;
+        this.onStopMoving = null;
     }
 
     static getColorForNumber(number) {
@@ -51,17 +53,21 @@ class Ball {
         if (this.y - Ball.RADIUS <= Table.Y_TOP || this.y + Ball.RADIUS >= Table.Y_BOTTOM) {
             this.v.y *= -1;
         }
-        console.log(this.v);
-
     	this.x += this.v.x;
     	this.y += this.v.y;
     	this.game.drawBalls();
     	if (Math.abs(this.v.x) > 0.1 || Math.abs(this.v.y) > 0.1) {
     		window.requestAnimationFrame(() => this.moveStep());
-    	}
+    	} else {
+    	    this.isMoving = false;
+            if (this.onStopMoving != null) {
+                this.onStopMoving();
+            }
+        }
     }
 
     bump(theta, power) {
+        this.isMoving = true;
 		this.v = new Vector(-Math.cos(theta), -Math.sin(theta));
 		this.v.scale(power);
     	this.moveStep();

@@ -58,7 +58,8 @@ class Cue {
     }
 
     onCanvasMouseUp(event) {
-    	this.power = this.distance;
+		let traegheit = 2.5;
+    	this.power = Math.sqrt(this.distance)*traegheit;
         if (this.increaseDistanceTimer) {
             clearInterval(this.increaseDistanceTimer);
         }

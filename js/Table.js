@@ -9,11 +9,19 @@ class Table {
             Table.X_RIGHT = Table.X_LEFT + Table.WIDTH;
             Table.Y_TOP = (this.context.canvas.height - Table.HEIGHT) / 2;
             Table.Y_BOTTOM = Table.Y_TOP + Table.HEIGHT;
+            Table.X_MIDDLE = Table.X_LEFT + Table.WIDTH / 2;
+            Table.HOLES = [
+                new Vector(Table.X_LEFT, Table.Y_TOP),
+                new Vector(Table.X_MIDDLE, Table.Y_TOP),
+                new Vector(Table.X_RIGHT, Table.Y_TOP),
+                new Vector(Table.X_LEFT, Table.Y_BOTTOM),
+                new Vector(Table.X_MIDDLE, Table.Y_BOTTOM),
+                new Vector(Table.X_RIGHT, Table.Y_BOTTOM),
+            ];
         }
     }
 
     draw() {
-        const xMiddle = Table.X_LEFT + Table.WIDTH / 2;
         const holeRadius = 1.5 * Ball.RADIUS;
         const holeOffset = Math.sqrt(holeRadius);
 
@@ -117,14 +125,14 @@ class Table {
         this.context.lineJoin = "round";
         this.context.lineWidth = 1.9 * holeRadius;
         this.context.beginPath();
-        this.context.moveTo(xMiddle - 0.3 * holeRadius, Table.Y_TOP);
-        this.context.lineTo(xMiddle, Table.Y_TOP - holeRadius);
-        this.context.lineTo(xMiddle + 0.3 * holeRadius, Table.Y_TOP);
+        this.context.moveTo(Table.X_MIDDLE - 0.3 * holeRadius, Table.Y_TOP);
+        this.context.lineTo(Table.X_MIDDLE, Table.Y_TOP - holeRadius);
+        this.context.lineTo(Table.X_MIDDLE + 0.3 * holeRadius, Table.Y_TOP);
         this.context.stroke();
 
         this.context.fillStyle = "black";
         this.context.beginPath();
-        this.context.arc(xMiddle, Table.Y_TOP - holeRadius, holeRadius, 0, 2 * Math.PI);
+        this.context.arc(Table.X_MIDDLE, Table.Y_TOP - holeRadius, holeRadius, 0, 2 * Math.PI);
         this.context.fill();
 
         // top right hole
@@ -161,14 +169,14 @@ class Table {
         this.context.lineJoin = "round";
         this.context.lineWidth = 1.9 * holeRadius;
         this.context.beginPath();
-        this.context.moveTo(xMiddle - 0.3 * holeRadius, Table.Y_BOTTOM);
-        this.context.lineTo(xMiddle, Table.Y_BOTTOM + holeRadius);
-        this.context.lineTo(xMiddle + 0.3 * holeRadius, Table.Y_BOTTOM);
+        this.context.moveTo(Table.X_MIDDLE - 0.3 * holeRadius, Table.Y_BOTTOM);
+        this.context.lineTo(Table.X_MIDDLE, Table.Y_BOTTOM + holeRadius);
+        this.context.lineTo(Table.X_MIDDLE + 0.3 * holeRadius, Table.Y_BOTTOM);
         this.context.stroke();
 
         this.context.fillStyle = "black";
         this.context.beginPath();
-        this.context.arc(xMiddle, Table.Y_BOTTOM + holeRadius, holeRadius, 0, 2 * Math.PI);
+        this.context.arc(Table.X_MIDDLE, Table.Y_BOTTOM + holeRadius, holeRadius, 0, 2 * Math.PI);
         this.context.fill();
 
         // bottom left hole
@@ -194,6 +202,8 @@ Table.BORDER_OUTER_COLOR = "#432918";
 Table.BORDER_INNER_COLOR = "#7d4e24";
 Table.BORDER_WIDTH = 25;
 Table.X_LEFT = null; // set in constructor
+Table.X_MIDDLE = null;
 Table.X_RIGHT = null;
 Table.Y_TOP = null;
 Table.Y_BOTTOM = null;
+Table.HOLES = null;

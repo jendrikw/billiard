@@ -76,12 +76,7 @@ class Cue {
             return;
         }
         this.mouseDown = false;
-        if(this.distance < 9){
-			this.power = this.distance * Cue.CUE_POWER_TO_BALL_SPEED_FACTOR;
-        }
-		else{
-			this.power = Math.sqrt(distance);
-		}
+        this.power = Math.min(this.distance * Cue.CUE_POWER_TO_BALL_SPEED_FACTOR, Math.sqrt(this.distance));
 		this.allowedToShoot = false;
         this.shoot();
     }

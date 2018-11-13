@@ -21,8 +21,11 @@ canvas {
 #control-music {
 
   background-size: 115%;
-  height: 50px;
-  width: 50px;
+  height: 100px;
+  width: 100px;
+  float: right;
+  margin-right: 666px;
+  margin-top: -33px;
 }
 
 .unmute {

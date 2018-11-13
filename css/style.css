@@ -18,6 +18,20 @@ canvas {
 
 }
 
+#control-music {
+
+  background-size: 115%;
+  height: 50px;
+  width: 50px;
+}
+
+.unmute {
+  background-image: url("../img/mute.png");
+}
+
+.mute {
+  background-image: url("../img/unmute.png");
+}
 
 #cue-img {
   display: none; }

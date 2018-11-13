@@ -8,6 +8,7 @@ class Cue {
         this.canvas = this.context.canvas;
         this.power = 0;
         this.distance = 0;
+        this.allowedToShoot = true;
         this.mouseDown = false;
         this.mouseClientX = null; // relative to the page
         this.mouseClientY = null;
@@ -16,13 +17,16 @@ class Cue {
         this.context.canvas.addEventListener("mousedown", () => this.onCanvasMouseDown());
         this.context.canvas.addEventListener("mouseup", () => this.onCanvasMouseUp());
         window.addEventListener("mousemove", e => this.onWindowMouseMove(e));
-        whiteBall.onStopMoving = () => this.onCanvasMouseMove(new MouseEvent("move", { clientX: this.mouseClientX, clientY: this.mouseClientY }));
+        whiteBall.onStopMoving = () => {
+            this.allowedToShoot = true;
+            return this.onCanvasMouseMove(new MouseEvent("move", {clientX: this.mouseClientX, clientY: this.mouseClientY}));
+        };
     }
 
     onCanvasMouseMove(event) {
         this.mouseClientX = event.clientX;
         this.mouseClientY = event.clientY;
-        if (!this.mouseDown && !this.whiteBall.isMoving) {
+        if (!this.mouseDown && this.allowedToShoot) {
             const mouseCanvasX = event.clientX - this.canvas.offsetLeft;
             const mouseCanvasY = event.clientY - this.canvas.offsetTop;
             // move cue around the ball
@@ -48,6 +52,9 @@ class Cue {
     }
 
     onCanvasMouseDown() {
+        if (!this.allowedToShoot) {
+            return;
+        }
         this.mouseDown = true;
         this.distance = 0;
         this.increaseDistance();
@@ -65,8 +72,12 @@ class Cue {
     }
 
     onCanvasMouseUp() {
+        if (!this.allowedToShoot) {
+            return;
+        }
         this.mouseDown = false;
         this.power = this.distance * Cue.CUE_POWER_TO_BALL_SPEED_FACTOR;
+        this.allowedToShoot = false;
         this.shoot();
     }
 

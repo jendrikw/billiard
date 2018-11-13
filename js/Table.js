@@ -114,10 +114,12 @@ class Table {
         // top middle hole
         this.context.strokeStyle = Table.COLOR;
         this.context.lineCap = "round";
+        this.context.lineJoin = "round";
         this.context.lineWidth = 1.9 * holeRadius;
         this.context.beginPath();
-        this.context.moveTo(xMiddle, Table.Y_TOP);
+        this.context.moveTo(xMiddle - 0.3 * holeRadius, Table.Y_TOP);
         this.context.lineTo(xMiddle, Table.Y_TOP - holeRadius);
+        this.context.lineTo(xMiddle + 0.3 * holeRadius, Table.Y_TOP);
         this.context.stroke();
 
         this.context.fillStyle = "black";
@@ -156,10 +158,12 @@ class Table {
         // bottom middle hole
         this.context.strokeStyle = Table.COLOR;
         this.context.lineCap = "round";
+        this.context.lineJoin = "round";
         this.context.lineWidth = 1.9 * holeRadius;
         this.context.beginPath();
-        this.context.moveTo(xMiddle, Table.Y_BOTTOM);
+        this.context.moveTo(xMiddle - 0.3 * holeRadius, Table.Y_BOTTOM);
         this.context.lineTo(xMiddle, Table.Y_BOTTOM + holeRadius);
+        this.context.lineTo(xMiddle + 0.3 * holeRadius, Table.Y_BOTTOM);
         this.context.stroke();
 
         this.context.fillStyle = "black";

@@ -23,7 +23,7 @@ class Table {
 
     draw() {
         const holeRadius = 1.5 * Ball.RADIUS;
-        const holeOffset = Math.sqrt(holeRadius);
+        const holeOffset = holeRadius / Math.sqrt(2);
 
         // top
         const topGradient = this.context.createLinearGradient(0, Table.Y_TOP - Table.BORDER_WIDTH, 0, Table.Y_TOP);
@@ -37,7 +37,7 @@ class Table {
         rightGradient.addColorStop(0, Table.BORDER_OUTER_COLOR);
         rightGradient.addColorStop(1, Table.BORDER_INNER_COLOR);
         this.context.fillStyle = rightGradient;
-        this.context.fillRect(Table.X_RIGHT, Table.Y_TOP, Table.BORDER_WIDTH, Table.HEIGHT);
+        this.context.fillRect(Table.X_RIGHT - 1, Table.Y_TOP, Table.BORDER_WIDTH + 1, Table.HEIGHT);
 
         // bottom
         const bottomGradient = this.context.createLinearGradient(0, Table.Y_BOTTOM + Table.BORDER_WIDTH, 0, Table.Y_BOTTOM);
@@ -51,7 +51,7 @@ class Table {
         leftGradient.addColorStop(0, Table.BORDER_OUTER_COLOR);
         leftGradient.addColorStop(1, Table.BORDER_INNER_COLOR);
         this.context.fillStyle = leftGradient;
-        this.context.fillRect(Table.X_LEFT - Table.BORDER_WIDTH, Table.Y_TOP, Table.BORDER_WIDTH, Table.HEIGHT);
+        this.context.fillRect(Table.X_LEFT - Table.BORDER_WIDTH, Table.Y_TOP, Table.BORDER_WIDTH + 1, Table.HEIGHT);
 
         // top left corner
         const topLeftCornerGradient = this.context.createRadialGradient(Table.X_LEFT, Table.Y_TOP, Table.BORDER_WIDTH, Table.X_LEFT, Table.Y_TOP, 0);
@@ -60,8 +60,8 @@ class Table {
         this.context.fillStyle = topLeftCornerGradient;
         this.context.moveTo(Table.X_LEFT, Table.Y_TOP + 1);
         this.context.lineTo(Table.X_LEFT - Table.BORDER_WIDTH, Table.Y_TOP + 1);
-        this.context.arcTo(Table.X_LEFT - Table.BORDER_WIDTH, Table.Y_TOP - Table.BORDER_WIDTH, Table.X_LEFT, Table.Y_TOP - Table.BORDER_WIDTH, Table.BORDER_WIDTH);
-        this.context.lineTo(Table.X_LEFT, Table.Y_TOP);
+        this.context.arcTo(Table.X_LEFT - Table.BORDER_WIDTH, Table.Y_TOP - Table.BORDER_WIDTH, Table.X_LEFT + 1, Table.Y_TOP - Table.BORDER_WIDTH, Table.BORDER_WIDTH);
+        this.context.lineTo(Table.X_LEFT + 1, Table.Y_TOP + 1);
         this.context.fill();
 
         // top right corner
@@ -70,10 +70,10 @@ class Table {
         topRightCornerGradient.addColorStop(0.9, Table.BORDER_INNER_COLOR);
         this.context.fillStyle = topRightCornerGradient;
         this.context.beginPath();
-        this.context.moveTo(Table.X_RIGHT, Table.Y_TOP + 1);
+        this.context.moveTo(Table.X_RIGHT, Table.Y_TOP);
         this.context.lineTo(Table.X_RIGHT + Table.BORDER_WIDTH, Table.Y_TOP + 1);
-        this.context.arcTo(Table.X_RIGHT + Table.BORDER_WIDTH, Table.Y_TOP - Table.BORDER_WIDTH, Table.X_RIGHT, Table.Y_TOP - Table.BORDER_WIDTH, Table.BORDER_WIDTH);
-        this.context.lineTo(Table.X_RIGHT, Table.Y_TOP);
+        this.context.arcTo(Table.X_RIGHT + Table.BORDER_WIDTH, Table.Y_TOP - Table.BORDER_WIDTH, Table.X_RIGHT - 100, Table.Y_TOP - Table.BORDER_WIDTH, Table.BORDER_WIDTH);
+        this.context.lineTo(Table.X_RIGHT - 1, Table.Y_TOP);
         this.context.fill();
 
         // bottom right corner
@@ -82,10 +82,10 @@ class Table {
         bottomRightCornerGradient.addColorStop(0.9, Table.BORDER_INNER_COLOR);
         this.context.fillStyle = bottomRightCornerGradient;
         this.context.beginPath();
-        this.context.moveTo(Table.X_RIGHT, Table.Y_BOTTOM - 1);
+        this.context.moveTo(Table.X_RIGHT - 1, Table.Y_BOTTOM - 1);
         this.context.lineTo(Table.X_RIGHT + Table.BORDER_WIDTH, Table.Y_BOTTOM - 1);
-        this.context.arcTo(Table.X_RIGHT + Table.BORDER_WIDTH, Table.Y_BOTTOM + Table.BORDER_WIDTH, Table.X_RIGHT, Table.Y_BOTTOM + Table.BORDER_WIDTH, Table.BORDER_WIDTH);
-        this.context.lineTo(Table.X_RIGHT, Table.Y_BOTTOM - 1);
+        this.context.arcTo(Table.X_RIGHT + Table.BORDER_WIDTH, Table.Y_BOTTOM + Table.BORDER_WIDTH, Table.X_RIGHT - 4, Table.Y_BOTTOM + Table.BORDER_WIDTH, Table.BORDER_WIDTH);
+        this.context.lineTo(Table.X_RIGHT - 4, Table.Y_BOTTOM - 1);
         this.context.fill();
 
         // bottom left corner
@@ -94,10 +94,10 @@ class Table {
         bottomLeftCornerGradient.addColorStop(0.9, Table.BORDER_INNER_COLOR);
         this.context.fillStyle = bottomLeftCornerGradient;
         this.context.beginPath();
-        this.context.moveTo(Table.X_LEFT, Table.Y_BOTTOM - 1);
+        this.context.moveTo(Table.X_LEFT + 1, Table.Y_BOTTOM - 1);
         this.context.lineTo(Table.X_LEFT - Table.BORDER_WIDTH, Table.Y_BOTTOM - 1);
-        this.context.arcTo(Table.X_LEFT - Table.BORDER_WIDTH, Table.Y_BOTTOM + Table.BORDER_WIDTH, Table.X_LEFT, Table.Y_BOTTOM + Table.BORDER_WIDTH, Table.BORDER_WIDTH);
-        this.context.lineTo(Table.X_LEFT, Table.Y_BOTTOM - 1);
+        this.context.arcTo(Table.X_LEFT - Table.BORDER_WIDTH, Table.Y_BOTTOM + Table.BORDER_WIDTH, Table.X_LEFT + 2, Table.Y_BOTTOM + Table.BORDER_WIDTH, Table.BORDER_WIDTH);
+        this.context.lineTo(Table.X_LEFT + 2, Table.Y_BOTTOM - 1);
         this.context.fill();
 
         // table

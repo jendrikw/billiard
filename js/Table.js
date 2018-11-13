@@ -14,7 +14,7 @@ class Table {
 
     draw() {
         const xMiddle = Table.X_LEFT + Table.WIDTH / 2;
-        const holeRadius = 1.2 * Ball.RADIUS;
+        const holeRadius = 1.5 * Ball.RADIUS;
         const holeOffset = Math.sqrt(holeRadius);
 
         // top
@@ -100,7 +100,7 @@ class Table {
         // top left hole
         this.context.strokeStyle = Table.COLOR;
         this.context.lineCap = "round";
-        this.context.lineWidth = 1.9 * holeRadius;
+        this.context.lineWidth = 1.95 * holeRadius;
         this.context.beginPath();
         this.context.moveTo(Table.X_LEFT + holeOffset, Table.Y_TOP + holeOffset);
         this.context.lineTo(Table.X_LEFT - holeOffset, Table.Y_TOP - holeOffset);

@@ -11,8 +11,6 @@ class Cue {
         this.mouseDown = false;
         this.mouseClientX = null; // relative to the page
         this.mouseClientY = null;
-        this.increaseDistanceTimer = null;
-        this.shootTimer = null;
         this.theta = null;
         this.context.canvas.addEventListener("mousemove", e => this.onCanvasMouseMove(e));
         this.context.canvas.addEventListener("mousedown", () => this.onCanvasMouseDown());
@@ -46,45 +44,47 @@ class Cue {
             // mouse outside of canvas
             this.distance = 0;
             this.mouseDown = false;
-            if (this.increaseDistanceTimer) {
-                clearInterval(this.increaseDistanceTimer);
-            }
         }
     }
 
     onCanvasMouseDown() {
         this.mouseDown = true;
         this.distance = 0;
-        this.increaseDistanceTimer = setInterval(() => {
-            this.distance += 0.5;
+        this.increaseDistance();
+    }
 
+    increaseDistance() {
+        this.distance += 0.5;
+        this.clear();
+        this.drawWithDistance(this.distance + Ball.RADIUS);
+        if (this.mouseDown) {
+            window.requestAnimationFrame(() => this.increaseDistance());
+        } else {
             this.clear();
-            this.drawWithDistance(this.distance + Ball.RADIUS);
-        }, 16)
+        }
     }
 
     onCanvasMouseUp() {
-		let traegheit = 0.3;
-        this.power = this.distance * traegheit;
-        if (this.increaseDistanceTimer) {
-            clearInterval(this.increaseDistanceTimer);
+        this.mouseDown = false;
+        this.power = this.distance * Cue.CUE_POWER_TO_BALL_SPEED_FACTOR;
+        this.shoot();
+    }
+
+    shoot() {
+        this.distance -= 5;
+        if (this.distance < 0) {
+            this.distance = 0;
+            this.mouseDown = false;
+            // remove cue (can't touch the ball if it's moving)
+            this.clear();
+            // move ball
+            this.whiteBall.bump(this.theta, this.power);
+            this.power = null;
+        } else {
+            this.clear();
+            this.drawWithDistance(this.distance + Ball.RADIUS);
+            window.requestAnimationFrame(() => this.shoot());
         }
-        this.increaseDistanceTimer = null;
-        this.shootTimer = setInterval(() => {
-            this.distance -= 5;
-            if (this.distance < 0) {
-                clearInterval(this.shootTimer);
-                this.distance = 0;
-                this.mouseDown = false;
-                // remove cue (can't touch the ball if it's moving)
-                this.clear();
-                // move ball
-                this.whiteBall.bump(this.theta, this.power);
-            } else {
-                this.clear();
-                this.drawWithDistance(this.distance + Ball.RADIUS);
-            }
-        }, 16);
     }
 
     drawWithDistance(distance) {
@@ -106,3 +106,4 @@ Cue.LENGTH = 150;
 Cue.BALL_CUE_DISTANCE = 20;
 Cue.IMG = null; // set in onload
 Cue.WIDTH = null; // set in onload
+Cue.CUE_POWER_TO_BALL_SPEED_FACTOR = 0.3;

@@ -47,10 +47,10 @@ class Ball {
 
     moveStep() {
         this.v.scale(0.99);
-		if (this.x - Ball.RADIUS <= Table.X_LEFT || this.x + Ball.RADIUS >= Table.X_RIGHT) {
+		if (this.x + this.v.x - Ball.RADIUS <= Table.X_LEFT || this.x + this.v.x + Ball.RADIUS >= Table.X_RIGHT) {
             this.v.x *= -1;
         }
-        if (this.y - Ball.RADIUS <= Table.Y_TOP || this.y + Ball.RADIUS >= Table.Y_BOTTOM) {
+        if (this.y + this.v.y - Ball.RADIUS <= Table.Y_TOP || this.y + this.v.y + Ball.RADIUS >= Table.Y_BOTTOM) {
             this.v.y *= -1;
         }
     	this.x += this.v.x;

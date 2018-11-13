@@ -5,10 +5,10 @@ class Ball {
     constructor(game,x, y, number) {
     	this.game = game;
         this.context = getContext("ball-canvas");
-        if (number !== undefined) {
-            this.color = Ball.getColorForNumber(number);
-        } else {
+        if (number === undefined) {
             this.color = "white";
+        } else {
+            this.color = Ball.getColorForNumber(number);
         }
         this.x = x;
         this.y = y;

@@ -43,12 +43,12 @@ canvas {
 
 .header-cont {
   background-color: green;
-  margin: -21px;
   padding-top: 0px;
 }
 
 .header-cont h1 {
   text-align: center;
+  margin: 0;
 }
 
 #main-nav {
@@ -74,5 +74,13 @@ canvas {
 
 ul {
   list-style: none; }
+ 
+#tutorial {
+  padding: 10px;
+  margin: 20px auto 0px auto;
+  background: rgba(0, 97, 27, 0.6);
+  width: 58%;
+}
+
 
 /*# sourceMappingURL=style.css.map */

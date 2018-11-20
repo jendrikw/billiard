@@ -5,6 +5,7 @@ body {
   color: #ffb649;
   background-image: url("../img/billiard-bg3.jpg");
   background-size: 100%;
+  margin: 0;
 }
 
 canvas {
@@ -23,9 +24,7 @@ canvas {
   background-size: 115%;
   height: 100px;
   width: 100px;
-  float: right;
-  margin-right: 666px;
-  margin-top: -33px;
+  margin: -33px auto 0 auto;
 }
 
 .unmute {

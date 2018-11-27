@@ -5,5 +5,5 @@ function onload() {
     Cue.WIDTH = Cue.IMG.naturalHeight * (Cue.LENGTH / Cue.IMG.naturalWidth);
 
     let game = new Game();
-    game.drawAll();
+    game.start();
 }

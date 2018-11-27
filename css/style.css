@@ -82,5 +82,17 @@ ul {
   width: 58%;
 }
 
+#welcom {
+  padding: 10px;
+  margin: 20px auto 0px auto;
+  background: rgba(0, 97, 27, 0.6);
+  width: 58%;
+}
+
+.site-cont h1 {
+  text-align: center;
+  margin: 0;
+}
+
 
 /*# sourceMappingURL=style.css.map */

@@ -102,8 +102,14 @@ ul {
 }
 
 .footer-cont p{
-	font-size: 10px
+	font-size: 10px;
+	color: #4169E1; /* Farbe->Königsblau */
+}
+.footer-cont span{
+	color: #000000;
 }
 
-
+.header-cont span{
+	color:#00117D;
+}
 /*# sourceMappingURL=style.css.map */

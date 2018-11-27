@@ -15,6 +15,9 @@ class Ball {
         this.v = null;
         this.isMoving = false;
         this.onStopMoving = null;
+        this.holes = Table.HOLES;
+        this.balls = this.game.balls;
+        console.log(Table.HOLE_RADIUS);
     }
 
     static getColorForNumber(number) {
@@ -47,15 +50,31 @@ class Ball {
 
     moveStep() {
         this.v.scale(0.99);
-		if (this.x + this.v.x - Ball.RADIUS <= Table.X_LEFT || this.x + this.v.x + Ball.RADIUS >= Table.X_RIGHT) {
-            this.v.x *= -1;
+        let isNearToHole = this.checkNearToHole();
+        
+        if(!isNearToHole) {
+        	if (this.x + this.v.x - Ball.RADIUS <= Table.X_LEFT || this.x + this.v.x + Ball.RADIUS >= Table.X_RIGHT) {
+                this.v.x *= -1;
+            }
+            if (this.y + this.v.y - Ball.RADIUS <= Table.Y_TOP || this.y + this.v.y + Ball.RADIUS >= Table.Y_BOTTOM) {
+                this.v.y *= -1;
+            }
         }
-        if (this.y + this.v.y - Ball.RADIUS <= Table.Y_TOP || this.y + this.v.y + Ball.RADIUS >= Table.Y_BOTTOM) {
-            this.v.y *= -1;
-        }
+        
     	this.x += this.v.x;
     	this.y += this.v.y;
     	this.game.drawBalls();
+    	
+        // hole collision:
+        let isInHole = this.checkHoleCollision();
+    	if(isInHole) {
+    		alert("Juhuuuu! Geschafft!");
+    	}
+    	
+    	// ball collision:
+    	let isBallCollided = this.checkBallCollision();
+    	// TODO
+    	
     	if (Math.abs(this.v.x) > 0.1 || Math.abs(this.v.y) > 0.1) {
     		window.requestAnimationFrame(() => this.moveStep());
     	} else {
@@ -71,6 +90,35 @@ class Ball {
 		this.v = new Vector(-Math.cos(theta), -Math.sin(theta));
 		this.v.scale(power);
     	this.moveStep();
+    }
+    
+    checkNearToHole() {
+    	
+    	for (const hole of this.holes) {
+    		// corner:
+    		if(Math.sqrt((this.x - hole.x)**2 + (this.y - hole.y)**2) <= Math.SQRT2*Table.HOLE_RADIUS) {
+    			return true;
+    		}
+		}
+    	return false;
+    }
+    
+    checkBallCollision() {
+    	for (let ball of this.balls) {
+    		// TODO
+    		
+		}
+    }
+    
+    checkHoleCollision() {
+    	for (const hole of this.holes) {
+    		const distance = Math.sqrt((this.x - hole.x)**2 + (this.y - hole.y)**2);
+    		console.log(hole, distance);
+    		if(distance < Table.HOLE_RADIUS) {
+    			return true;
+    		}
+		}
+    	return false;
     }
 }
 

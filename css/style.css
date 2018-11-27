@@ -94,5 +94,16 @@ ul {
   margin: 0;
 }
 
+.footer-cont {
+	 position: absolute; 
+	 bottom: 0px;
+	 width: 100%;
+	 background-color: #ffb649;
+}
+
+.footer-cont p{
+	font-size: 10px
+}
+
 
 /*# sourceMappingURL=style.css.map */

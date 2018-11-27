@@ -67,37 +67,22 @@ class Ball {
             }
             const dx = this.x + this.v.x - b.x;
             const dy = this.y + this.v.y - b.y;
-            const midPointDistance = Math.sqrt(dx * dx + dy * dy);
-            if (midPointDistance <= 2 * Ball.RADIUS) {
-                console.log("dx, midPointDistance", dx, midPointDistance);
-                const theta = Math.acos((0.5 * dx) / (0.5 * midPointDistance));
-                const angleVCollisionPoint = 0.5 * Math.PI - theta;
-                console.log("theta, angleVCollisionPoint", theta, angleVCollisionPoint);
+            const ballMidPointsDistance = Math.sqrt(dx * dx + dy * dy);
+            if (ballMidPointsDistance <= 2 * Ball.RADIUS) {
+                console.log(this.v, dy, dx);
 
-                const vLength = this.v.length() * Math.cos(theta);
-                const vxChange = Math.sin(theta);
-                const vyChange = Math.cos(theta);
+                // Vector Direction firstball
+                this.v = new Vector(dy, -dx);
+               // this.v.setLength(3); // todo length
 
-                const otherVLength = this.v.length() * Math.sin(theta);
-                const otherVxChange = Math.sin(angleVCollisionPoint);
-                const otherVyChange = Math.cos(angleVCollisionPoint);
-
-                console.log(this.v.length(), vLength, otherVLength);
-
-                const v = this.v;
-                this.v = new Vector(vxChange, vyChange);
-                this.v.setLength(vLength);
-                console.log(v, this.v);
-
-                // b.v = b.v.plus(new Vector(otherVxChange, otherVyChange));
-                // b.v.setLength(otherVLength);
-                // console.log(b.v);
-
+                // Vector Direction other ball
+                b.v = new Vector(-dx, -dy);
                 b.moveStep();
             }
         }
     	this.x += this.v.x;
     	this.y += this.v.y;
+    	this.drawVelocityDirectionAndMagnitude();
         window.requestAnimationFrame(() => this.moveStep());
     }
 
@@ -107,6 +92,14 @@ class Ball {
 		this.v.scale(power);
     	this.moveStep();
     }
+
+    drawVelocityDirectionAndMagnitude() {
+        this.context.strokeStyle = "red";
+        this.context.beginPath();
+        this.context.moveTo(this.x, this.y);
+        this.context.lineTo(this.x + 50 * this.v.x, this.y + 50 * this.v.y);
+        this.context.stroke();
+    }
 }
 
-Ball.RADIUS = scaleRealCentimetersToPixel(6.15) / 2 * 2;
+Ball.RADIUS = scaleRealCentimetersToPixel(6.15) / 2;

@@ -82,5 +82,34 @@ ul {
   width: 58%;
 }
 
+#welcom {
+  padding: 10px;
+  margin: 20px auto 0px auto;
+  background: rgba(0, 97, 27, 0.6);
+  width: 58%;
+}
 
+.site-cont h1 {
+  text-align: center;
+  margin: 0;
+}
+
+.footer-cont {
+	 position: absolute; 
+	 bottom: 0px;
+	 width: 100%;
+	 background-color: #ffb649;
+}
+
+.footer-cont p{
+	font-size: 10px;
+	color: #4169E1; /* Farbe->Königsblau */
+}
+.footer-cont span{
+	color: #000000;
+}
+
+.header-cont span{
+	color:#00117D;
+}
 /*# sourceMappingURL=style.css.map */

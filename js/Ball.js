@@ -10,6 +10,7 @@ class Ball {
         } else {
             this.color = Ball.getColorForNumber(number);
         }
+        this.number = number;
         this.x = x;
         this.y = y;
         this.v = new Vector(0, 0);
@@ -64,7 +65,9 @@ class Ball {
          // hole collision:
          let isInHole = this.checkHoleCollision();
          if(isInHole) {
-        	 // alert("Juhuuuu! Geschafft!"); TODO
+        	 // alert("Juhuuuu! Geschafft!"); // TODO
+        	 //this.ball.remove();
+        	 //ball.y = 400;
          }
 
 // let isNearToHole = this.checkNearToHole();
@@ -99,6 +102,7 @@ class Ball {
 
             
         }
+        
     	this.x += this.v.x;
     	this.y += this.v.y;
     	this.drawVelocityDirectionAndMagnitude();
@@ -177,6 +181,18 @@ class Ball {
     		}
 		}
     	return false;
+    }
+    
+    remove() {
+    	// Remove the ball if it hits/falls in a hole:
+    	// Remove bedeutet, dass der Ball an eine unerreichbare Koordinate gezeichnet wird. Performance soll nicht beruecksichtigt werden.
+    	for (var i = 0; i < this.game.balls.length; i++) {
+			if(this.ball.number == this.game.balls[i].number) {
+				ball.x = 2000;
+				ball.y = 2000;
+			}
+		}
+    	
     }
 }
 Ball.RADIUS = scaleRealCentimetersToPixel(6.15) / 2;

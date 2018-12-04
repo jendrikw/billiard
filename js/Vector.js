@@ -22,10 +22,10 @@ class Vector {
         this.y *= factor;
     }
 
-    setLength(l) {
+    setLength(length) {
         this.normalize();
         // length is now 1
-        this.scale(l);
+        this.scale(length);
     }
 
     plus(that) {

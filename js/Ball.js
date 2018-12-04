@@ -52,15 +52,20 @@ class Ball {
         console.log("moveStep", this.color);
         this.v.scale(0.99);
 
-        checkBallMoving();
-        handleCushionCollision();
+        this.checkBallMoving();
+        this.handleCushionCollision();
 		
         for (const ball of this.game.balls) {
             if (this === ball) {
                 continue;
             }
-            handleBallCollision(this.ball);
+            this.handleBallCollision(ball);
             
+         // hole collision:
+//         let isInHole = this.checkHoleCollision();
+//         if(isInHole) {
+//        	 alert("Juhuuuu! Geschafft!");
+//         }
 
 // let isNearToHole = this.checkNearToHole();
 //        
@@ -84,10 +89,6 @@ class Ball {
 // if(isInHole) {
 // alert("Juhuuuu! Geschafft!");
 // }
-//    	
-// // ball collision:
-// let isBallCollided = this.checkBallCollision();
-// // TODO
 //    	
 // if (Math.abs(this.v.x) > 0.1 || Math.abs(this.v.y) > 0.1) {
 // window.requestAnimationFrame(() => this.moveStep());
@@ -132,8 +133,8 @@ class Ball {
 
             // Vector Direction firstball
             this.v = new Vector(dy, -dx);
-           // this.v.setLength(3); // todo length
-
+            //this.v.setLength(3); // todo length
+            
             // Vector Direction other ball
             ball.v = new Vector(-dx, -dy);
             ball.moveStep();
@@ -160,7 +161,6 @@ class Ball {
     checkNearToHole() {
     	
     	for (const hole of this.holes) {
-    		// corner:
     		if(Math.sqrt((this.x - hole.x)**2 + (this.y - hole.y)**2) <= Math.SQRT2*Table.HOLE_RADIUS) {
     			return true;
     		}
@@ -168,18 +168,11 @@ class Ball {
     	return false;
     }
     
-    checkBallCollision() {
-    	for (let ball of this.balls) {
-    		// TODO
-    		
-		}
-    }
-    
     checkHoleCollision() {
     	for (const hole of this.holes) {
     		const distance = Math.sqrt((this.x - hole.x)**2 + (this.y - hole.y)**2);
     		console.log(hole, distance);
-    		if(distance < Table.HOLE_RADIUS) {
+    		if(distance <= Table.HOLE_RADIUS) {
     			return true;
     		}
 		}

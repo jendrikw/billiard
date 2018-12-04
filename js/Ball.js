@@ -62,10 +62,10 @@ class Ball {
             this.handleBallCollision(ball);
             
          // hole collision:
-//         let isInHole = this.checkHoleCollision();
-//         if(isInHole) {
-//        	 alert("Juhuuuu! Geschafft!");
-//         }
+         let isInHole = this.checkHoleCollision();
+         if(isInHole) {
+        	 // alert("Juhuuuu! Geschafft!"); TODO
+         }
 
 // let isNearToHole = this.checkNearToHole();
 //        

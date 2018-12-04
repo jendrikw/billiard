@@ -52,36 +52,15 @@ class Ball {
         console.log("moveStep", this.color);
         this.v.scale(0.99);
 
-        if (Math.abs(this.v.x) < 0.1 && Math.abs(this.v.y) < 0.1) {
-            this.isMoving = false;
-            if (this.onStopMoving != null) {
-                this.onStopMoving();
-            }
-            return;
-        }
-		if (this.x + this.v.x - Ball.RADIUS <= Table.X_LEFT || this.x + this.v.x + Ball.RADIUS >= Table.X_RIGHT) {
-            this.v.x *= -1;
-        }
-        if (this.y + this.v.y - Ball.RADIUS <= Table.Y_TOP || this.y + this.v.y + Ball.RADIUS >= Table.Y_BOTTOM) {
-            this.v.y *= -1;
-        }
-        for (const b of this.game.balls) {
-            if (this === b) {
+        checkBallMoving();
+        handleCushionCollision();
+		
+        for (const ball of this.game.balls) {
+            if (this === ball) {
                 continue;
             }
-            const dx = this.x + this.v.x - b.x;
-            const dy = this.y + this.v.y - b.y;
-            const ballMidPointsDistance = Math.sqrt(dx * dx + dy * dy);
-            if (ballMidPointsDistance <= 2 * Ball.RADIUS) {
-                console.log(this.v, dy, dx);
-
-                // Vector Direction firstball
-                this.v = new Vector(dy, -dx);
-               // this.v.setLength(3); // todo length
-
-                // Vector Direction other ball
-                b.v = new Vector(-dx, -dy);
-                b.moveStep();
+            handleBallCollision(this.ball);
+            
 
 // let isNearToHole = this.checkNearToHole();
 //        
@@ -117,14 +96,50 @@ class Ball {
 // if (this.onStopMoving != null) {
 // this.onStopMoving();
 
-            }
+            
         }
     	this.x += this.v.x;
     	this.y += this.v.y;
     	this.drawVelocityDirectionAndMagnitude();
         window.requestAnimationFrame(() => this.moveStep());
     }
+    
+    checkBallMoving() {
+    	if (Math.abs(this.v.x) < 0.1 && Math.abs(this.v.y) < 0.1) {
+            this.isMoving = false;
+            if (this.onStopMoving != null) {
+                this.onStopMoving();
+            }
+            return;
+        }
+    }
 
+    handleCushionCollision() {
+    	if (this.x + this.v.x - Ball.RADIUS <= Table.X_LEFT || this.x + this.v.x + Ball.RADIUS >= Table.X_RIGHT) {
+            this.v.x *= -1;
+        }
+        if (this.y + this.v.y - Ball.RADIUS <= Table.Y_TOP || this.y + this.v.y + Ball.RADIUS >= Table.Y_BOTTOM) {
+            this.v.y *= -1;
+        }
+    }
+    
+    handleBallCollision(ball) {
+    	const dx = this.x + this.v.x - ball.x;
+        const dy = this.y + this.v.y - ball.y;
+        const ballMidPointsDistance = Math.sqrt(dx * dx + dy * dy);
+        if (ballMidPointsDistance <= 2 * Ball.RADIUS) {
+            console.log(this.v, dy, dx);
+
+            // Vector Direction firstball
+            this.v = new Vector(dy, -dx);
+           // this.v.setLength(3); // todo length
+
+            // Vector Direction other ball
+            ball.v = new Vector(-dx, -dy);
+            ball.moveStep();
+        }
+    }
+    
     bump(theta, power) {
         this.isMoving = true;
 		this.v = new Vector(-Math.cos(theta), -Math.sin(theta));

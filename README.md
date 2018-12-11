@@ -3,4 +3,4 @@
 * ich
 * du
 * der andere Typ
-* Stephan
+* Stephan (der seltsame Typ)

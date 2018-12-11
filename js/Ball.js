@@ -17,7 +17,7 @@ class Ball {
         this.isMoving = false;
         this.holes = Table.HOLES;
         this.balls = this.game.balls;
-        console.log(Table.HOLE_RADIUS);
+        // console.log(Table.HOLE_RADIUS);
     }
 
     static getColorForNumber(number) {
@@ -50,6 +50,7 @@ class Ball {
 
     moveStep() {
         console.log("moveStep", this.color);
+        console.log("BallpositionX " + this.x + " BallpositionY " + this.y);
         this.v.scale(0.99);
 
         if (this.shouldStopMoving()) {
@@ -137,8 +138,10 @@ class Ball {
         const dy = this.y + this.v.y - ball.y;
         const ballMidPointsDistance = Math.sqrt(dx * dx + dy * dy);
         if (ballMidPointsDistance <= 2 * Ball.RADIUS) {
-            console.log(this.v, dy, dx);
+            // console.log(this.v, dy, dx);
 
+			
+            //TODO FIX THIS SHIT!!!
 
             // Vector Direction firstball
             this.v = new Vector(dy, -dx);
@@ -149,14 +152,15 @@ class Ball {
 
 
             // Velocity distribution:
-            let collisionVector = new Vector(dx, dy);
 
             // Winkel berechnen zwischen colloisionVetor und this.v:
-            let angle = this.v / ballMidPointsDistance;
+            let angle = Math.atan( dx /dy);
             let distributionV = angle/90;
 
-            ball.v += this.v * (1 - distributionV);
-            this.v *= distributionV;
+
+			let thisVtemp = this.v;
+			ball.v.setLength(thisVtemp.scale(1 - distributionV));
+            this.v.scale(distributionV);
 
             console.log("Verteilung: " + distributionV + " Geschwindigkeit [Ausgang][Ziel]: " + this.v + " " + ball.v);
 
@@ -212,7 +216,7 @@ class Ball {
 		try{
     	for (const hole of this.holes) {
     		const distance = Math.sqrt((this.x - hole.x)**2 + (this.y - hole.y)**2);
-    		console.log(hole, distance);
+    		// console.log(hole, distance);
     		if(distance <= Table.HOLE_RADIUS) {
     			return true;
     		}

@@ -65,9 +65,7 @@ class Ball {
          // hole collision:
          let isInHole = this.checkHoleCollision();
          if(isInHole) {
-        	 // alert("Juhuuuu! Geschafft!"); // TODO
-        	 //this.ball.remove();
-        	 //ball.y = 400;
+        	 this.remove();
          }
 
 // let isNearToHole = this.checkNearToHole();
@@ -135,12 +133,25 @@ class Ball {
         if (ballMidPointsDistance <= 2 * Ball.RADIUS) {
             console.log(this.v, dy, dx);
 
+            
             // Vector Direction firstball
             this.v = new Vector(dy, -dx);
-            //this.v.setLength(3); // todo length
-            
             // Vector Direction other ball
             ball.v = new Vector(-dx, -dy);
+            
+            
+            // Velocity distribution:
+            let collisionVector = new Vector(dx, dy);
+            
+            // Winkel berechnen zwischen colloisionVetor und this.v:
+            let angle = this.v / ballMidPointsDistance;
+            let distributionV = angle/90;
+            
+            ball.v += this.v * (1 - distributionV); 
+            this.v *= distributionV; 
+            
+            console.log("Verteilung: " + distributionV + " Geschwindigkeit [Ausgang][Ziel]: " + this.v + " " + ball.v);
+            	
             ball.moveStep();
         }
     }
@@ -186,13 +197,8 @@ class Ball {
     remove() {
     	// Remove the ball if it hits/falls in a hole:
     	// Remove bedeutet, dass der Ball an eine unerreichbare Koordinate gezeichnet wird. Performance soll nicht beruecksichtigt werden.
-    	for (var i = 0; i < this.game.balls.length; i++) {
-			if(this.ball.number == this.game.balls[i].number) {
-				ball.x = 2000;
-				ball.y = 2000;
-			}
-		}
-    	
+		this.x = 2000;
+		this.y = 2000;
     }
 }
 Ball.RADIUS = scaleRealCentimetersToPixel(6.15) / 2;

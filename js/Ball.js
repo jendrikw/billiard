@@ -154,7 +154,7 @@ class Ball {
 
 
     drawVelocityDirectionAndMagnitude() {
-        this.context.strokeStyle = "red";
+        this.context.strokeStyle = "#4169E1";
         this.context.beginPath();
         this.context.moveTo(this.x, this.y);
         this.context.lineTo(this.x + 50 * this.v.x, this.y + 50 * this.v.y);

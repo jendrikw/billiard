@@ -15,7 +15,6 @@ class Ball {
         this.y = y;
         this.v = new Vector(0, 0);
         this.isMoving = false;
-        this.onStopMoving = null;
         this.holes = Table.HOLES;
         this.balls = this.game.balls;
         console.log(Table.HOLE_RADIUS);
@@ -53,15 +52,17 @@ class Ball {
         console.log("moveStep", this.color);
         this.v.scale(0.99);
 
-        this.checkBallMoving();
+        if (this.shouldStopMoving()) {
+            return;
+        }
         this.handleCushionCollision();
-		
+
         for (const ball of this.game.balls) {
             if (this === ball) {
                 continue;
             }
             this.handleBallCollision(ball);
-            
+
          // hole collision:
          let isInHole = this.checkHoleCollision();
          if(isInHole) {
@@ -69,7 +70,7 @@ class Ball {
          }
 
 // let isNearToHole = this.checkNearToHole();
-//        
+//
 // if(!isNearToHole) {
 // if (this.x + this.v.x - Ball.RADIUS <= Table.X_LEFT || this.x + this.v.x +
 // Ball.RADIUS >= Table.X_RIGHT) {
@@ -80,17 +81,17 @@ class Ball {
 // this.v.y *= -1;
 // }
 // }
-//        
+//
 // this.x += this.v.x;
 // this.y += this.v.y;
 // this.game.drawBalls();
-//    	
+//
 // // hole collision:
 // let isInHole = this.checkHoleCollision();
 // if(isInHole) {
 // alert("Juhuuuu! Geschafft!");
 // }
-//    	
+//
 // if (Math.abs(this.v.x) > 0.1 || Math.abs(this.v.y) > 0.1) {
 // window.requestAnimationFrame(() => this.moveStep());
 // } else {
@@ -98,23 +99,22 @@ class Ball {
 // if (this.onStopMoving != null) {
 // this.onStopMoving();
 
-            
+
         }
-        
+
     	this.x += this.v.x;
     	this.y += this.v.y;
     	this.drawVelocityDirectionAndMagnitude();
         window.requestAnimationFrame(() => this.moveStep());
     }
-    
-    checkBallMoving() {
+
+    shouldStopMoving() {
     	if (Math.abs(this.v.x) < 0.1 && Math.abs(this.v.y) < 0.1) {
+    	    this.v = new Vector(0, 0);
             this.isMoving = false;
-            if (this.onStopMoving != null) {
-                this.onStopMoving();
-            }
-            return;
+            return true;
         }
+        return false;
     }
 
     handleCushionCollision() {
@@ -130,7 +130,7 @@ class Ball {
 			console.log("Yannick hat es wieder kaputt gemacht!");
 		}
     }
-    
+
     handleBallCollision(ball) {
 		try{
     	const dx = this.x + this.v.x - ball.x;
@@ -139,25 +139,27 @@ class Ball {
         if (ballMidPointsDistance <= 2 * Ball.RADIUS) {
             console.log(this.v, dy, dx);
 
-            
+
             // Vector Direction firstball
             this.v = new Vector(dy, -dx);
+            //this.v.setLength(3); // todo length
+
             // Vector Direction other ball
             ball.v = new Vector(-dx, -dy);
-            
-            
+
+
             // Velocity distribution:
             let collisionVector = new Vector(dx, dy);
-            
+
             // Winkel berechnen zwischen colloisionVetor und this.v:
             let angle = this.v / ballMidPointsDistance;
             let distributionV = angle/90;
-            
-            ball.v += this.v * (1 - distributionV); 
-            this.v *= distributionV; 
-            
+
+            ball.v += this.v * (1 - distributionV);
+            this.v *= distributionV;
+
             console.log("Verteilung: " + distributionV + " Geschwindigkeit [Ausgang][Ziel]: " + this.v + " " + ball.v);
-            	
+
             ball.moveStep();
         }
 		}
@@ -165,7 +167,7 @@ class Ball {
 			console.log("Yannick hat es wieder kaputt gemacht!");
 		}
     }
-    
+
     bump(theta, power) {
 		try{
         this.isMoving = true;
@@ -205,7 +207,7 @@ class Ball {
 			console.log("Yannick hat es wieder kaputt gemacht!");
 		}
 	}
-    
+
     checkHoleCollision() {
 		try{
     	for (const hole of this.holes) {
@@ -221,7 +223,7 @@ class Ball {
 			console.log("Yannick hat es wieder kaputt gemacht!");
 		}
     }
-    
+
     remove() {
 		try{
     	// Remove the ball if it hits/falls in a hole:

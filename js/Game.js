@@ -8,8 +8,8 @@ class Game {
         for (let i = 1; i <= 15; i++) {
             this.balls[i] = new Ball(this, 100 + 20 * i, 200, i);
         }
-        
-        this.cue = new Cue(this.balls[0]);
+
+        this.cue = new Cue(this, this.balls[0]);
         this.ballContext = getContext("ball-canvas");
     }
 
@@ -30,4 +30,10 @@ class Game {
         }
         window.requestAnimationFrame(() => this.drawBalls());
     }
+
+    areAnyBallsMoving() {
+        console.log("areAnyBallsMoving");
+        return this.balls.some(b => b.isMoving);
+    }
+
 }

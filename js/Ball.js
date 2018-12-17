@@ -49,8 +49,8 @@ class Ball {
     }
 
     moveStep() {
-//        console.log("moveStep", this.color);
-//        console.log("BallpositionX " + this.x + " BallpositionY " + this.y);
+        console.log("moveStep", this.color);
+        console.log("BallpositionX " + this.x + " BallpositionY " + this.y);
         this.v.scale(0.99);
 
         if (this.shouldStopMoving()) {

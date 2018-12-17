@@ -49,8 +49,8 @@ class Ball {
     }
 
     moveStep() {
-        console.log("moveStep", this.color);
-        console.log("BallpositionX " + this.x + " BallpositionY " + this.y);
+//        console.log("moveStep", this.color);
+//        console.log("BallpositionX " + this.x + " BallpositionY " + this.y);
         this.v.scale(0.99);
 
         if (this.shouldStopMoving()) {
@@ -67,7 +67,16 @@ class Ball {
          // hole collision:
          let isInHole = this.checkHoleCollision();
          if(isInHole) {
-        	 this.remove();
+        	 if(this.color === "white") {
+        		 this.x = 320;
+        		 this.y = 300;
+        		 this.foulCounter++;
+        		 this.v = new Vector(0, 0);
+                 this.isMoving = false;
+        	 } else {
+        		 this.remove(); 
+        	 }
+        	 
          }
 
 // let isNearToHole = this.checkNearToHole();
@@ -102,11 +111,11 @@ class Ball {
 
 
         }
-
-    	this.x += this.v.x;
-    	this.y += this.v.y;
-    	this.drawVelocityDirectionAndMagnitude();
+        this.x += this.v.x;
+        this.y += this.v.y;
+        this.drawVelocityDirectionAndMagnitude();
         window.requestAnimationFrame(() => this.moveStep());
+
     }
 
     shouldStopMoving() {
@@ -119,21 +128,15 @@ class Ball {
     }
 
     handleCushionCollision() {
-		try{
     	if (this.x + this.v.x - Ball.RADIUS <= Table.X_LEFT || this.x + this.v.x + Ball.RADIUS >= Table.X_RIGHT) {
             this.v.x *= -1;
         }
         if (this.y + this.v.y - Ball.RADIUS <= Table.Y_TOP || this.y + this.v.y + Ball.RADIUS >= Table.Y_BOTTOM) {
             this.v.y *= -1;
         }
-		}
-		catch(e){
-			console.log("Yannick hat es wieder kaputt gemacht!");
-		}
     }
 
-    handleBallCollision(ball) {
-		try{
+    handleBallCollision(ball) {    	
     	const dx = this.x + this.v.x - ball.x;
         const dy = this.y + this.v.y - ball.y;
         const ballMidPointsDistance = Math.sqrt(dx * dx + dy * dy);
@@ -166,54 +169,38 @@ class Ball {
 
             ball.moveStep();
         }
-		}
-		catch(e){
-			console.log("Yannick hat es wieder kaputt gemacht!");
-		}
     }
 
     bump(theta, power) {
-		try{
         this.isMoving = true;
 		this.v = new Vector(-Math.cos(theta), -Math.sin(theta));
 		this.v.scale(power);
-    	this.moveStep();
-		}
-		catch(e){
-			console.log("Yannick hat es wieder kaputt gemacht!");
+		try{
+			this.moveStep();
+		} catch(err) {
+			console.log("Ein Fehler in 'moveStep() in 'Ball.js' ist aufgetreten. " + err);
 		}
 	}
 
 
     drawVelocityDirectionAndMagnitude() {
-		try{
         this.context.strokeStyle = "#4169E1";
         this.context.beginPath();
         this.context.moveTo(this.x, this.y);
         this.context.lineTo(this.x + 50 * this.v.x, this.y + 50 * this.v.y);
         this.context.stroke();
-		}
-		catch(e){
-			console.log("Yannick hat es wieder kaputt gemacht!");
-		}
 	}
 
     checkNearToHole() {
-    	try{
     	for (const hole of this.holes) {
     		if(Math.sqrt((this.x - hole.x)**2 + (this.y - hole.y)**2) <= Math.SQRT2*Table.HOLE_RADIUS) {
     			return true;
     		}
 		}
     	return false;
-		}
-		catch(e){
-			console.log("Yannick hat es wieder kaputt gemacht!");
-		}
 	}
 
     checkHoleCollision() {
-		try{
     	for (const hole of this.holes) {
     		const distance = Math.sqrt((this.x - hole.x)**2 + (this.y - hole.y)**2);
     		// console.log(hole, distance);
@@ -222,22 +209,13 @@ class Ball {
     		}
 		}
     	return false;
-		}
-		catch(e){
-			console.log("Yannick hat es wieder kaputt gemacht!");
-		}
     }
 
     remove() {
-		try{
     	// Remove the ball if it hits/falls in a hole:
     	// Remove bedeutet, dass der Ball an eine unerreichbare Koordinate gezeichnet wird. Performance soll nicht beruecksichtigt werden.
 		this.x = 2000;
 		this.y = 2000;
-		}
-		catch(e){
-			console.log("Yannick hat es wieder kaputt gemacht!");
-		}
 	}
 }
 Ball.RADIUS = scaleRealCentimetersToPixel(6.15) / 2;

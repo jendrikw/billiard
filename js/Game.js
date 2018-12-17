@@ -14,13 +14,8 @@ class Game {
     }
 
     start() {
-		try{
         this.table.draw();
         this.drawBalls();
-		}
-		catch(e){
-			console.log("Yannick hat es wieder kaputt gemacht!");
-		}
     }
 
     drawBalls() {

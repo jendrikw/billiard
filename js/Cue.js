@@ -13,6 +13,7 @@ class Cue {
         this.mouseClientX = null; // relative to the page
         this.mouseClientY = null;
         this.theta = null;
+        this.bumpCounter = 0;
         this.context.canvas.addEventListener("mousemove", e => this.onCanvasMouseMove(e));
         this.context.canvas.addEventListener("mousedown", () => this.onCanvasMouseDown());
         this.context.canvas.addEventListener("mouseup", () => this.onCanvasMouseUp());
@@ -83,6 +84,8 @@ class Cue {
             this.mouseDown = false;
             // remove cue (can't touch the ball if it's moving)
             this.clear();
+            // increment bumpCounter for the score:
+            this.bumpCounter++;
             // move ball
             this.whiteBall.bump(this.theta, this.power);
             this.power = null;

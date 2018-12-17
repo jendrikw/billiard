@@ -2,12 +2,17 @@
 
 function toggleMusic() {
     const music = document.getElementById('music');
-    if (music.paused) {
-        music.play();
-    } else {
-        music.pause();
-        music.currentTime = 0;
+    try {
+    	if (music.paused) {
+            music.play();
+        } else {
+            music.pause();
+            music.currentTime = 0;
+        }
+    } catch(err) {
+    	console.log("Es gab ein Problem mit der Musik. " + err);
     }
+    
 }
 
 function toggleText(button) {

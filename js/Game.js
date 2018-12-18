@@ -29,5 +29,14 @@ class Game {
     areAnyBallsMoving() {
         return this.balls.some(b => b.isMoving);
     }
+    
+    startANewGame() {
+    	let game = new Game();
+    	game.start();
+    }
+    
+    handleGameWon() {
+    	this.startANewGame();
+    }
 
 }

@@ -74,6 +74,8 @@ class Ball {
                  this.isMoving = false;
         	 } else {
         		 this.remove();
+        		 console.log("Es muss handleGameWon() aufgerufen werden.");
+        		 this.game.handleGameWon();
         	 }
 
          }

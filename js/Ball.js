@@ -158,7 +158,7 @@ class Ball {
             this.v.scale(0.05);
 
             console.log("[after collision]", "angle", angle * 360 / (2 * Math.PI), "verteilung", distributionV, "this.v", this.v, "ball.v", ball.v);
-
+            
             ball.moveStep();
         }
     }

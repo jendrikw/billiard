@@ -49,8 +49,7 @@ class Ball {
     }
 
     moveStep() {
-        console.log("moveStep", this.color);
-        console.log("BallpositionX " + this.x + " BallpositionY " + this.y);
+        console.log("moveStep", this.color, "x ", this.x, "y", this.y);
         this.v.scale(0.99);
 
         if (this.shouldStopMoving()) {
@@ -74,9 +73,9 @@ class Ball {
         		 this.v = new Vector(0, 0);
                  this.isMoving = false;
         	 } else {
-        		 this.remove(); 
+        		 this.remove();
         	 }
-        	 
+
          }
 
 // let isNearToHole = this.checkNearToHole();
@@ -136,32 +135,30 @@ class Ball {
         }
     }
 
-    handleBallCollision(ball) {    	
-    	const dx = this.x + this.v.x - ball.x;
-        const dy = this.y + this.v.y - ball.y;
+    handleBallCollision(ball) {
+    	const dx = ball.x - (this.x + this.v.x);
+        const dy = ball.y - (this.y + this.v.y);
         const ballMidPointsDistance = Math.sqrt(dx * dx + dy * dy);
         if (ballMidPointsDistance <= 2 * Ball.RADIUS) {
-            // console.log(this.v, dy, dx);
-            // TODO Velocity
-            // Velocity distribution:
+            console.log("[before collision]", "this.v", this.v, "ball.v", ball.v);
+
+            // Vector Direction firstball
+            this.v = new Vector(dy, -dx);
+
+            // Vector Direction other ball
+            ball.v = new Vector(dx, dy);
 
             // Winkel berechnen zwischen colloisionVetor und this.v:
             let angle = Math.atan(dx/dy);
-            let distributionV = angle/90;
 
-			let thisVtemp = this.v;
-			ball.v.setLength(thisVtemp.scale(distributionV));
-            this.v.scale(1 - distributionV);
+            // Velocity distribution:
+            let distributionV = angle / (Math.PI / 2);
 
-            console.log("Verteilung: " + distributionV + " Geschwindigkeit [Ausgang][Ziel]: " + this.v.x + " " + this.v.y + " " + ball.v);
-            
-            // Vector Direction firstball
-            this.v = new Vector(dy, -dx);
-            //this.v.setLength(3); // todo length
+            ball.v.scale(0.05);
+            this.v.scale(0.05);
 
-            // Vector Direction other ball
-            ball.v = new Vector(-dx, -dy);
-            
+            console.log("[after collision]", "angle", angle * 360 / (2 * Math.PI), "verteilung", distributionV, "this.v", this.v, "ball.v", ball.v);
+
             ball.moveStep();
         }
     }

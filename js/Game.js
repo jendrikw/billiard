@@ -4,8 +4,8 @@ class Game {
     constructor() {
         this.table = new Table();
         this.balls = [];
-        this.balls[0] = new Ball(this, 320, 300);
-        for (let i = 1; i <= 15; i++) {
+        this.balls[0] = new Ball(this, 150, 250);
+        for (let i = 1; i <= 1; i++) {
             this.balls[i] = new Ball(this, 100 + 20 * i, 200, i);
         }
 
@@ -27,7 +27,6 @@ class Game {
     }
 
     areAnyBallsMoving() {
-        console.log("areAnyBallsMoving");
         return this.balls.some(b => b.isMoving);
     }
 

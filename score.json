@@ -1,8 +1,8 @@
 {
-"scores" [
+"scores" :[
 	{
 		"name": "LauliLauch",
-		"score": 100,
+		"score": 100
 	},
 	{
 		"name": "DerWitzbold",
@@ -21,7 +21,7 @@
 		"score": 2000
 	},
 	{
-		"name": "IamAwsom",
+		"name": "IamAwesome",
 		"score": 3500
 	},
 	{

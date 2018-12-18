@@ -142,31 +142,26 @@ class Ball {
         const ballMidPointsDistance = Math.sqrt(dx * dx + dy * dy);
         if (ballMidPointsDistance <= 2 * Ball.RADIUS) {
             // console.log(this.v, dy, dx);
+            // TODO Velocity
+            // Velocity distribution:
 
-			
-            //TODO FIX THIS SHIT!!!
+            // Winkel berechnen zwischen colloisionVetor und this.v:
+            let angle = Math.atan(dx/dy);
+            let distributionV = angle/90;
 
+			let thisVtemp = this.v;
+			ball.v.setLength(thisVtemp.scale(distributionV));
+            this.v.scale(1 - distributionV);
+
+            console.log("Verteilung: " + distributionV + " Geschwindigkeit [Ausgang][Ziel]: " + this.v.x + " " + this.v.y + " " + ball.v);
+            
             // Vector Direction firstball
             this.v = new Vector(dy, -dx);
             //this.v.setLength(3); // todo length
 
             // Vector Direction other ball
             ball.v = new Vector(-dx, -dy);
-
-
-            // Velocity distribution:
-
-            // Winkel berechnen zwischen colloisionVetor und this.v:
-            let angle = Math.atan( dx /dy);
-            let distributionV = angle/90;
-
-
-			let thisVtemp = this.v;
-			ball.v.setLength(thisVtemp.scale(1 - distributionV));
-            this.v.scale(distributionV);
-
-            console.log("Verteilung: " + distributionV + " Geschwindigkeit [Ausgang][Ziel]: " + this.v + " " + ball.v);
-
+            
             ball.moveStep();
         }
     }

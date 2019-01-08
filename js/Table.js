@@ -22,7 +22,10 @@ class Table {
     }
 
     draw() {
-
+    	this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height);
+    	this.context.font = "30px Arial";
+		this.context.fillStyle = "#ffb649";
+    	this.context.fillText("Anzahl Fouls: " + Ball.Fouls, 10, 50);
         const holeOffset = 0.1 * Table.HOLE_RADIUS / Math.sqrt(2);
 
         // top

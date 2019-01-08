@@ -71,10 +71,12 @@ class Ball {
         	 if(this.color === "white") {
         		 this.x = 320;
         		 this.y = 300;
-        		 this.foulCounter++;
+        		 Ball.Fouls++;
+        		 this.game.handleFoul();
         		 this.v = new Vector(0, 0);
-                 this.isMoving = false;
+                 this.isMoving = false;                 
         	 } else {
+        		 
         		 this.remove();
         		 this.game.handleGameWon();
         	 }
@@ -220,3 +222,4 @@ class Ball {
     }
 }
 Ball.RADIUS = scaleRealCentimetersToPixel(6.15) / 2;
+Ball.Fouls = 0;

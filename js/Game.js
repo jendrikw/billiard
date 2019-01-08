@@ -46,10 +46,12 @@ class Game {
     
     handleGameWon() {
     	this.ballsInHole++;
-    	
     	if(this.ballsInHole == this.numberOfBalls) {
     		this.startANewGame();
     	}
     }
-
+    
+    handleFoul() {
+    	this.table.draw();
+    }
 }

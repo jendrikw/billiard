@@ -209,9 +209,9 @@ class Ball {
     remove() {
     	// Remove the ball if it hits/falls in a hole:
     	// Remove bedeutet, dass der Ball an eine unerreichbare Koordinate gezeichnet wird. Performance soll nicht beruecksichtigt werden.
-		this.isInHole = true;
-    	this.x = 2000;
-		this.y = 2000;
+    	let xDistance = this.game.ballsInHole;
+    	this.x = 160 + xDistance * 20;
+		this.y = 440;
 		this.v = new Vector(0,0); 
 	}
     

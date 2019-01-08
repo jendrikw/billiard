@@ -2,18 +2,22 @@
 
 class Game {
     constructor() {
-        this.table = new Table();
-        this.balls = [];
-        this.balls[0] = new Ball(this, 150, 250);
-        for (let i = 1; i <= 1; i++) {
-            this.balls[i] = new Ball(this, 100 + 20 * i, 200, i);
-        }
-
-        this.cue = new Cue(this, this.balls[0]);
-        this.ballContext = getContext("ball-canvas");
+    	this.ballContext = getContext("ball-canvas");
     }
 
     start() {
+    	this.numberOfBalls = 2;
+    	this.ballsInHole = 0;
+        this.table = new Table();
+        this.balls = [];
+        this.balls[0] = new Ball(this, 320, 250);
+        for (let i = 1; i <= this.numberOfBalls; i++) {
+            this.balls[i] = new Ball(this, 100 + 220 * i, 200, i);
+            //this.balls[2] = new Ball(this, 100 + 220 * 1, 370, 2);
+        }
+
+        this.cue = new Cue(this, this.balls[0]);
+    	
         this.table.draw();
         this.drawBalls();
     }
@@ -31,12 +35,19 @@ class Game {
     }
     
     startANewGame() {
-    	let game = new Game();
-    	game.start();
+    	for (let ball of this.balls) {
+    		// requestAnimationFrame für die Bälle vom alten Spiel verhindern:
+    		ball.kill();
+    	}
+    	this.start();
     }
     
     handleGameWon() {
-    	this.startANewGame();
+    	this.ballsInHole++;
+    	
+    	if(this.ballsInHole == this.numberOfBalls) {
+    		this.startANewGame();
+    	}
     }
 
 }

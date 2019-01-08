@@ -17,6 +17,8 @@ class Ball {
         this.isMoving = false;
         this.holes = Table.HOLES;
         this.balls = this.game.balls;
+        this.isInHole = false;
+        this.isBeingKilled = false;
         // console.log(Table.HOLE_RADIUS);
     }
 
@@ -52,7 +54,7 @@ class Ball {
         console.log("moveStep", this.color, "x ", this.x, "y", this.y);
         this.v.scale(0.99);
 
-        if (this.shouldStopMoving()) {
+        if (this.isBeingKilled || this.shouldStopMoving()) {
             return;
         }
         this.handleCushionCollision();
@@ -74,7 +76,6 @@ class Ball {
                  this.isMoving = false;
         	 } else {
         		 this.remove();
-        		 console.log("Es muss handleGameWon() aufgerufen werden.");
         		 this.game.handleGameWon();
         	 }
 
@@ -156,8 +157,8 @@ class Ball {
             // Velocity distribution:
             let distributionV = angle / (Math.PI / 2);
 
-            ball.v.scale(0.05);
-            this.v.scale(0.05);
+            ball.v.scale(0.5);
+            this.v.scale(0.5);
 
             console.log("[after collision]", "angle", angle * 360 / (2 * Math.PI), "verteilung", distributionV, "this.v", this.v, "ball.v", ball.v);
             
@@ -208,8 +209,14 @@ class Ball {
     remove() {
     	// Remove the ball if it hits/falls in a hole:
     	// Remove bedeutet, dass der Ball an eine unerreichbare Koordinate gezeichnet wird. Performance soll nicht beruecksichtigt werden.
-		this.x = 2000;
+		this.isInHole = true;
+    	this.x = 2000;
 		this.y = 2000;
+		this.v = new Vector(0,0); 
 	}
+    
+    kill() {
+    	this.isBeingKilled = true;
+    }
 }
 Ball.RADIUS = scaleRealCentimetersToPixel(6.15) / 2;

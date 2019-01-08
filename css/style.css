@@ -9,7 +9,8 @@ body {
 }
 
 canvas {
-  position: absolute; }
+  position: absolute;
+}
 
 #canvas-container {
   height: 480px;
@@ -91,6 +92,13 @@ footer {
 
 .mute {
   background-image: url("../img/unmute.png");
+}
+
+#nono_sucking_gif {
+  display: none;
+  position: absolute;
+  left: 0;
+  height: 200px;
 }
 
 #text {

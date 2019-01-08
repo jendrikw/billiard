@@ -7,7 +7,6 @@ function onload() {
 	} catch(err) {
 		console.log("Es gab einen Fehler beim Cue. " + err);
 	}
-    
 
     let game = new Game();
     game.start();

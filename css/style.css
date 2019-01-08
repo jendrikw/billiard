@@ -27,16 +27,25 @@ canvas {
   margin: -33px auto 0 auto;
 }
 
-.unmute {
-  background-image: url("../img/mute.png");
-}
-
-.mute {
-  background-image: url("../img/unmute.png");
-}
-
 #cue-img {
   display: none; }
+
+footer {
+  margin-top:0.75%;
+}
+
+.footer-cont {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  height: 5%;
+  background-color: green;
+}
+
+#footer-links *{
+  color: #ffb649;
+  margin-left:0.7%;
+}
 
 .hidden {
   display: none; }
@@ -51,65 +60,61 @@ canvas {
   margin: 0;
 }
 
+.header-cont span{
+  color:#00117D;
+}
+
 #main-nav {
   /*background-color: green;*/
   padding: 6px;
   /*width: calc(640px + 2 * 1px - 2 * 6px);*/
   /* width of canvas + border of canvas - padding*/
   margin: auto; }
-  #main-nav ul {
+
+#main-nav ul {
     font-size: 0;
     margin: 0;
     padding: 0 20px; }
-    #main-nav ul li {
+
+#main-nav ul li {
       border: solid 1px black;
       box-sizing: border-box;
       display: inline-block;
       font-size: 1rem;
       margin: 0 2px;
       text-align: center;
-      width: calc(25% - 4px); }
-      #main-nav ul li a {
-        color: #ffb649; }
+      width: calc(20% - 4px); }
+
+#main-nav ul li a {
+        color: #ffb649;
+}
+
+.mute {
+  background-image: url("../img/unmute.png");
+}
+
+#text {
+  padding: 10px;
+  margin: 20px auto 0px auto;
+  background: rgba(0, 97, 27, 0.6);
+  width: 58%;
+}
+
+#text ul {
+  text-align: center;
+}
+
+.unmute {
+  background-image: url("../img/mute.png");
+}
 
 ul {
   list-style: none; }
- 
-#tutorial {
-  padding: 10px;
-  margin: 20px auto 0px auto;
-  background: rgba(0, 97, 27, 0.6);
-  width: 58%;
-}
-
-#welcom {
-  padding: 10px;
-  margin: 20px auto 0px auto;
-  background: rgba(0, 97, 27, 0.6);
-  width: 58%;
-}
 
 .site-cont h1 {
   text-align: center;
   margin: 0;
 }
 
-.footer-cont {
-	 position: absolute; 
-	 bottom: 0px;
-	 width: 100%;
-	 background-color: #ffb649;
-}
 
-.footer-cont p{
-	font-size: 10px;
-	color: #4169E1; /* Farbe->Königsblau */
-}
-.footer-cont span{
-	color: #000000;
-}
-
-.header-cont span{
-	color:#00117D;
-}
 /*# sourceMappingURL=style.css.map */

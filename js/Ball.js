@@ -19,6 +19,7 @@ class Ball {
         this.balls = this.game.balls;
         this.isInHole = false;
         this.isBeingKilled = false;
+        this.fouls = 0;
         // console.log(Table.HOLE_RADIUS);
     }
 
@@ -71,8 +72,8 @@ class Ball {
         	 if(this.color === "white") {
         		 this.x = 320;
         		 this.y = 300;
-        		 Ball.Fouls++;
-        		 this.game.handleFoul();
+        		 this.game.incrementFouls();
+        		 this.game.redrawTable();
         		 this.v = new Vector(0, 0);
                  this.isMoving = false;                 
         	 } else {
@@ -177,6 +178,7 @@ class Ball {
 		} catch(err) {
 			console.log("Ein Fehler in 'moveStep() in 'Ball.js' ist aufgetreten. " + err);
 		}
+		 this.game.redrawTable();
 	}
 
 
@@ -222,4 +224,3 @@ class Ball {
     }
 }
 Ball.RADIUS = scaleRealCentimetersToPixel(6.15) / 2;
-Ball.Fouls = 0;

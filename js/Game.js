@@ -8,7 +8,7 @@ class Game {
     start() {
         this.numberOfBalls = 3;
         this.ballsInHole = 0;
-        this.table = new Table();
+        this.table = new Table(this);
         this.balls = [];
         this.balls[0] = new Ball(this, 320, 250);
         //for (let i = 1; i <= this.numberOfBalls; i++) {
@@ -24,6 +24,8 @@ class Game {
 
         this.nonoSuckingGif = document.getElementById("nono_sucking_gif");
 
+        this.fouls = 0;
+        this.bumps = 0;
         this.table.draw();
         this.drawBalls();
     }
@@ -39,7 +41,14 @@ class Game {
     areAnyBallsMoving() {
         return this.balls.some(b => b.isMoving);
     }
-
+    
+    incrementFouls() {
+    	this.fouls++;
+    }
+    incrementBumps() {
+    	this.bumps++;
+    }
+    
     startANewGame() {
         for (let ball of this.balls) {
             // requestAnimationFrame für die Bälle vom alten Spiel verhindern:
@@ -60,9 +69,10 @@ class Game {
         if (this.ballsInHole == this.numberOfBalls) {
             this.startANewGame();
         }
+        this.redrawTable();
     }
 
-    handleFoul() {
+    redrawTable() {
         this.table.draw();
     }
 }

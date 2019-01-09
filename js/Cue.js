@@ -85,7 +85,7 @@ class Cue {
             // remove cue (can't touch the ball if it's moving)
             this.clear();
             // increment bumpCounter for the score:
-            this.bumpCounter++;
+            this.game.incrementBumps();
             // move ball
             this.whiteBall.bump(this.theta, this.power);
             this.power = null;

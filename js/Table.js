@@ -26,10 +26,9 @@ class Table {
     	this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height);
     	this.context.font = "22px serif";
 		this.context.fillStyle = "#ffb649";
-    	this.context.fillText("Anzahl Fouls: " + this.game.fouls, 25, 50);
-    	this.context.fillText("Anzahl", this.context.canvas.width/2 - 29, 20);
-    	this.context.fillText("eingelochter Bälle: " + this.game.ballsInHole, this.context.canvas.width / 2 - 90, 50);
-    	this.context.fillText("Anzahl Schläge: " + this.game.bumps, 450, 50);
+    	this.context.fillText("Fouls: " + this.game.fouls, 30, 50);
+    	this.context.fillText("Eingelochte Bälle: " + this.game.ballsInHole, this.context.canvas.width / 2 - 90, 50);
+    	this.context.fillText("Schläge: " + this.game.bumps, 520, 50);
     	
     	
         const holeOffset = 0.1 * Table.HOLE_RADIUS / Math.sqrt(2);

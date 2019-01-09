@@ -8,7 +8,8 @@ fetch('score.json')
  function asynchronJson(json){
 	console.log(json);
 	let table = document.getElementById("TableScores");
-	for (i = 0 ; i<json.size();i++){
+	 let i;
+	 for (i = 0 ; i<json.size();i++){
 		createTableRow(table,i);
 	}
  }

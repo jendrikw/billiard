@@ -76,11 +76,11 @@ class Game {
     }
     
     calculateScore() {
-    	this.score = this.ballsInHole * 200 - (this.bumps*50 + this.fouls*200);
-    	console.log("Score: " + this.score + " " + this.bumps + " " + this.fouls);
+    	this.score = this.ballsInHole * 200 - (this.bumps*25 + this.fouls*75); // Negative score is allowed.
     }
 
     redrawTable() {
+    	this.calculateScore();
         this.table.draw();
     }
 }

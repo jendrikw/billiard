@@ -29,6 +29,7 @@ class Table {
     	this.context.fillText("Fouls: " + this.game.fouls, 40, 50);
     	this.context.fillText("Eingelochte Bälle: " + this.game.ballsInHole, this.context.canvas.width / 2 - 100, 50);
     	this.context.fillText("Schläge: " + this.game.bumps, 500, 50);
+    	this.context.fillText("Score: " + this.game.score, this.context.canvas.width/2 - 55, 20);
     	
     	
         const holeOffset = 0.1 * Table.HOLE_RADIUS / Math.sqrt(2);

@@ -65,6 +65,7 @@ class Ball {
 
     moveStep() {
         // console.log("moveStep", this.color, "x ", this.x, "y", this.y);
+
         this.v.scale(0.99);
 
         if (this.isBeingKilled || this.shouldStopMoving()) {

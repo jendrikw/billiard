@@ -43,12 +43,23 @@ class Ball {
         }[number];
     }
 
+    hasWhiteDot() {
+        return 9 <= this.number && this.number <= 15;
+    }
+
     draw() {
         this.context.beginPath();
         this.context.fillStyle = this.color;
         this.context.arc(this.x, this.y, Ball.RADIUS, 0, 2 * Math.PI);
         this.context.fill();
         this.context.closePath();
+        if (this.hasWhiteDot()) {
+            this.context.beginPath();
+            this.context.fillStyle = "white";
+            this.context.arc(this.x, this.y, Ball.RADIUS * 0.4, 0, 2 * Math.PI);
+            this.context.fill();
+            this.context.closePath();
+        }
     }
 
     moveStep() {
@@ -75,9 +86,9 @@ class Ball {
         		 this.game.incrementFouls();
         		 this.game.redrawTable();
         		 this.v = new Vector(0, 0);
-                 this.isMoving = false;                 
+                 this.isMoving = false;
         	 } else {
-        		 
+
         		 this.remove();
         		 this.game.handleGameWon();
         	 }
@@ -164,7 +175,7 @@ class Ball {
             this.v.scale(0.5);
 
             console.log("[after collision]", "angle", angle * 360 / (2 * Math.PI), "verteilung", distributionV, "this.v", this.v, "ball.v", ball.v);
-            
+
             ball.moveStep();
         }
     }
@@ -216,9 +227,9 @@ class Ball {
     	let xDistance = this.game.ballsInHole;
     	this.x = 160 + xDistance * 20;
 		this.y = 440;
-		this.v = new Vector(0,0); 
+		this.v = new Vector(0,0);
 	}
-    
+
     kill() {
     	this.isBeingKilled = true;
     }

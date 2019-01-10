@@ -78,7 +78,16 @@ class Game {
     calculateScore() {
     	this.score = this.ballsInHole * 200 - (this.bumps*25 + this.fouls*75); // Negative score is allowed.
     }
-
+    
+    notifyBallStopped() {
+    	if(!this.areAnyBallsMoving() && this.balls[0].isFoul) {
+    		this.balls[0].x = 300;
+    		this.balls[0].y = 300;
+    		this.balls[0].draw();
+    		this.balls[0].isFoul = false;
+    	}
+    }
+    
     redrawTable() {
     	this.calculateScore();
         this.table.draw();

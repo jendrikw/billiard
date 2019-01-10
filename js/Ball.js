@@ -19,7 +19,7 @@ class Ball {
         this.balls = this.game.balls;
         this.isInHole = false;
         this.isBeingKilled = false;
-        this.fouls = 0;
+        this.isFoul = false;
         this.clickAudio = document.getElementById("click_audio");
         // console.log(Table.HOLE_RADIUS);
     }
@@ -67,10 +67,13 @@ class Ball {
         // console.log("moveStep", this.color, "x ", this.x, "y", this.y);
 
         this.v.scale(0.99);
-
+        
+        
         if (this.isBeingKilled || this.shouldStopMoving()) {
+        	this.game.notifyBallStopped();
             return;
         }
+        
         this.handleCushionCollision();
 
         for (const ball of this.game.balls) {
@@ -78,66 +81,35 @@ class Ball {
                 continue;
             }
             this.handleBallCollision(ball);
-
-            // hole collision:
-            let isInHole = this.checkHoleCollision();
-            if(isInHole) {
-                if(this.color === "white") {
-                    this.x = 320;
-                    this.y = 300;
-                    this.game.incrementFouls();
-                    this.game.redrawTable();
-                    this.v = new Vector(0, 0);
-                    this.isMoving = false;
-                } else {
-                    this.remove();
-                    this.game.handleGameWon();
-                }
-            }
-
-// let isNearToHole = this.checkNearToHole();
-//
-// if(!isNearToHole) {
-// if (this.x + this.v.x - Ball.RADIUS <= Table.X_LEFT || this.x + this.v.x +
-// Ball.RADIUS >= Table.X_RIGHT) {
-// this.v.x *= -1;
-// }
-// if (this.y + this.v.y - Ball.RADIUS <= Table.Y_TOP || this.y + this.v.y +
-// Ball.RADIUS >= Table.Y_BOTTOM) {
-// this.v.y *= -1;
-// }
-// }
-//
-// this.x += this.v.x;
-// this.y += this.v.y;
-// this.game.drawBalls();
-//
-// // hole collision:
-// let isInHole = this.checkHoleCollision();
-// if(isInHole) {
-// alert("Juhuuuu! Geschafft!");
-// }
-//
-// if (Math.abs(this.v.x) > 0.1 || Math.abs(this.v.y) > 0.1) {
-// window.requestAnimationFrame(() => this.moveStep());
-// } else {
-// this.isMoving = false;
-// if (this.onStopMoving != null) {
-// this.onStopMoving();
-
-
         }
+        
+     // hole collision:
+        let isInHole = this.checkHoleCollision();
+        if(isInHole) {
+            if(this.color === "white") {
+                this.game.incrementFouls();
+                this.game.redrawTable();
+                this.isFoul = true;
+                this.x = 2000;
+                this.y = 2000;
+                this.v = new Vector(0, 0);
+                this.isMoving = false;
+            } else {
+                this.remove();
+                this.game.handleGameWon();
+            }
+        }
+        
         this.x += this.v.x;
         this.y += this.v.y;
         this.drawVelocityDirectionAndMagnitude();
         window.requestAnimationFrame(() => this.moveStep());
-
     }
-
+    
     shouldStopMoving() {
     	if (Math.abs(this.v.x) < 0.1 && Math.abs(this.v.y) < 0.1) {
     	    this.v = new Vector(0, 0);
-            this.isMoving = false;
+            this.isMoving = false;            
             return true;
         }
         return false;

@@ -20,6 +20,7 @@ class Ball {
         this.isInHole = false;
         this.isBeingKilled = false;
         this.fouls = 0;
+        this.clickAudio = document.getElementById("click_audio");
         // console.log(Table.HOLE_RADIUS);
     }
 
@@ -158,6 +159,8 @@ class Ball {
         const ballMidPointsDistance = Math.sqrt(dx * dx + dy * dy);
         if (ballMidPointsDistance <= 2 * Ball.RADIUS) {
             console.log("[before collision]", "this.v", this.v, "ball.v", ball.v);
+            this.clickAudio.currentTime = 0;
+            this.clickAudio.play();
 
             // Vector Direction firstball
             this.v = new Vector(dy, -dx);

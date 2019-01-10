@@ -104,6 +104,7 @@ class Game {
 
     end() {
         this.calculateScore();
+        this.redrawTable();
         this.cue.kill();
         this.afterGameOptions.style.display = "block";
     }

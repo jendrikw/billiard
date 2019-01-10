@@ -112,6 +112,10 @@ footer {
   text-align: center;
 }
 
+#text > ul > li {
+  margin:1% 0;
+}
+
 .unmute {
   background-image: url("../img/mute.png");
 }

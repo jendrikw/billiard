@@ -12,15 +12,7 @@ function toggleMusic() {
     } catch(err) {
     	console.log("Es gab ein Problem mit der Musik. " + err);
     }
-    
-}
 
-function toggleText(button) {
-	if (button.innerText === "Musik aus") {
-		button.innerText = "Musik an";
-	} else {
-		button.innerText = "Musik aus";
-	}
 }
 
 function toggleClass() {

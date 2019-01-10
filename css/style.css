@@ -1,6 +1,32 @@
 a {
   text-decoration: none; }
 
+#after-game-block {
+  display: none;
+  position: absolute;
+  top: 300px;
+  width: 640px;
+}
+
+#after-game-header {
+  font-size: 2em;
+  width: 100%;
+  text-align: center;
+  display: inline-block;
+}
+
+#after-game-content > * {
+  display: inline-block;
+  width: 50%;
+  text-align: center;
+  cursor: pointer;
+}
+
+#after-game-content span {
+  border: 1px solid #ffb649;
+  padding: 0 6px;
+}
+
 body {
   color: #ffb649;
   background-image: url("../img/billiard-bg3.jpg");

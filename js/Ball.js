@@ -67,13 +67,12 @@ class Ball {
         // console.log("moveStep", this.color, "x ", this.x, "y", this.y);
 
         this.v.scale(0.99);
-        
-        
+
         if (this.isBeingKilled || this.shouldStopMoving()) {
         	this.game.notifyBallStopped();
             return;
         }
-        
+
         this.handleCushionCollision();
 
         for (const ball of this.game.balls) {
@@ -82,8 +81,8 @@ class Ball {
             }
             this.handleBallCollision(ball);
         }
-        
-     // hole collision:
+
+        // hole collision:
         let isInHole = this.checkHoleCollision();
         if(isInHole) {
             if(this.color === "white") {
@@ -94,22 +93,26 @@ class Ball {
                 this.y = 2000;
                 this.v = new Vector(0, 0);
                 this.isMoving = false;
+            } else if (this.color === "black") {
+                this.remove();
+                this.game.handleGameWon();
+                this.game.end();
             } else {
                 this.remove();
                 this.game.handleGameWon();
             }
         }
-        
+
         this.x += this.v.x;
         this.y += this.v.y;
         this.drawVelocityDirectionAndMagnitude();
         window.requestAnimationFrame(() => this.moveStep());
     }
-    
+
     shouldStopMoving() {
     	if (Math.abs(this.v.x) < 0.1 && Math.abs(this.v.y) < 0.1) {
     	    this.v = new Vector(0, 0);
-            this.isMoving = false;            
+            this.isMoving = false;
             return true;
         }
         return false;

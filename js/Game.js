@@ -24,6 +24,15 @@ class Game {
 
         this.nonoSuckingGif = document.getElementById("nono_sucking_gif");
 
+        this.afterGameOptions = document.getElementById("after-game-block");
+        this.afterGameOptions.style.display = "none";
+
+        this.newGameButton = document.getElementById("new-game");
+        this.newGameButton.addEventListener("click", () => this.startANewGame());
+
+        this.scoresButton = document.getElementById("scores");
+        this.scoresButton.addEventListener("click", () => Game.redirectToScores());
+
         this.fouls = 0;
         this.bumps = 0;
         this.score = 0;
@@ -42,15 +51,17 @@ class Game {
     areAnyBallsMoving() {
         return this.balls.some(b => b.isMoving);
     }
-    
+
     incrementFouls() {
     	this.fouls++;
     }
+
     incrementBumps() {
     	this.bumps++;
     }
-    
+
     startANewGame() {
+        this.afterGameOptions.style.display = "block";
         for (let ball of this.balls) {
             // requestAnimationFrame für die Bälle vom alten Spiel verhindern:
             ball.kill();
@@ -67,14 +78,12 @@ class Game {
         this.nonoSuckingGif.style.display = "block";
         this.nonoSuckingSound.addEventListener("ended", () => {this.nonoSuckingGif.style.display = "none";});
 
-        if (this.ballsInHole == this.numberOfBalls) {
-        	this.calculateScore();
-        	this.cue.kill();
-            this.startANewGame();
+        if (this.ballsInHole === this.numberOfBalls) {
+            this.end();
         }
         this.redrawTable();
     }
-    
+
     calculateScore() {
     	this.score = this.ballsInHole * 200 - (this.bumps*25 + this.fouls*75); // Negative score is allowed.
     }
@@ -91,5 +100,15 @@ class Game {
     redrawTable() {
     	this.calculateScore();
         this.table.draw();
+    }
+
+    end() {
+        this.calculateScore();
+        this.cue.kill();
+        this.afterGameOptions.style.display = "block";
+    }
+
+    static redirectToScores() {
+        window.location = "./score.html";
     }
 }

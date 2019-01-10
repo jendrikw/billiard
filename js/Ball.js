@@ -64,7 +64,7 @@ class Ball {
     }
 
     moveStep() {
-        console.log("moveStep", this.color, "x ", this.x, "y", this.y);
+        // console.log("moveStep", this.color, "x ", this.x, "y", this.y);
         this.v.scale(0.99);
 
         if (this.isBeingKilled || this.shouldStopMoving()) {
@@ -78,23 +78,21 @@ class Ball {
             }
             this.handleBallCollision(ball);
 
-         // hole collision:
-         let isInHole = this.checkHoleCollision();
-         if(isInHole) {
-        	 if(this.color === "white") {
-        		 this.x = 320;
-        		 this.y = 300;
-        		 this.game.incrementFouls();
-        		 this.game.redrawTable();
-        		 this.v = new Vector(0, 0);
-                 this.isMoving = false;
-        	 } else {
-
-        		 this.remove();
-        		 this.game.handleGameWon();
-        	 }
-
-         }
+            // hole collision:
+            let isInHole = this.checkHoleCollision();
+            if(isInHole) {
+                if(this.color === "white") {
+                    this.x = 320;
+                    this.y = 300;
+                    this.game.incrementFouls();
+                    this.game.redrawTable();
+                    this.v = new Vector(0, 0);
+                    this.isMoving = false;
+                } else {
+                    this.remove();
+                    this.game.handleGameWon();
+                }
+            }
 
 // let isNearToHole = this.checkNearToHole();
 //
@@ -179,6 +177,7 @@ class Ball {
 
             console.log("[after collision]", "angle", angle * 360 / (2 * Math.PI), "verteilung", distributionV, "this.v", this.v, "ball.v", ball.v);
 
+            ball.isMoving = true;
             ball.moveStep();
         }
     }
@@ -235,6 +234,7 @@ class Ball {
 
     kill() {
     	this.isBeingKilled = true;
+    	this.isMoving = false;
     }
 }
 Ball.RADIUS = scaleRealCentimetersToPixel(6.15) / 2;

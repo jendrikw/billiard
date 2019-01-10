@@ -23,7 +23,7 @@ class Cue {
     onCanvasMouseMove(event) {
         this.mouseClientX = event.clientX;
         this.mouseClientY = event.clientY;
-        if (!this.mouseDown && this.allowedToShoot()) {
+        if (!this.mouseDown && !this.power && this.allowedToShoot()) {
             const mouseCanvasX = event.clientX - this.canvas.offsetLeft;
             const mouseCanvasY = event.clientY - this.canvas.offsetTop;
             // move cue around the ball
@@ -110,7 +110,9 @@ class Cue {
     }
 
     allowedToShoot() {
-        return !this.game.areAnyBallsMoving();
+        const b = !this.game.areAnyBallsMoving();
+        console.log("allowedToShoot", b);
+        return b;
     }
     
     kill() {

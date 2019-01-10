@@ -17,11 +17,9 @@ canvas {
   margin: auto;
   margin-top: 80px;
   width: 640px;
-
 }
 
 #control-music {
-
   background-size: 115%;
   height: 100px;
   width: 100px;
@@ -128,5 +126,36 @@ ul {
   margin: 0;
 }
 
+th, td {
+  border-bottom: 1px solid #ffb649;
+}
 
+tr:hover {background-color: rgba(0, 100, 40);}
+
+th {
+  background-color: rgba(0, 97, 27);
+  color: #ffb649;
+  height: 25px;
+  border: 10px;
+}
+
+#table {
+  padding: 10px;
+  margin: 20px auto 0 auto;
+  background: rgba(0, 97, 27, 0.6);
+  width: 58%;
+  text-align: left;
+}
+
+.center
+{ 
+text-align: center;
+}
+
+.center table
+{ 
+margin-left: auto;
+margin-right: auto;
+text-align: left;
+}
 /*# sourceMappingURL=style.css.map */

@@ -37,7 +37,7 @@ fetch('score.json')
     }
 
     // FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
-    var divContainer = document.getElementById("text");
+    var divContainer = document.getElementById("table");
     divContainer.innerHTML = "";
 	divContainer.appendChild(table);
 

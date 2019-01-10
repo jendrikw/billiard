@@ -14,10 +14,10 @@ class Cue {
         this.mouseClientY = null;
         this.theta = null;
         this.bumpCounter = 0;
-        this.context.canvas.addEventListener("mousemove", e => this.onCanvasMouseMove(e));
-        this.context.canvas.addEventListener("mousedown", () => this.onCanvasMouseDown());
-        this.context.canvas.addEventListener("mouseup", () => this.onCanvasMouseUp());
-        window.addEventListener("mousemove", e => this.onWindowMouseMove(e));
+        this.context.canvas.addEventListener("mousemove", this.internalMouseMove = e => this.onCanvasMouseMove(e));
+        this.context.canvas.addEventListener("mousedown", this.internalMouseDown = () => this.onCanvasMouseDown());
+        this.context.canvas.addEventListener("mouseup", this.internalMouseUp = () => this.onCanvasMouseUp());
+        window.addEventListener("mousemove", this.internalWindowMouseMove = e => this.onWindowMouseMove(e));
     }
 
     onCanvasMouseMove(event) {
@@ -111,6 +111,15 @@ class Cue {
 
     allowedToShoot() {
         return !this.game.areAnyBallsMoving();
+    }
+    
+    kill() {
+    	delete this.game;
+    	delete this.canvas;
+    	this.context.canvas.removeEventListener("mousemove", this.internalMouseMove);
+    	this.context.canvas.removeEventListener("mousedown", this.internalMouseDown);
+    	this.context.canvas.removeEventListener("mouseup", this.internalMouseUp);
+    	this.context.canvas.removeEventListener("mousemove", this.internalWindowMouseMove);
     }
 
 }

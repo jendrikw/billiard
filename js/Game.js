@@ -26,6 +26,7 @@ class Game {
 
         this.fouls = 0;
         this.bumps = 0;
+        this.score = 0;
         this.table.draw();
         this.drawBalls();
     }
@@ -67,9 +68,16 @@ class Game {
         this.nonoSuckingSound.addEventListener("ended", () => {this.nonoSuckingGif.style.display = "none";});
 
         if (this.ballsInHole == this.numberOfBalls) {
+        	this.calculateScore();
+        	this.cue.kill();
             this.startANewGame();
         }
         this.redrawTable();
+    }
+    
+    calculateScore() {
+    	this.score = this.ballsInHole * 200 - (this.bumps*50 + this.fouls*200);
+    	console.log("Score: " + this.score + " " + this.bumps + " " + this.fouls);
     }
 
     redrawTable() {

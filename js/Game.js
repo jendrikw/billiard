@@ -6,17 +6,17 @@ class Game {
     }
 
     start() {
-        this.numberOfBalls = 3;
+        this.numberOfBalls = 15;
         this.ballsInHole = 0;
         this.table = new Table(this);
         this.balls = [];
         this.balls[0] = new Ball(this, 320, 250);
-        //for (let i = 1; i <= this.numberOfBalls; i++) {
-        //this.balls[i] = new Ball(this, 100 + 220 * i, 200, i);
-        this.balls[1] = new Ball(this, 100 + 220 * 1, 200, 1);
-        this.balls[2] = new Ball(this, 100 + 220 * 1, 370, 2);
-        this.balls[3] = new Ball(this, 50, 370, 6);
-        //}
+        for (let i = 1; i <= this.numberOfBalls; i++) {
+        	this.balls[i] = new Ball(this, 100 + 20 * i, 200, i);
+        	//this.balls[1] = new Ball(this, 100 + 220 * 1, 200, 1);
+        	//this.balls[2] = new Ball(this, 100 + 220 * 1, 370, 2);
+        	//this.balls[3] = new Ball(this, 50, 370, 6);
+        }
 
         this.cue = new Cue(this, this.balls[0]);
         this.nonoSuckingSound = document.getElementById("nono_sucking_audio");

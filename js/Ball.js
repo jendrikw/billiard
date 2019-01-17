@@ -136,8 +136,9 @@ class Ball {
             this.clickAudio.currentTime = 0;
             this.clickAudio.play();
 
-            // math is inspired by
+            // math is from
             // http://www.vobarian.com/collisions/2dcollisions2.pdf
+            // https://www.wolframalpha.com/input/?i=elastic+collision
 
             // vector in the direction of the collision
             const deltaVector = new Vector(dx, dy);
@@ -159,8 +160,9 @@ class Ball {
             // the tangent part stays the same
 
             // calculate the new delta direction components
-            const newThisVDelta = (thisVDelta + 2 * ballVDelta) / 2;
-            const newBallVDelta = (ballVDelta + 2 * thisVDelta) / 2;
+            // each ball pushes the other ball by exactly its velocity in the direction of the collision
+            const newThisVDelta = ballVDelta;
+            const newBallVDelta = thisVDelta;
 
             // convert the new delta component to x-y-Vectors
             const thisV1 = tangentNormal.copy();
@@ -175,7 +177,7 @@ class Ball {
             ballV2.scale(newBallVDelta);
             ball.v = ballV1.plus(ballV2);
 
-            // Winkel berechnen zwischen colloisionVetor und this.v:
+            // Winkel berechnen zwischen collisionVector und this.v:
             let angle = Math.atan(dx/dy);
 
             console.log("[after collision]", "this.v.length()", this.v.length(), "ball.v.length()", ball.v.length(), "angle", angle * 360 / (2 * Math.PI), "this.v", this.v, "ball.v", ball.v);

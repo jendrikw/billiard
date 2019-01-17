@@ -10,7 +10,7 @@ class Game {
         this.ballsInHole = 0;
         this.table = new Table(this);
         this.balls = [];
-        this.balls[0] = new Ball(this, 320, 250);
+        this.balls[0] = new Ball(this, 500, 200);
         for (let i = 1; i <= this.numberOfBalls; i++) {
         	this.balls[i] = new Ball(this, 100 + 20 * i, 200, i);
         	//this.balls[1] = new Ball(this, 100 + 220 * 1, 200, 1);

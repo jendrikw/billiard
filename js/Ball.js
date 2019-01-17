@@ -136,21 +136,44 @@ class Ball {
             this.clickAudio.currentTime = 0;
             this.clickAudio.play();
 
-            // if (dx > 0) {
-            //     this.v = new Vector(dy, -dx);
-            // } else {
-            //     // Vector Direction firstball
-            //     this.v = new Vector(-dy, dx);
-            // }
+            // math is inspired by
+            // http://www.vobarian.com/collisions/2dcollisions2.pdf
 
+            // vector in the direction of the collision
             const deltaVector = new Vector(dx, dy);
-
             deltaVector.normalize();
-            this.v.x += -deltaVector.dotProduct(this.v) * deltaVector.x;
-            this.v.y += -deltaVector.dotProduct(this.v) * deltaVector.y;
 
-            ball.v.x += deltaVector.dotProduct(this.v) * deltaVector.x;
-            ball.v.y += deltaVector.dotProduct(this.v) * deltaVector.y;
+            // vector tangent to deltaVector
+            const tangentNormal = new Vector(-dy, dx);
+            tangentNormal.normalize();
+
+            // split the two vectors in 4 components:
+            // each ball gets a component in deltaVector and in tangentNormal
+
+            const thisVDelta = deltaVector.dotProduct(this.v);
+            const thisVTangent = tangentNormal.dotProduct(this.v);
+
+            const ballVDelta = deltaVector.dotProduct(ball.v);
+            const ballVTangent = tangentNormal.dotProduct(ball.v);
+
+            // the tangent part stays the same
+
+            // calculate the new delta direction components
+            const newThisVDelta = (thisVDelta + 2 * ballVDelta) / 2;
+            const newBallVDelta = (ballVDelta + 2 * thisVDelta) / 2;
+
+            // convert the new delta component to x-y-Vectors
+            const thisV1 = tangentNormal.copy();
+            thisV1.scale(thisVTangent);
+            const thisV2 = deltaVector.copy();
+            thisV2.scale(newThisVDelta);
+            this.v = thisV1.plus(thisV2);
+
+            const ballV1 = tangentNormal.copy();
+            ballV1.scale(ballVTangent);
+            const ballV2 = deltaVector.copy();
+            ballV2.scale(newBallVDelta);
+            ball.v = ballV1.plus(ballV2);
 
             // Winkel berechnen zwischen colloisionVetor und this.v:
             let angle = Math.atan(dx/dy);
@@ -217,4 +240,4 @@ class Ball {
     	this.isMoving = false;
     }
 }
-Ball.RADIUS = scaleRealCentimetersToPixel(6.15) / 2 * 4;
+Ball.RADIUS = scaleRealCentimetersToPixel(6.15) / 2;

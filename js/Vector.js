@@ -40,7 +40,6 @@ class Vector {
         return (this.x * that.x) + (this.y * that.y);
     }
 
-    // addiert das s-fache von that auf this
     copy() {
         return new Vector(this.x, this.y);
     }

@@ -57,8 +57,11 @@ class Ball {
         if (this.hasWhiteDot()) {
             this.context.beginPath();
             this.context.fillStyle = "white";
+            this.context.strokeStyle = "black";
+            this.context.lineWidth = 0.5;
             this.context.arc(this.x, this.y, Ball.RADIUS * 0.4, 0, 2 * Math.PI);
             this.context.fill();
+            this.context.stroke();
             this.context.closePath();
         }
     }

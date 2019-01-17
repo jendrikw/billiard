@@ -132,26 +132,30 @@ class Ball {
         const dy = ball.y - (this.y + this.v.y);
         const ballMidPointsDistance = Math.sqrt(dx * dx + dy * dy);
         if (ballMidPointsDistance <= 2 * Ball.RADIUS) {
-            console.log("[before collision]", "this.v", this.v, "ball.v", ball.v);
+            console.log("[before collision]", "this.v.length()", this.v.length(), "this.v", this.v, "ball.v", ball.v);
             this.clickAudio.currentTime = 0;
             this.clickAudio.play();
 
-            // Vector Direction firstball
-            this.v = new Vector(dy, -dx);
+            // if (dx > 0) {
+            //     this.v = new Vector(dy, -dx);
+            // } else {
+            //     // Vector Direction firstball
+            //     this.v = new Vector(-dy, dx);
+            // }
 
-            // Vector Direction other ball
-            ball.v = new Vector(dx, dy);
+            const deltaVector = new Vector(dx, dy);
+
+            deltaVector.normalize();
+            this.v.x += -deltaVector.dotProduct(this.v) * deltaVector.x;
+            this.v.y += -deltaVector.dotProduct(this.v) * deltaVector.y;
+
+            ball.v.x += deltaVector.dotProduct(this.v) * deltaVector.x;
+            ball.v.y += deltaVector.dotProduct(this.v) * deltaVector.y;
 
             // Winkel berechnen zwischen colloisionVetor und this.v:
             let angle = Math.atan(dx/dy);
 
-            // Velocity distribution:
-            let distributionV = angle / (Math.PI / 2);
-
-            ball.v.scale(4);
-            this.v.scale(4);
-
-            console.log("[after collision]", "angle", angle * 360 / (2 * Math.PI), "verteilung", distributionV, "this.v", this.v, "ball.v", ball.v);
+            console.log("[after collision]", "this.v.length()", this.v.length(), "ball.v.length()", ball.v.length(), "angle", angle * 360 / (2 * Math.PI), "this.v", this.v, "ball.v", ball.v);
 
             ball.isMoving = true;
             ball.moveStep();
@@ -213,4 +217,4 @@ class Ball {
     	this.isMoving = false;
     }
 }
-Ball.RADIUS = scaleRealCentimetersToPixel(6.15) / 2;
+Ball.RADIUS = scaleRealCentimetersToPixel(6.15) / 2 * 4;

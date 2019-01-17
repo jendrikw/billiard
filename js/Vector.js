@@ -35,4 +35,13 @@ class Vector {
     minus(that) {
         return new Vector(this.x - that.x, this.y - that.y);
     }
+
+    dotProduct(that) {
+        return (this.x * that.x) + (this.y * that.y);
+    }
+
+    // addiert das s-fache von that auf this
+    copy() {
+        return new Vector(this.x, this.y);
+    }
 }

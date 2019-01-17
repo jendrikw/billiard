@@ -21,7 +21,6 @@ class Ball {
         this.isBeingKilled = false;
         this.isFoul = false;
         this.clickAudio = document.getElementById("click_audio");
-        // console.log(Table.HOLE_RADIUS);
     }
 
     static getColorForNumber(number) {
@@ -67,8 +66,6 @@ class Ball {
     }
 
     moveStep() {
-        // console.log("moveStep", this.color, "x ", this.x, "y", this.y);
-
         this.v.scale(0.99);
 
         if (this.isBeingKilled || this.shouldStopMoving()) {
@@ -180,10 +177,7 @@ class Ball {
             ballV2.scale(newBallVDelta);
             ball.v = ballV1.plus(ballV2);
 
-            // Winkel berechnen zwischen collisionVector und this.v:
-            let angle = Math.atan(dx/dy);
-
-            console.log("[after collision]", "this.v.length()", this.v.length(), "ball.v.length()", ball.v.length(), "angle", angle * 360 / (2 * Math.PI), "this.v", this.v, "ball.v", ball.v);
+            console.log("[after collision]", "this.v.length()", this.v.length(), "ball.v.length()", ball.v.length(), "this.v", this.v, "ball.v", ball.v);
 
             ball.isMoving = true;
             ball.moveStep();
@@ -223,7 +217,6 @@ class Ball {
     checkHoleCollision() {
     	for (const hole of this.holes) {
     		const distance = Math.sqrt((this.x - hole.x)**2 + (this.y - hole.y)**2);
-    		// console.log(hole, distance);
     		if(distance <= Table.HOLE_RADIUS) {
     			return true;
     		}

@@ -8,9 +8,15 @@ class Table {
         if (Table.X_LEFT == null) {
             Table.X_LEFT = (this.context.canvas.width - Table.WIDTH) / 2;
             Table.X_RIGHT = Table.X_LEFT + Table.WIDTH;
+            Table.X_MIDDLE = Table.X_LEFT + Table.WIDTH / 2;
+
             Table.Y_TOP = (this.context.canvas.height - Table.HEIGHT) / 2;
             Table.Y_BOTTOM = Table.Y_TOP + Table.HEIGHT;
-            Table.X_MIDDLE = Table.X_LEFT + Table.WIDTH / 2;
+            Table.Y_MIDDLE = Table.Y_TOP + Table.HEIGHT / 2;
+
+            Table.APEX_BALL_X = Table.X_LEFT + (1/4) * Table.WIDTH;
+            Table.WHITE_BALL_X = Table.X_LEFT + (3/4) * Table.WIDTH;
+
             Table.HOLES = [
                 new Vector(Table.X_LEFT, Table.Y_TOP),
                 new Vector(Table.X_MIDDLE, Table.Y_TOP),
@@ -30,8 +36,8 @@ class Table {
     	this.context.fillText("Eingelochte Bälle: " + this.game.ballsInHole, this.context.canvas.width / 2 - 100, 50);
     	this.context.fillText("Schläge: " + this.game.bumps, 500, 50);
     	this.context.fillText("Score: " + this.game.score, this.context.canvas.width/2 - 55, 20);
-    	
-    	
+
+
         const holeOffset = 0.1 * Table.HOLE_RADIUS / Math.sqrt(2);
 
         // top
@@ -201,6 +207,19 @@ class Table {
         this.context.beginPath();
         this.context.arc(Table.X_LEFT - holeOffset, Table.Y_BOTTOM + holeOffset, Table.HOLE_RADIUS, 0, 2 * Math.PI);
         this.context.fill();
+
+        // draw line for white ball
+        this.context.fillStyle = "#AAAAAA80";
+        this.context.beginPath();
+        this.context.arc(Table.WHITE_BALL_X, Table.Y_MIDDLE, 2, 0, 2 * Math.PI);
+        this.context.fill();
+
+        // draw white dot for apex ball
+        this.context.fillStyle = "#AAAAAA80";
+        this.context.beginPath();
+        this.context.arc(Table.APEX_BALL_X, Table.Y_MIDDLE, 2, 0, 2 * Math.PI);
+        this.context.fill();
+
     }
 }
 

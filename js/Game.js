@@ -10,12 +10,22 @@ class Game {
         this.ballsInHole = 0;
         this.table = new Table(this);
         this.balls = [];
-        this.balls[0] = new Ball(this, 500, 200);
+        this.balls[0] = new Ball(this, Table.WHITE_BALL_X, Table.Y_MIDDLE);
         for (let i = 1; i <= this.numberOfBalls; i++) {
-        	this.balls[i] = new Ball(this, 100 + 20 * i, 200, i);
-        	//this.balls[1] = new Ball(this, 100 + 220 * 1, 200, 1);
-        	//this.balls[2] = new Ball(this, 100 + 220 * 1, 370, 2);
-        	//this.balls[3] = new Ball(this, 50, 370, 6);
+        	this.balls[i] = new Ball(this, 0, 0, i);
+        }
+
+        let ballNumbers = [9, 7, 12, 15, 8, 1, 6, 10, 3, 14, 11, 2, 13, 4, 5];
+        let i = 0;
+        for (let x = 0; x > -5; x--) {
+            let yMin = 0.5 * x;
+            let yMax = -0.5 * x;
+            for (let y = yMin; y <= yMax; y++) {
+                let ballIndex = ballNumbers[i];
+                i++;
+                this.balls[ballIndex].x = Table.APEX_BALL_X + x * 2 * Ball.RADIUS;
+                this.balls[ballIndex].y = Table.Y_MIDDLE + y * 2.1 * Ball.RADIUS;
+            }
         }
 
         this.cue = new Cue(this, this.balls[0]);
@@ -90,8 +100,9 @@ class Game {
 
     notifyBallStopped() {
     	if(!this.areAnyBallsMoving() && this.balls[0].isFoul) {
-    		this.balls[0].x = 300;
-    		this.balls[0].y = 300;
+    		// reset white ball
+    	    this.balls[0].x = Table.WHITE_BALL_X;
+    		this.balls[0].y = Table.Y_MIDDLE;
     		this.balls[0].draw();
     		this.balls[0].isFoul = false;
     	}

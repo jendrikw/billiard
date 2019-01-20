@@ -6,31 +6,31 @@ class Game {
     }
 
     start() {
-        this.numberOfBalls = 3;
+        this.numberOfBalls = 15;
         this.ballsInHole = 0;
         this.table = new Table(this);
         this.balls = [];
         this.balls[0] = new Ball(this, Table.WHITE_BALL_X, Table.Y_MIDDLE);
-//        for (let i = 1; i <= this.numberOfBalls; i++) {
-//        	this.balls[i] = new Ball(this, 0, 0, i);
-//        }
+        for (let i = 1; i <= this.numberOfBalls; i++) {
+        	this.balls[i] = new Ball(this, 0, 0, i);
+        }
 
-//        let ballNumbers = [9, 7, 12, 15, 8, 1, 6, 10, 3, 14, 11, 2, 13, 4, 5];
-//        let i = 0;
-//        for (let x = 0; x > -5; x--) {
-//            let yMin = 0.5 * x;
-//            let yMax = -0.5 * x;
-//            for (let y = yMin; y <= yMax; y++) {
-//                let ballIndex = ballNumbers[i];
-//                i++;
-//                this.balls[ballIndex].x = Table.APEX_BALL_X + x * 2 * Ball.RADIUS;
-//                this.balls[ballIndex].y = Table.Y_MIDDLE + y * 2.1 * Ball.RADIUS;
-//            }
-//        }
+        let ballNumbers = [9, 7, 12, 15, 8, 1, 6, 10, 3, 14, 11, 2, 13, 4, 5];
+        let i = 0;
+        for (let x = 0; x > -5; x--) {
+            let yMin = 0.5 * x;
+            let yMax = -0.5 * x;
+            for (let y = yMin; y <= yMax; y++) {
+                let ballIndex = ballNumbers[i];
+                i++;
+                this.balls[ballIndex].x = Table.APEX_BALL_X + x * 2 * Ball.RADIUS;
+                this.balls[ballIndex].y = Table.Y_MIDDLE + y * 2.1 * Ball.RADIUS;
+            }
+        }
 
-        this.balls[1] = new Ball(this, 320, 360, 1);
-        this.balls[2] = new Ball(this, 320, 110, 8);
-        this.balls[3] = new Ball(this, Table.WHITE_BALL_X, Table.Y_MIDDLE, 3);
+        // this.balls[1] = new Ball(this, 320, 360, 1);
+        //this.balls[2] = new Ball(this, 320, 110, 8);
+        //this.balls[3] = new Ball(this, Table.WHITE_BALL_X, Table.Y_MIDDLE, 3);
         
         
         this.cue = new Cue(this, this.balls[0]);

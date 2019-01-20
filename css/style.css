@@ -4,6 +4,7 @@ a {
 
 #after-game-block {
   position: absolute;
+  display: none;
   top: 300px;
   width: 640px;
 }
@@ -34,6 +35,21 @@ body {
   margin: 0;
 }
 
+#bottom-controls {
+  height: 100px;
+  line-height: 100px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+#bottom-controls * {
+  width: 100px;
+  display: inline-block;
+  line-height: 100px;
+  margin: 0;
+  vertical-align: middle;
+}
+
 canvas {
   position: absolute;
 }
@@ -58,10 +74,8 @@ text-align: left;
 }
 
 #control-music {
+  height: 100%;
   background-size: 115%;
-  height: 100px;
-  width: 100px;
-  margin: -33px auto 0 auto;
 }
 
 #cue-img {

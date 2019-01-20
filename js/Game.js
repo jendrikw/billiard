@@ -16,6 +16,7 @@ class Game {
         	this.balls[i] = new Ball(this, 0, 0, i);
         }
 
+		//every ball gets a number 
         let ballNumbers = [9, 7, 12, 15, 8, 1, 6, 10, 3, 14, 11, 2, 13, 4, 5];
         let i = 0;
         for (let x = 0; x > -5; x--) {
@@ -29,6 +30,7 @@ class Game {
             }
         }
 
+		// cue spawns on the ball
         this.cue = new Cue(this, this.balls[0]);
         this.nonoSuckingSound = document.getElementById("nono_sucking_audio");
         this.nonoSuckingSound.volume = 1.0;
@@ -40,18 +42,23 @@ class Game {
         this.afterGameText = document.getElementById("after-game-header");
         this.afterGameOptions.style.display = "none";
         this.afterGameText.style.display = "none";
-
+		
+		//get the score
         this.scoresButton = document.getElementById("scores");
         this.scoresButton.addEventListener("click", () => Game.redirectToScores());
-
+		
+		//get the playername
         this.playerNameInput = document.getElementById("playername");
-
+		
+		//save the name and score and send this to the local storage
         this.saveScoreButton = document.getElementById("send");
         this.saveScoreButton.addEventListener("click", () => this.saveScore());
-
+		
+		//logik to pause the game
         this.pauseButton = document.getElementById("pause");
         this.pauseButton.addEventListener("click", () => this.togglePaused());
-
+		
+		//Button to start a new game
         this.startNewGameButtons = document.getElementsByClassName("new-game");
         for (let button of this.startNewGameButtons) {
             button.addEventListener("click", () => {
@@ -110,6 +117,7 @@ class Game {
     }
     
     end() {
+		//operations to end the game and open the "game ended screen"
         this.calculateScore();
         this.redrawTable();
         this.cue.kill();
@@ -118,6 +126,7 @@ class Game {
     }
     
     playNono() {
+		//Play meme when ball is in the hole
     	this.nonoSuckingSound.pause();
         this.nonoSuckingSound.currentTime = 0;
         this.nonoSuckingSound.play();
@@ -154,6 +163,7 @@ class Game {
 		let whiteBallCantBeDrawn = true;
 		let yDelta = Ball.RADIUS * 1.5;
 		
+		//if the white ball had a foul and is resetting on the place and the place is not empty, than the ball is changing the place where it spawn
     	while(whiteBallCantBeDrawn) {
 			let counter = 0;
 			// Check collision after reset white ball.
@@ -180,8 +190,6 @@ class Game {
     	this.calculateScore();
         this.table.draw();
     }
-
-    
 
     static redirectToScores() {
         window.location = "./score.html";

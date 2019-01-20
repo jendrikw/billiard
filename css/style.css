@@ -165,12 +165,16 @@ footer {
   width: 58%;
 }
 
-#text ul {
+#text tr {
   text-align: center;
 }
 
-#text > ul > li {
-  margin: 1% 0;
+#text tr td {
+  padding: 2% 0;
+}
+
+.unmute {
+  background-image: url("../img/mute.png");
 }
 
 th {

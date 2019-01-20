@@ -1,8 +1,11 @@
 'use strict';
 
 function onload() {
+	//LOADE SCORE-DATA FROM LOCAL STORAGE
     let scores = localStorage.getItem("scores");
-    if (scores === null) {
+    
+	//IF SCORES DON'T EXISTS RETURN AN EMPTY ARRAY, IF NOT PARSE THE JSON DATA IN AN ARRAY
+	if (scores === null) {
         scores = {scores: []};
     } else {
         try {
@@ -12,7 +15,8 @@ function onload() {
             localStorage.setItem("scores", JSON.stringify({scores: []}))
         }
     }
-
+	
+	//TABLE CANT BE BIGGER THAN 10 ROWS
     if (scores.scores.length < 10) {
         fetch('score.json')
             .then(response => response.json())

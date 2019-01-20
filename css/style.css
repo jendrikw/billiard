@@ -1,5 +1,6 @@
 a {
-  text-decoration: none; }
+  text-decoration: none;
+}
 
 #after-game-block {
   position: absolute;
@@ -52,7 +53,8 @@ canvas {
 }
 
 #cue-img {
-  display: none; }
+  display: none;
+}
 
 footer {
   height: 40px;
@@ -66,19 +68,20 @@ footer {
   background-color: green;
 }
 
-#footer-links *{
+#footer-links * {
   color: #ffb649;
-  margin-left:0.7%;
+  margin-left: 0.7%;
   height: 40px;
   line-height: 40px;
 }
 
 .hidden {
-  display: none; }
+  display: none;
+}
 
 .header-cont {
   background-color: green;
-  padding-top: 0px;
+  padding-top: 0;
 }
 
 .header-cont h1 {
@@ -86,30 +89,33 @@ footer {
   margin: 0;
 }
 
-.header-cont span{
-  color:#00117D;
+.header-cont span {
+  color: #00117D;
 }
 
 #main-nav {
   padding: 6px;
-  margin: auto; }
+  margin: auto;
+}
 
 #main-nav ul {
-    font-size: 0;
-    margin: 0;
-    padding: 0 20px; }
+  font-size: 0;
+  margin: 0;
+  padding: 0 20px;
+}
 
 #main-nav ul li {
-      border: solid 1px black;
-      box-sizing: border-box;
-      display: inline-block;
-      font-size: 1rem;
-      margin: 0 2px;
-      text-align: center;
-      width: calc(20% - 4px); }
+  border: solid 1px black;
+  box-sizing: border-box;
+  display: inline-block;
+  font-size: 1rem;
+  margin: 0 2px;
+  text-align: center;
+  width: calc(20% - 4px);
+}
 
 #main-nav ul li a {
-        color: #ffb649;
+  color: #ffb649;
 }
 
 .mute {
@@ -123,10 +129,6 @@ footer {
   height: 200px;
 }
 
-#send{
-
-}
-
 .site-cont h1 {
   text-align: center;
   margin: 0;
@@ -134,7 +136,7 @@ footer {
 
 #text {
   padding: 10px;
-  margin: 20px auto 0px auto;
+  margin: 20px auto 0 auto;
   background: rgba(0, 97, 27, 0.6);
   width: 58%;
 }
@@ -144,7 +146,7 @@ footer {
 }
 
 #text > ul > li {
-  margin:1% 0;
+  margin: 1% 0;
 }
 
 .unmute {
@@ -152,15 +154,16 @@ footer {
 }
 
 ul {
-  list-style: none; }
-
-
+  list-style: none;
+}
 
 th, td {
   border-bottom: 1px solid #ffb649;
 }
 
-tr:hover {background-color: rgba(0, 100, 40);}
+tr:hover {
+  background-color: rgba(0, 100, 40);
+}
 
 th {
   background-color: rgba(0, 97, 27);
@@ -177,14 +180,12 @@ th {
   text-align: left;
 }
 
-.center
-{
-text-align: center;
+.center {
+  text-align: center;
 }
 
-.center table
-{
-margin-left: auto;
-margin-right: auto;
-text-align: left;
+.center table {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
 }

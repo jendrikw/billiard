@@ -175,6 +175,12 @@ footer {
   margin: 0;
 }
 
+#start-new-game {
+  text-align: center;
+  display: block;
+  margin: auto;
+}
+
 #table {
   padding: 10px;
   margin: 20px auto 0 auto;

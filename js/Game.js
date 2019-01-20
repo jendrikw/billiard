@@ -40,9 +40,6 @@ class Game {
         this.afterGameOptions.style.display = "none";
         this.afterGameText.style.display = "none";
 
-        this.newGameButton = document.getElementById("new-game");
-        this.newGameButton.addEventListener("click", () => this.startANewGame());
-
         this.scoresButton = document.getElementById("scores");
         this.scoresButton.addEventListener("click", () => Game.redirectToScores());
 
@@ -53,6 +50,14 @@ class Game {
 
         this.pauseButton = document.getElementById("pause");
         this.pauseButton.addEventListener("click", () => this.togglePaused());
+
+        this.startNewGameButtons = document.getElementsByClassName("new-game");
+        for (let button of this.startNewGameButtons) {
+            button.addEventListener("click", () => {
+                this.cue.kill();
+                this.startANewGame();
+            });
+        }
 
         this.fouls = 0;
         this.bumps = 0;
@@ -103,7 +108,7 @@ class Game {
 
         // Check, game won or not (black ball):
         if((this.ballsInHole < this.numberOfBalls) && (this.ballIsBlack)) {
-        	this.afterGameText.innerHTML = "Verloren";;
+        	this.afterGameText.innerHTML = "Verloren";
         	this.end();
         }
         if (this.ballsInHole === this.numberOfBalls) {

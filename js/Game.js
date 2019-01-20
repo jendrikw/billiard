@@ -6,6 +6,7 @@ class Game {
     }
 
     start() {
+		//initialisation from the balls on the Table
         this.numberOfBalls = 15;
         this.ballsInHole = 0;
         this.table = new Table(this);

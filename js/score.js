@@ -51,6 +51,7 @@ function createTable(scores) {
         tabCell = tr.insertCell(-1);
         tabCell.innerHTML = scores.scores[i].score;
         table.appendChild(tr);
+
     }
 
     // FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.

@@ -2,7 +2,7 @@ a {
   text-decoration: none; }
 
 #after-game-block {
-  display: none;
+  /*display: none;*/
   position: absolute;
   top: 300px;
   width: 640px;

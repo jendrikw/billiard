@@ -1,8 +1,6 @@
 'use strict';
 
-
 class Game {
-
     constructor() {
         this.ballContext = getContext("ball-canvas");
     }
@@ -50,13 +48,11 @@ class Game {
         this.newGameButton = document.getElementById("new-game");
         this.newGameButton.addEventListener("click", () => this.startANewGame());
 
+        this.sendButton = document.getElementById("new-game");
+        this.sendButton.addEventListener("click", () => this.store());
+
         this.scoresButton = document.getElementById("scores");
         this.scoresButton.addEventListener("click", () => Game.redirectToScores());
-
-        this.playerNameInput = document.getElementById("playername");
-
-        this.saveScoreButton = document.getElementById("send");
-        this.saveScoreButton.addEventListener("click", () => this.saveScore());
 
         this.fouls = 0;
         this.bumps = 0;
@@ -127,6 +123,7 @@ class Game {
     	    this.balls[0].x = Table.WHITE_BALL_X;
     		this.balls[0].y = Table.Y_MIDDLE;
     		this.balls[0].draw();
+    		
     		this.balls[0].isFoul = false;
     	}
     }
@@ -144,23 +141,10 @@ class Game {
         this.afterGameText.style.display = "block";
     }
 
+    store(){
+        window.localStorage.setItem()
+    }
     static redirectToScores() {
         window.location = "./score.html";
     }
-
-    saveScore() {
-        const name = this.playerNameInput.value;
-        let scores = localStorage.getItem("score");
-        if (scores === null) {
-            scores = {scores: []};
-        } else {
-            scores = JSON.parse(scores);
-        }
-        scores.scores.push({name, score: this.score});
-        localStorage.setItem("scores", JSON.stringify(scores));
-        Game.redirectToScores();
-    }
-
 }
-
-

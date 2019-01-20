@@ -40,6 +40,9 @@ class Game {
         this.newGameButton = document.getElementById("new-game");
         this.newGameButton.addEventListener("click", () => this.startANewGame());
 
+        this.sendButton = document.getElementById("new-game");
+        this.sendButton.addEventListener("click", () => this.store());
+
         this.scoresButton = document.getElementById("scores");
         this.scoresButton.addEventListener("click", () => Game.redirectToScores());
 
@@ -120,6 +123,9 @@ class Game {
         this.afterGameOptions.style.display = "block";
     }
 
+    store(){
+        window.localStorage.setItem()
+    }
     static redirectToScores() {
         window.location = "./score.html";
     }

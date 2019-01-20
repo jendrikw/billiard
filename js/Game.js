@@ -27,12 +27,7 @@ class Game {
                 this.balls[ballIndex].y = Table.Y_MIDDLE + y * 2.1 * Ball.RADIUS;
             }
         }
-
-        // this.balls[1] = new Ball(this, 320, 360, 1);
-        //this.balls[2] = new Ball(this, 320, 110, 8);
-        //this.balls[3] = new Ball(this, Table.WHITE_BALL_X, Table.Y_MIDDLE, 3);
-        
-        
+                
         this.cue = new Cue(this, this.balls[0]);
         this.nonoSuckingSound = document.getElementById("nono_sucking_audio");
         this.nonoSuckingSound.volume = 1.0;

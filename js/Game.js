@@ -8,28 +8,33 @@ class Game {
     }
 
     start() {
-        this.numberOfBalls = 15;
+        this.numberOfBalls = 2;
         this.ballsInHole = 0;
         this.table = new Table(this);
         this.balls = [];
         this.balls[0] = new Ball(this, Table.WHITE_BALL_X, Table.Y_MIDDLE);
-        for (let i = 1; i <= this.numberOfBalls; i++) {
-        	this.balls[i] = new Ball(this, 0, 0, i);
-        }
+//        for (let i = 1; i <= this.numberOfBalls; i++) {
+//        	this.balls[i] = new Ball(this, 0, 0, i);
+//        }
 
-        let ballNumbers = [9, 7, 12, 15, 8, 1, 6, 10, 3, 14, 11, 2, 13, 4, 5];
-        let i = 0;
-        for (let x = 0; x > -5; x--) {
-            let yMin = 0.5 * x;
-            let yMax = -0.5 * x;
-            for (let y = yMin; y <= yMax; y++) {
-                let ballIndex = ballNumbers[i];
-                i++;
-                this.balls[ballIndex].x = Table.APEX_BALL_X + x * 2 * Ball.RADIUS;
-                this.balls[ballIndex].y = Table.Y_MIDDLE + y * 2.1 * Ball.RADIUS;
-            }
-        }
+//        let ballNumbers = [9, 7, 12, 15, 8, 1, 6, 10, 3, 14, 11, 2, 13, 4, 5];
+//        let i = 0;
+//        for (let x = 0; x > -5; x--) {
+//            let yMin = 0.5 * x;
+//            let yMax = -0.5 * x;
+//            for (let y = yMin; y <= yMax; y++) {
+//                let ballIndex = ballNumbers[i];
+//                i++;
+//                this.balls[ballIndex].x = Table.APEX_BALL_X + x * 2 * Ball.RADIUS;
+//                this.balls[ballIndex].y = Table.Y_MIDDLE + y * 2.1 * Ball.RADIUS;
+//            }
+//        }
 
+        this.balls[1] = new Ball(this, 320, 360, 1);
+        this.balls[2] = new Ball(this, 320, 110, 8);
+        
+        
+        
         this.cue = new Cue(this, this.balls[0]);
         this.nonoSuckingSound = document.getElementById("nono_sucking_audio");
         this.nonoSuckingSound.volume = 1.0;
@@ -37,7 +42,9 @@ class Game {
         this.nonoSuckingGif = document.getElementById("nono_sucking_gif");
 
         this.afterGameOptions = document.getElementById("after-game-block");
+        this.afterGameText = document.getElementById("after-game-header");
         this.afterGameOptions.style.display = "none";
+        this.afterGameText.style.display = "none";
 
         this.newGameButton = document.getElementById("new-game");
         this.newGameButton.addEventListener("click", () => this.startANewGame());
@@ -53,6 +60,7 @@ class Game {
         this.fouls = 0;
         this.bumps = 0;
         this.score = 0;
+        this.ballIsBlack = false;
         this.table.draw();
         this.drawBalls();
     }
@@ -95,8 +103,14 @@ class Game {
         this.nonoSuckingGif.style.display = "block";
         this.nonoSuckingSound.addEventListener("ended", () => {this.nonoSuckingGif.style.display = "none";});
 
+        
+        if((this.ballsInHole < this.numberOfBalls) && (this.ballIsBlack)) {
+        	this.afterGameText.innerHTML = "Verloren";;
+        	this.end();
+        }
         if (this.ballsInHole === this.numberOfBalls) {
-            this.end();
+        	this.afterGameText.innerHTML = "Gewonnen";
+           this.end();
         }
         this.redrawTable();
     }
@@ -125,6 +139,7 @@ class Game {
         this.redrawTable();
         this.cue.kill();
         this.afterGameOptions.style.display = "block";
+        this.afterGameText.style.display = "block";
     }
 
     static redirectToScores() {

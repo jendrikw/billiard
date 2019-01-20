@@ -95,8 +95,9 @@ class Ball {
                 this.isMoving = false;
             } else if (this.color === "black") {
                 this.remove();
+                this.game.ballIsBlack = true;
                 this.game.handleGameWon();
-                this.game.end();
+                //this.game.end();
             } else {
                 this.remove();
                 this.game.handleGameWon();

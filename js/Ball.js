@@ -5,6 +5,7 @@ class Ball {
     constructor(game, x, y, number) {
     	this.game = game;
         this.context = getContext("ball-canvas");
+        // the constructor for the white ball gets called with 3 arguments, because it has no number
         if (number === undefined) {
             this.color = "white";
         } else {
@@ -15,9 +16,6 @@ class Ball {
         this.y = y;
         this.v = new Vector(0, 0);
         this.isMoving = false;
-        this.holes = Table.HOLES;
-        this.balls = this.game.balls;
-        this.isInHole = false;
         this.isBeingKilled = false;
         this.isFoul = false;
         this.clickAudio = document.getElementById("click_audio");
@@ -63,14 +61,8 @@ class Ball {
             this.context.stroke();
             this.context.closePath();
         }
-        
-        //handleFoulCollision();
     }
 
-    handleFoulCollision() {
-    	
-    }
-    
     moveStep() {
         this.v.scale(0.99);
 
@@ -89,9 +81,9 @@ class Ball {
         }
 
         // hole collision:
-        let isInHole = this.checkHoleCollision();
-        if(isInHole) {
-            if(this.color === "white") {
+        const isInHole = this.checkHoleCollision();
+        if (isInHole) {
+            if (this.color === "white") {
                 this.game.incrementFouls();
                 this.game.redrawTable();
                 this.isFoul = true;
@@ -111,7 +103,6 @@ class Ball {
 
         this.x += this.v.x;
         this.y += this.v.y;
-        this.drawVelocityDirectionAndMagnitude();
         window.requestAnimationFrame(() => this.moveStep());
     }
 
@@ -150,7 +141,7 @@ class Ball {
             const deltaVector = new Vector(dx, dy);
             deltaVector.normalize();
 
-            // vector tangent to deltaVector
+            // vector orthogonal to deltaVector
             const tangentNormal = new Vector(-dy, dx);
             tangentNormal.normalize();
 
@@ -202,26 +193,8 @@ class Ball {
 		 this.game.redrawTable();
 	}
 
-
-    drawVelocityDirectionAndMagnitude() {
-        this.context.strokeStyle = "#4169E1";
-        this.context.beginPath();
-        this.context.moveTo(this.x, this.y);
-        this.context.lineTo(this.x + 50 * this.v.x, this.y + 50 * this.v.y);
-        this.context.stroke();
-	}
-
-    checkNearToHole() {
-    	for (const hole of this.holes) {
-    		if(Math.sqrt((this.x - hole.x)**2 + (this.y - hole.y)**2) <= Math.SQRT2*Table.HOLE_RADIUS) {
-    			return true;
-    		}
-		}
-    	return false;
-	}
-
     checkHoleCollision() {
-    	for (const hole of this.holes) {
+    	for (const hole of Table.HOLES) {
     		const distance = Math.sqrt((this.x - hole.x)**2 + (this.y - hole.y)**2);
     		if(distance <= Table.HOLE_RADIUS) {
     			return true;
@@ -233,7 +206,7 @@ class Ball {
     remove() {
     	// Remove the ball if it hits/falls in a hole:
     	// Remove bedeutet, dass der Ball an eine unerreichbare Koordinate gezeichnet wird. Performance soll nicht beruecksichtigt werden.
-    	let xDistance = this.game.ballsInHole;
+    	const xDistance = this.game.ballsInHole;
     	this.x = (this.context.canvas.width/2 - 7*Ball.RADIUS - 90) + xDistance * 20;
 		this.y = 440;
 		this.v = new Vector(0,0);
@@ -244,4 +217,5 @@ class Ball {
     	this.isMoving = false;
     }
 }
+
 Ball.RADIUS = scaleRealCentimetersToPixel(6.15) / 2;

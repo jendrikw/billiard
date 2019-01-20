@@ -39,9 +39,6 @@ class Table {
     	this.context.fillText("Schläge: " + this.game.bumps, 500, 50);
     	this.context.fillText("Score: " + this.game.score, this.context.canvas.width/2 - 55, 20);
 
-        // the distance by which the corner holes are moved to the outside, measured from the corner of the playing area
-        const holeOffset = 0 * Table.HOLE_RADIUS / Math.sqrt(2);
-
         // top
         const topGradient = this.context.createLinearGradient(0, Table.Y_TOP - Table.BORDER_WIDTH, 0, Table.Y_TOP);
         topGradient.addColorStop(0, Table.BORDER_OUTER_COLOR);
@@ -127,13 +124,13 @@ class Table {
         this.context.lineCap = "round";
         this.context.lineWidth = 1.95 * Table.HOLE_RADIUS;
         this.context.beginPath();
-        this.context.moveTo(Table.X_LEFT + holeOffset, Table.Y_TOP + holeOffset);
-        this.context.lineTo(Table.X_LEFT - holeOffset, Table.Y_TOP - holeOffset);
+        this.context.moveTo(Table.X_LEFT, Table.Y_TOP);
+        this.context.lineTo(Table.X_LEFT, Table.Y_TOP);
         this.context.stroke();
 
         this.context.fillStyle = "black";
         this.context.beginPath();
-        this.context.arc(Table.X_LEFT - holeOffset, Table.Y_TOP - holeOffset, Table.HOLE_RADIUS, 0, 2 * Math.PI);
+        this.context.arc(Table.X_LEFT, Table.Y_TOP, Table.HOLE_RADIUS, 0, 2 * Math.PI);
         this.context.fill();
 
         // top middle hole
@@ -157,13 +154,13 @@ class Table {
         this.context.lineCap = "round";
         this.context.lineWidth = 1.9 * Table.HOLE_RADIUS;
         this.context.beginPath();
-        this.context.moveTo(Table.X_RIGHT - holeOffset, Table.Y_TOP + holeOffset);
-        this.context.lineTo(Table.X_RIGHT + holeOffset, Table.Y_TOP - holeOffset);
+        this.context.moveTo(Table.X_RIGHT, Table.Y_TOP);
+        this.context.lineTo(Table.X_RIGHT, Table.Y_TOP);
         this.context.stroke();
 
         this.context.fillStyle = "black";
         this.context.beginPath();
-        this.context.arc(Table.X_RIGHT + holeOffset, Table.Y_TOP - holeOffset, Table.HOLE_RADIUS, 0, 2 * Math.PI);
+        this.context.arc(Table.X_RIGHT, Table.Y_TOP, Table.HOLE_RADIUS, 0, 2 * Math.PI);
         this.context.fill();
 
         // bottom right hole
@@ -171,13 +168,13 @@ class Table {
         this.context.lineCap = "round";
         this.context.lineWidth = 1.9 * Table.HOLE_RADIUS;
         this.context.beginPath();
-        this.context.moveTo(Table.X_RIGHT - holeOffset, Table.Y_BOTTOM - holeOffset);
-        this.context.lineTo(Table.X_RIGHT + holeOffset, Table.Y_BOTTOM + holeOffset);
+        this.context.moveTo(Table.X_RIGHT, Table.Y_BOTTOM);
+        this.context.lineTo(Table.X_RIGHT, Table.Y_BOTTOM);
         this.context.stroke();
 
         this.context.fillStyle = "black";
         this.context.beginPath();
-        this.context.arc(Table.X_RIGHT + holeOffset, Table.Y_BOTTOM + holeOffset, Table.HOLE_RADIUS, 0, 2 * Math.PI);
+        this.context.arc(Table.X_RIGHT, Table.Y_BOTTOM, Table.HOLE_RADIUS, 0, 2 * Math.PI);
         this.context.fill();
 
         // bottom middle hole
@@ -186,7 +183,7 @@ class Table {
         this.context.lineJoin = "round";
         this.context.lineWidth = 1.9 * Table.HOLE_RADIUS;
         this.context.beginPath();
-        this.context.moveTo(Table.X_MIDDLE - 0.3 * Table.HOLE_RADIUS, Table.Y_BOTTOM);
+        this.context.moveTo(Table.X_MIDDLE + 0.3 * Table.HOLE_RADIUS, Table.Y_BOTTOM);
         this.context.lineTo(Table.X_MIDDLE, Table.Y_BOTTOM + Table.HOLE_RADIUS);
         this.context.lineTo(Table.X_MIDDLE + 0.3 * Table.HOLE_RADIUS, Table.Y_BOTTOM);
         this.context.stroke();
@@ -201,13 +198,13 @@ class Table {
         this.context.lineCap = "round";
         this.context.lineWidth = 1.9 * Table.HOLE_RADIUS;
         this.context.beginPath();
-        this.context.moveTo(Table.X_LEFT + holeOffset, Table.Y_BOTTOM - holeOffset);
-        this.context.lineTo(Table.X_LEFT - holeOffset, Table.Y_BOTTOM + holeOffset);
+        this.context.moveTo(Table.X_LEFT, Table.Y_BOTTOM);
+        this.context.lineTo(Table.X_LEFT, Table.Y_BOTTOM);
         this.context.stroke();
 
         this.context.fillStyle = "black";
         this.context.beginPath();
-        this.context.arc(Table.X_LEFT - holeOffset, Table.Y_BOTTOM + holeOffset, Table.HOLE_RADIUS, 0, 2 * Math.PI);
+        this.context.arc(Table.X_LEFT, Table.Y_BOTTOM, Table.HOLE_RADIUS, 0, 2 * Math.PI);
         this.context.fill();
 
         // draw line for white ball

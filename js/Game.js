@@ -115,7 +115,7 @@ class Game {
     }
 
     calculateScore() {
-    	this.score = this.ballsInHole * 200 - (this.bumps*25 + this.fouls*75); // Negative score is allowed.
+    	this.score = this.ballsInHole * 200 - (this.bumps*10 + this.fouls*50); // Negative score is allowed.
     }
 
     // For white ball. Foul. Wait until all balls are stopped:

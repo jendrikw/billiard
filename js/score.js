@@ -15,7 +15,7 @@ function onload() {
             localStorage.removeItem("scores");
         }
     }
-
+	//LOAD JSON FILE
     fetch('score.json')
         .then(response => response.json())
         .then(json => createTable(scores.scores.concat(json.scores)));

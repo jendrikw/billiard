@@ -103,14 +103,14 @@ class Game {
         this.nonoSuckingGif.style.display = "block";
         this.nonoSuckingSound.addEventListener("ended", () => {this.nonoSuckingGif.style.display = "none";});
 
-        
+        // Check, game won or not (black ball):
         if((this.ballsInHole < this.numberOfBalls) && (this.ballIsBlack)) {
         	this.afterGameText.innerHTML = "Verloren";;
         	this.end();
         }
         if (this.ballsInHole === this.numberOfBalls) {
         	this.afterGameText.innerHTML = "Gewonnen";
-           this.end();
+            this.end();
         }
         this.redrawTable();
     }

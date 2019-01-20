@@ -97,7 +97,6 @@ class Ball {
                 this.remove();
                 this.game.ballIsBlack = true;
                 this.game.handleGameWon();
-                //this.game.end();
             } else {
                 this.remove();
                 this.game.handleGameWon();

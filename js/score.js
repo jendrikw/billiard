@@ -1,10 +1,10 @@
 'use strict';
 
 function onload() {
-	//LOADE SCORE-DATA FROM LOCAL STORAGE
+	// load score-data from local storage
     let scores = localStorage.getItem("scores");
 
-	//IF SCORES DON'T EXISTS RETURN AN EMPTY ARRAY, IF NOT PARSE THE JSON DATA IN AN ARRAY
+	// if scores don't exists use an empty array, if not parse the json data in an array
 	if (scores === null) {
         scores = {scores: []};
     } else {
@@ -15,7 +15,8 @@ function onload() {
             localStorage.removeItem("scores");
         }
     }
-	//LOAD JSON FILE
+
+	// load the json file with the dummy scores
     fetch('score.json')
         .then(response => response.json())
         .then(json => createTable(scores.scores.concat(json.scores)));
@@ -23,23 +24,27 @@ function onload() {
 
 
 function createTable(scores) {
+    // sort the scores descending
     scores.sort((x, y) => y.score - x.score);
 
-    // CREATE DYNAMIC TABLE.
+    // create table
     const table = document.createElement("table");
 
-    // CREATE HTML TABLE HEADER ROW USING THE EXTRACTED HEADERS ABOVE.
-    let tr = table.insertRow(-1);                   // TABLE ROW.
+    // create html table header row using the extracted headers above.
+    // table row
+    let tr = table.insertRow(-1);
 
-    let th = document.createElement("th");      // TABLE HEADER.
+    // table header
+    let th = document.createElement("th");
     th.innerHTML = "Name";
     tr.appendChild(th);
 
-    th = document.createElement("th");      // TABLE HEADER.
+    // table header
+    th = document.createElement("th");
     th.innerHTML = "Score";
     tr.appendChild(th);
 
-    // ADD JSON DATA TO THE TABLE AS ROWS.
+    // add json data to the table as rows
     for (let i = 0; i < scores.length; i++) {
 
         tr = table.insertRow(-1);
@@ -53,7 +58,7 @@ function createTable(scores) {
 
     }
 
-    // FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
+    // finally add the newly created table with json data to a container
     const divContainer = document.getElementById("table");
     divContainer.innerHTML = "";
     divContainer.appendChild(table);

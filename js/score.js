@@ -18,12 +18,12 @@ function onload() {
 
     fetch('score.json')
         .then(response => response.json())
-        .then(json => createTable({scores: scores.scores.concat(json.scores)}));
+        .then(json => createTable(scores.scores.concat(json.scores)));
 }
 
 
 function createTable(scores) {
-    scores.scores.sort((x, y) => y.score - x.score);
+    scores.sort((x, y) => y.score - x.score);
 
     // CREATE DYNAMIC TABLE.
     const table = document.createElement("table");
@@ -40,15 +40,15 @@ function createTable(scores) {
     tr.appendChild(th);
 
     // ADD JSON DATA TO THE TABLE AS ROWS.
-    for (let i = 0; i < scores.scores.length; i++) {
+    for (let i = 0; i < scores.length; i++) {
 
         tr = table.insertRow(-1);
 
         let tabCell = tr.insertCell(-1);
-        tabCell.innerHTML = scores.scores[i].name;
+        tabCell.innerHTML = scores[i].name;
 
         tabCell = tr.insertCell(-1);
-        tabCell.innerHTML = scores.scores[i].score;
+        tabCell.innerHTML = scores[i].score;
         table.appendChild(tr);
 
     }

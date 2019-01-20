@@ -19,7 +19,11 @@ function onload() {
 	// load the json file with the dummy scores
     fetch('score.json')
         .then(response => response.json())
-        .then(json => createTable(scores.scores.concat(json.scores)));
+        .then(json => createTable(scores.scores.concat(json.scores)))
+        .catch(e => {
+            console.log(e);
+            createTable(scores.scores);
+        });
 }
 
 

@@ -8,7 +8,7 @@ class Game {
     }
 
     start() {
-        this.numberOfBalls = 2;
+        this.numberOfBalls = 3;
         this.ballsInHole = 0;
         this.table = new Table(this);
         this.balls = [];
@@ -32,7 +32,7 @@ class Game {
 
         this.balls[1] = new Ball(this, 320, 360, 1);
         this.balls[2] = new Ball(this, 320, 110, 8);
-        
+        this.balls[3] = new Ball(this, Table.WHITE_BALL_X, Table.Y_MIDDLE, 3);
         
         
         this.cue = new Cue(this, this.balls[0]);
@@ -41,6 +41,7 @@ class Game {
 
         this.nonoSuckingGif = document.getElementById("nono_sucking_gif");
 
+        // Change endGameText and show the rest of the game without allowing to play. 
         this.afterGameOptions = document.getElementById("after-game-block");
         this.afterGameText = document.getElementById("after-game-header");
         this.afterGameOptions.style.display = "none";
@@ -119,6 +120,7 @@ class Game {
     	this.score = this.ballsInHole * 200 - (this.bumps*25 + this.fouls*75); // Negative score is allowed.
     }
 
+    // For white ball. Foul. Wait until all balls are stopped:
     notifyBallStopped() {
     	if(!this.areAnyBallsMoving() && this.balls[0].isFoul) {
     		// reset white ball

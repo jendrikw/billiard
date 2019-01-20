@@ -63,8 +63,14 @@ class Ball {
             this.context.stroke();
             this.context.closePath();
         }
+        
+        //handleFoulCollision();
     }
 
+    handleFoulCollision() {
+    	
+    }
+    
     moveStep() {
         this.v.scale(0.99);
 

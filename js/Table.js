@@ -6,6 +6,7 @@ class Table {
         this.context = getContext("table-canvas");
         this.game = game;
         if (Table.X_LEFT == null) {
+            // initialize variables the first time an instance is initialized
             Table.X_LEFT = (this.context.canvas.width - Table.WIDTH) / 2;
             Table.X_RIGHT = Table.X_LEFT + Table.WIDTH;
             Table.X_MIDDLE = Table.X_LEFT + Table.WIDTH / 2;
@@ -29,6 +30,7 @@ class Table {
     }
 
     draw() {
+        // draw the information texts
     	this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height);
     	this.context.font = "22px serif";
 		this.context.fillStyle = "#ffb649";
@@ -37,7 +39,7 @@ class Table {
     	this.context.fillText("Schläge: " + this.game.bumps, 500, 50);
     	this.context.fillText("Score: " + this.game.score, this.context.canvas.width/2 - 55, 20);
 
-
+        // the distance by which the corner holes are moved to the outside, measured from the corner of the playing area
         const holeOffset = 0.1 * Table.HOLE_RADIUS / Math.sqrt(2);
 
         // top
@@ -223,14 +225,16 @@ class Table {
     }
 }
 
+// a table is 270cm long at the longer side, and half of that on the smaller side
 Table.WIDTH = scaleRealCentimetersToPixel(270);
 Table.HEIGHT = scaleRealCentimetersToPixel(270 / 2);
 Table.COLOR = "green";
 Table.BORDER_OUTER_COLOR = "#432918";
 Table.BORDER_INNER_COLOR = "#7d4e24";
 Table.BORDER_WIDTH = 29;
-Table.HOLE_RADIUS = 1.9 * Ball.RADIUS;
-Table.X_LEFT = null; // set in constructor
+Table.HOLE_RADIUS = 1.9 * Ball.RADIUS; // this factor was found by some testing
+// set in constructor, because they are dependant on the canvas
+Table.X_LEFT = null;
 Table.X_MIDDLE = null;
 Table.X_RIGHT = null;
 Table.Y_TOP = null;

@@ -141,10 +141,23 @@ class Game {
         this.afterGameText.style.display = "block";
     }
 
-    store(){
-        window.localStorage.setItem()
-    }
     static redirectToScores() {
         window.location = "./score.html";
     }
+
+    saveScore() {
+        const name = this.playerNameInput.value;
+        let scores = localStorage.getItem("score");
+        if (scores === null) {
+            scores = {scores: []};
+        } else {
+            scores = JSON.parse(scores);
+        }
+        scores.scores.push({name, score: this.score});
+        localStorage.setItem("scores", JSON.stringify(scores));
+        Game.redirectToScores();
+    }
+
 }
+
+

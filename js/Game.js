@@ -43,18 +43,18 @@ class Game {
         this.afterGameOptions.style.display = "none";
         this.afterGameText.style.display = "none";
 		
-		//get the score
+		//get the score-button and add an eventlistener to it
         this.scoresButton = document.getElementById("scores");
         this.scoresButton.addEventListener("click", () => Game.redirectToScores());
 		
-		//get the playername
+		//get the playername and add an eventlistener to it
         this.playerNameInput = document.getElementById("playername");
 		
-		//save the name and score and send this to the local storage
+		//add a eventlistener to the send button
         this.saveScoreButton = document.getElementById("send");
         this.saveScoreButton.addEventListener("click", () => this.saveScore());
 		
-		//logik to pause the game
+		//add e eventlistener to the pause button
         this.pauseButton = document.getElementById("pause");
         this.pauseButton.addEventListener("click", () => this.togglePaused());
 		

@@ -40,7 +40,7 @@ class Table {
     	this.context.fillText("Score: " + this.game.score, this.context.canvas.width/2 - 55, 20);
 
         // the distance by which the corner holes are moved to the outside, measured from the corner of the playing area
-        const holeOffset = 0.1 * Table.HOLE_RADIUS / Math.sqrt(2);
+        const holeOffset = 0 * Table.HOLE_RADIUS / Math.sqrt(2);
 
         // top
         const topGradient = this.context.createLinearGradient(0, Table.Y_TOP - Table.BORDER_WIDTH, 0, Table.Y_TOP);

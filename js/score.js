@@ -3,7 +3,7 @@
 function onload() {
 	//LOADE SCORE-DATA FROM LOCAL STORAGE
     let scores = localStorage.getItem("scores");
-    
+
 	//IF SCORES DON'T EXISTS RETURN AN EMPTY ARRAY, IF NOT PARSE THE JSON DATA IN AN ARRAY
 	if (scores === null) {
         scores = {scores: []};
@@ -12,18 +12,13 @@ function onload() {
             scores = JSON.parse(scores);
         } catch (e) {
             console.log("Fehler beim laden der scores aus dem localStorage: ", e);
-            localStorage.setItem("scores", JSON.stringify({scores: []}))
+            localStorage.removeItem("scores");
         }
     }
-	
-	//TABLE CANT BE BIGGER THAN 10 ROWS
-    if (scores.scores.length < 10) {
-        fetch('score.json')
-            .then(response => response.json())
-            .then(json => createTable({scores: scores.scores.concat(json.scores)}));
-    } else {
-        createTable(scores);
-    }
+
+    fetch('score.json')
+        .then(response => response.json())
+        .then(json => createTable({scores: scores.scores.concat(json.scores)}));
 }
 
 

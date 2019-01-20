@@ -148,7 +148,7 @@ class Game {
 
     saveScore() {
         const name = this.playerNameInput.value;
-        let scores = localStorage.getItem("score");
+        let scores = localStorage.getItem("scores");
         if (scores === null) {
             scores = {scores: []};
         } else {

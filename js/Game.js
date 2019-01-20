@@ -1,6 +1,8 @@
 'use strict';
-
+	
+	
 class Game {
+
     constructor() {
         this.ballContext = getContext("ball-canvas");
     }
@@ -40,7 +42,7 @@ class Game {
         this.newGameButton = document.getElementById("new-game");
         this.newGameButton.addEventListener("click", () => this.startANewGame());
 
-        this.sendButton = document.getElementById("new-game");
+        this.sendButton = document.getElementById("send");
         this.sendButton.addEventListener("click", () => this.store());
 
         this.scoresButton = document.getElementById("scores");
@@ -124,9 +126,34 @@ class Game {
     }
 
     store(){
-        window.localStorage.setItem()
+        fetch('score.json')
+	.then(response => response.json())
+	.then(json => asynchronJson(json));
     }
+	
     static redirectToScores() {
         window.location = "./score.html";
     }
+	
+	asynchronJson(json){
+	console.log(json);
+	
+	//JSON initalisieren der Konstanten fuer das hinzufuegen von Namen und Scores in der Score-JSON
+
+  
+	let itemsArray = [];
+	input = document.getElementById("playername");
+
+	localStorage.setItem('score', JSON.stringify(itemsArray));
+	const data = JSON.parse(localStorage.getItem('score'));
+	consol.log(localStorage.getItem('score'));
+	e.preventDefault();
+
+	itemsArray.push(input.value);
+	itemsArray.push(this.score);
+	localStorage.setItem('items', JSON.stringify(itemsArray));
+	}
+
 }
+
+

@@ -67,8 +67,12 @@ class Game {
         this.table.draw();
         this.isPaused = false;
         this.drawBalls();
+    }    
+    
+    calculateScore() {
+    	this.score = this.ballsInHole * 200 - (this.bumps*10 + this.fouls*50); // Negative score is allowed.
     }
-
+    
     drawBalls() {
         this.ballContext.clearRect(0, 0, this.ballContext.canvas.width, this.ballContext.canvas.height);
         for (let b of this.balls) {
@@ -89,23 +93,9 @@ class Game {
     	this.bumps++;
     }
 
-    startANewGame() {
-        this.afterGameOptions.style.display = "block";
-        for (let ball of this.balls) {
-            // requestAnimationFrame für die Bälle vom alten Spiel verhindern:
-            ball.kill();
-        }
-        this.start();
-    }
-
     handleGameWon() {
         this.ballsInHole++;
-        this.nonoSuckingSound.pause();
-        this.nonoSuckingSound.currentTime = 0;
-        this.nonoSuckingSound.play();
-
-        this.nonoSuckingGif.style.display = "block";
-        this.nonoSuckingSound.addEventListener("ended", () => {this.nonoSuckingGif.style.display = "none";});
+        this.playNono(); // play a GIF
 
         // Check, game won or not (black ball):
         if((this.ballsInHole < this.numberOfBalls) && (this.ballIsBlack)) {
@@ -118,27 +108,7 @@ class Game {
         }
         this.redrawTable();
     }
-
-    calculateScore() {
-    	this.score = this.ballsInHole * 200 - (this.bumps*10 + this.fouls*50); // Negative score is allowed.
-    }
-
-    // For white ball. Foul. Wait until all balls are stopped:
-    notifyBallStopped() {
-    	if(!this.areAnyBallsMoving() && this.balls[0].isFoul) {
-    		// reset white ball
-    	    this.balls[0].x = Table.WHITE_BALL_X;
-    		this.balls[0].y = Table.Y_MIDDLE;
-    		this.balls[0].draw();
-    		this.balls[0].isFoul = false;
-    	}
-    }
-
-    redrawTable() {
-    	this.calculateScore();
-        this.table.draw();
-    }
-
+    
     end() {
         this.calculateScore();
         this.redrawTable();
@@ -146,6 +116,72 @@ class Game {
         this.afterGameOptions.style.display = "block";
         this.afterGameText.style.display = "block";
     }
+    
+    playNono() {
+    	this.nonoSuckingSound.pause();
+        this.nonoSuckingSound.currentTime = 0;
+        this.nonoSuckingSound.play();
+
+        this.nonoSuckingGif.style.display = "block";
+        this.nonoSuckingSound.addEventListener("ended", () => {this.nonoSuckingGif.style.display = "none";});
+    }
+    
+    startANewGame() {
+        this.afterGameOptions.style.display = "block";
+        for (let ball of this.balls) {
+            // requestAnimationFrame für die Bälle vom alten Spiel verhindern:
+            ball.kill();
+        }
+        this.start();
+    }
+
+    // For white ball. Foul. Wait until all balls are stopped:
+    notifyBallStopped() {
+    	if(!this.areAnyBallsMoving() && this.balls[0].isFoul) {
+    		// reset white ball
+    		
+    		this.balls[0].x = Table.WHITE_BALL_X;
+    		this.balls[0].y = Table.Y_MIDDLE;
+    		
+    		this.handleCollisionAfterReset();
+    		this.balls[0].draw();
+    		this.balls[0].isFoul = false;
+    	}
+    }
+
+    handleCollisionAfterReset() {
+    	let isFoulCollision = false;
+		let whiteBallCantBeDrawn = true;
+		let yDelta = Ball.RADIUS * 1.5;
+		
+    	while(whiteBallCantBeDrawn) {
+			let counter = 0;
+			// Check collision after reset white ball.
+    		for (let ball of this.balls) {
+    			isFoulCollision = this.balls[0].checkFoulCollision(ball);
+    			if(this.balls[0].y >= Table.Y_BOTTOM) {
+					this.balls[0].y = Table.Y_MIDDLE;
+					yDelta *= -1; 
+				}
+    			if(isFoulCollision) {
+    				this.balls[0].y += yDelta;
+    				counter++;
+    			}
+    			isFoulCollision = false;
+			}
+    		if(counter === 0) {
+    			whiteBallCantBeDrawn = false;
+    		}
+    		
+		}
+    }
+    
+    redrawTable() {
+    	this.calculateScore();
+        this.table.draw();
+    }
+
+    
 
     static redirectToScores() {
         window.location = "./score.html";

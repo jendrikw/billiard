@@ -63,6 +63,17 @@ class Ball {
         }
     }
 
+    // Second collision-method. Checks the collision RIGHT NOW, not the next collision like in "handleBallCollision(ball)".
+    checkFoulCollision(ball) {
+    	if (this === ball) {
+            return false;
+        }
+    	const dx = ball.x - this.x;
+        const dy = ball.y - this.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        return (distance <= 2 * Ball.RADIUS);
+    }
+    
     moveStep() {
         if (!this.game.isPaused) {
             this.v.scale(0.99);

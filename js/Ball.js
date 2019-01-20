@@ -201,7 +201,7 @@ class Ball {
 
     remove() {
     	// Remove the ball if it hits/falls in a hole:
-    	// Remove bedeutet, dass der Ball an eine unerreichbare Koordinate gezeichnet wird. Performance soll nicht beruecksichtigt werden.
+    	// Remove says, that the ball can't reach impossible cordinats. Performance doesn't matter.
     	const xDistance = this.game.ballsInHole;
     	this.x = (this.context.canvas.width/2 - 7*Ball.RADIUS - 90) + xDistance * 20;
 		this.y = 440;

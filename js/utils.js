@@ -6,6 +6,6 @@ function scaleRealCentimetersToPixel(cm) {
 }
 
 function getContext(id) {
-	// Fehlerabfangen
+	// catch errors
     return document.getElementById(id).getContext("2d");
 }

@@ -173,12 +173,11 @@ footer {
   margin: 1% 0;
 }
 
-.unmute {
-  background-image: url("../img/mute.png");
-}
-
-ul {
-  list-style: none;
+th {
+  background-color: rgba(0, 97, 27);
+  color: #ffb649;
+  height: 25px;
+  border: 10px;
 }
 
 th, td {
@@ -189,24 +188,10 @@ tr:hover {
   background-color: rgba(0, 100, 40);
 }
 
-th {
-  background-color: rgba(0, 97, 27);
-  color: #ffb649;
-  height: 25px;
-  border: 10px;
+.unmute {
+  background-image: url("../img/mute.png");
 }
 
-tr:hover {background-color: rgba(0, 100, 40);}
-
-.center {
-  text-align: center;
+ul {
+  list-style: none;
 }
-
-.center table {
-  margin-left: auto;
-  margin-right: auto;
-  text-align: left;
-}
-
-
-

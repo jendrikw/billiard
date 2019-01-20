@@ -129,6 +129,10 @@ footer {
   height: 200px;
 }
 
+.site-cont {
+  margin-bottom: 40px;
+}
+
 .site-cont h1 {
   text-align: center;
   margin: 0;

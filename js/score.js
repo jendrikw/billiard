@@ -21,7 +21,7 @@ function onload() {
         .then(response => response.json())
         .then(json => createTable(scores.scores.concat(json.scores)))
         .catch(e => {
-            console.log(e);
+            console.log("konnte scores.json nicht laden", e);
             createTable(scores.scores);
         });
 }

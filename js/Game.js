@@ -1,6 +1,6 @@
 'use strict';
-	
-	
+
+
 class Game {
 
     constructor() {
@@ -42,11 +42,13 @@ class Game {
         this.newGameButton = document.getElementById("new-game");
         this.newGameButton.addEventListener("click", () => this.startANewGame());
 
-        this.sendButton = document.getElementById("send");
-        this.sendButton.addEventListener("click", () => this.store());
-
         this.scoresButton = document.getElementById("scores");
         this.scoresButton.addEventListener("click", () => Game.redirectToScores());
+
+        this.playerNameInput = document.getElementById("playername");
+
+        this.saveScoreButton = document.getElementById("send");
+        this.saveScoreButton.addEventListener("click", () => this.saveScore());
 
         this.fouls = 0;
         this.bumps = 0;
@@ -125,34 +127,22 @@ class Game {
         this.afterGameOptions.style.display = "block";
     }
 
-    store(){
-        fetch('score.json')
-	.then(response => response.json())
-	.then(json => asynchronJson(json));
-    }
-	
     static redirectToScores() {
         window.location = "./score.html";
     }
-	
-	asynchronJson(json){
-	console.log(json);
-	
-	//JSON initalisieren der Konstanten fuer das hinzufuegen von Namen und Scores in der Score-JSON
 
-  
-	let itemsArray = [];
-	input = document.getElementById("playername");
-
-	localStorage.setItem('score', JSON.stringify(itemsArray));
-	const data = JSON.parse(localStorage.getItem('score'));
-	consol.log(localStorage.getItem('score'));
-	e.preventDefault();
-
-	itemsArray.push(input.value);
-	itemsArray.push(this.score);
-	localStorage.setItem('items', JSON.stringify(itemsArray));
-	}
+    saveScore() {
+        const name = this.playerNameInput.value;
+        let scores = localStorage.getItem("score");
+        if (scores === null) {
+            scores = {scores: []};
+        } else {
+            scores = JSON.parse(scores);
+        }
+        scores.scores.push({name, score: this.score});
+        localStorage.setItem("scores", JSON.stringify(scores));
+        Game.redirectToScores();
+    }
 
 }
 

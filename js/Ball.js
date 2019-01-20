@@ -6,7 +6,7 @@ class Ball {
     	this.game = game;
         this.context = getContext("ball-canvas");
         // the constructor for the white ball gets called with 3 arguments, because it has no number
-        if (number === undefined) {
+        if (number === undefined) { // The white ball doesn't have a color-number. For this reason this color is white. 
             this.color = "white";
         } else {
             this.color = Ball.getColorForNumber(number);
@@ -16,7 +16,7 @@ class Ball {
         this.y = y;
         this.v = new Vector(0, 0);
         this.isMoving = false;
-        this.isBeingKilled = false;
+        this.isBeingKilled = false; // if ball deleted
         this.isFoul = false;
         this.clickAudio = document.getElementById("click_audio");
     }
@@ -74,19 +74,20 @@ class Ball {
         return (distance <= 2 * Ball.RADIUS);
     }
     
+    // One step for the ball when the ball is moving.  
     moveStep() {
-        if (!this.game.isPaused) {
-            this.v.scale(0.99);
+        if (!this.game.isPaused) { // if the game is paused, nothing should happends.
+            this.v.scale(0.99); // the ball becomes slower. It is a kind of friction.
 
             if (this.isBeingKilled || this.shouldStopMoving()) {
                 this.game.notifyBallStopped();
                 return;
             }
 
-            this.handleCushionCollision();
+            this.handleCushionCollision(); // Checks the collision with the border.
 
-            for (const ball of this.game.balls) {
-                if (this === ball) {
+            for (const ball of this.game.balls) { 
+                if (this === ball) { // The white ball collides with itselfs every time. For this reason this collision has to be ignored.
                     continue;
                 }
                 this.handleBallCollision(ball);
@@ -99,8 +100,8 @@ class Ball {
                     this.game.incrementFouls();
                     this.game.redrawTable();
                     this.isFoul = true;
-                    this.x = 2000;
-                    this.y = 2000;
+                    this.x = 2000; // For the time the other balls are moving, the white ball should not be on the table. 
+                    this.y = 2000; 
                     this.v = new Vector(0, 0);
                     this.isMoving = false;
                 } else if (this.color === "black") {
@@ -113,21 +114,23 @@ class Ball {
                 }
             }
 
-            this.x += this.v.x;
+            this.x += this.v.x; // The ball moves. The speed is a vector in x in y direction
             this.y += this.v.y;
         }
-        window.requestAnimationFrame(() => this.moveStep());
+        window.requestAnimationFrame(() => this.moveStep()); // Calls the "moveStep()" method again.
     }
 
+    // The balls should stop when the speed is smaller than 0.1 pixel per frame. Otherwise the balls would stop very late.
     shouldStopMoving() {
     	if (Math.abs(this.v.x) < 0.1 && Math.abs(this.v.y) < 0.1) {
-    	    this.v = new Vector(0, 0);
+    	    this.v = new Vector(0, 0); // the speed-vector has to be reset to 0.
             this.isMoving = false;
             return true;
         }
         return false;
     }
 
+    // Turns the speed-/direction verctor when the ball collides with the border.
     handleCushionCollision() {
     	if (this.x + this.v.x - Ball.RADIUS <= Table.X_LEFT || this.x + this.v.x + Ball.RADIUS >= Table.X_RIGHT) {
             this.v.x *= -1;
@@ -190,6 +193,7 @@ class Ball {
         }
     }
 
+    // Is called when the cue hits the white ball. The direction and power (speed) is calculated. 
     bump(theta, power) {
         this.isMoving = true;
 		this.v = new Vector(-Math.cos(theta), -Math.sin(theta));
@@ -214,14 +218,15 @@ class Ball {
 
     remove() {
     	// Remove the ball if it hits/falls in a hole:
-    	// Remove says, that the ball can't reach impossible cordinats. Performance doesn't matter.
+    	// Remove says, that the ball can't reach impossible coordinats. Performance doesn't matter.
     	const xDistance = this.game.ballsInHole;
-    	this.x = (this.context.canvas.width/2 - 7*Ball.RADIUS - 90) + xDistance * 20;
+    	this.x = (this.context.canvas.width/2 - 7*Ball.RADIUS - 90) + xDistance * 20; // The holed balls have to be lined up under the game-table.
 		this.y = 440;
-		this.v = new Vector(0,0);
+		this.v = new Vector(0,0); // Besides the speed/direction has to be reset. Otherwise these balls would move under the table.  
 	}
 
-    kill() {
+    // Remove balls from table.
+    kill() { 
     	this.isBeingKilled = true;
     	this.isMoving = false;
     }

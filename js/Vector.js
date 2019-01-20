@@ -20,12 +20,14 @@ class Vector {
     scale(factor) {
         this.x *= factor;
         this.y *= factor;
+        return this;
     }
 
     setLength(length) {
         this.normalize();
         // length is now 1
         this.scale(length);
+        return this;
     }
 
     plus(that) {

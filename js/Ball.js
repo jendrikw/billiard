@@ -161,17 +161,13 @@ class Ball {
             const newThisVDelta = ballVDelta;
             const newBallVDelta = thisVDelta;
 
-            // convert the new delta component to x-y-Vectors
-            const thisV1 = tangentNormal.copy();
-            thisV1.scale(thisVTangent);
-            const thisV2 = deltaVector.copy();
-            thisV2.scale(newThisVDelta);
+            // convert the new components to x-y-Vectors
+            const thisV1 = tangentNormal.copy().scale(thisVTangent);
+            const thisV2 = deltaVector.copy().scale(newThisVDelta);
             this.v = thisV1.plus(thisV2);
 
-            const ballV1 = tangentNormal.copy();
-            ballV1.scale(ballVTangent);
-            const ballV2 = deltaVector.copy();
-            ballV2.scale(newBallVDelta);
+            const ballV1 = tangentNormal.copy().scale(ballVTangent);
+            const ballV2 = deltaVector.copy().scale(newBallVDelta);
             ball.v = ballV1.plus(ballV2);
 
             console.log("[after collision]", "this.v.length()", this.v.length(), "ball.v.length()", ball.v.length(), "this.v", this.v, "ball.v", ball.v);

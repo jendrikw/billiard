@@ -48,6 +48,7 @@ body {
   line-height: 100px;
   margin: 0;
   vertical-align: middle;
+  height: 100px;
 }
 
 canvas {
@@ -153,6 +154,16 @@ footer {
   position: absolute;
   left: 0;
   height: 200px;
+}
+
+#pause {
+  background-image: url("../img/Pause.svg");
+  background-size: 100%;
+  border: 5px solid transparent;
+}
+
+#pause.isPaused {
+  border: 5px solid #ffb649;
 }
 
 .site-cont {

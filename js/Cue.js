@@ -110,11 +110,11 @@ class Cue {
     }
 
     allowedToShoot() {
-        const b = !this.game.areAnyBallsMoving();
+        const b = !this.game.areAnyBallsMoving() && !this.game.isPaused;
         console.log("allowedToShoot", b);
         return b;
     }
-    
+
     kill() {
     	delete this.game;
     	delete this.canvas;

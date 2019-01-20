@@ -27,14 +27,14 @@ class Game {
                 this.balls[ballIndex].y = Table.Y_MIDDLE + y * 2.1 * Ball.RADIUS;
             }
         }
-                
+
         this.cue = new Cue(this, this.balls[0]);
         this.nonoSuckingSound = document.getElementById("nono_sucking_audio");
         this.nonoSuckingSound.volume = 1.0;
 
         this.nonoSuckingGif = document.getElementById("nono_sucking_gif");
 
-        // Change endGameText and show the rest of the game without allowing to play. 
+        // Change endGameText and show the rest of the game without allowing to play.
         this.afterGameOptions = document.getElementById("after-game-block");
         this.afterGameText = document.getElementById("after-game-header");
         this.afterGameOptions.style.display = "none";
@@ -51,11 +51,15 @@ class Game {
         this.saveScoreButton = document.getElementById("send");
         this.saveScoreButton.addEventListener("click", () => this.saveScore());
 
+        this.pauseButton = document.getElementById("pause");
+        this.pauseButton.addEventListener("click", () => this.togglePaused());
+
         this.fouls = 0;
         this.bumps = 0;
         this.score = 0;
         this.ballIsBlack = false;
         this.table.draw();
+        this.isPaused = false;
         this.drawBalls();
     }
 
@@ -154,6 +158,10 @@ class Game {
         Game.redirectToScores();
     }
 
+    togglePaused() {
+        this.isPaused = !this.isPaused;
+        this.pauseButton.classList.toggle("isPaused");
+    }
 }
 
 

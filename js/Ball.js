@@ -64,45 +64,47 @@ class Ball {
     }
 
     moveStep() {
-        this.v.scale(0.99);
+        if (!this.game.isPaused) {
+            this.v.scale(0.99);
 
-        if (this.isBeingKilled || this.shouldStopMoving()) {
-        	this.game.notifyBallStopped();
-            return;
-        }
-
-        this.handleCushionCollision();
-
-        for (const ball of this.game.balls) {
-            if (this === ball) {
-                continue;
+            if (this.isBeingKilled || this.shouldStopMoving()) {
+                this.game.notifyBallStopped();
+                return;
             }
-            this.handleBallCollision(ball);
-        }
 
-        // hole collision:
-        const isInHole = this.checkHoleCollision();
-        if (isInHole) {
-            if (this.color === "white") {
-                this.game.incrementFouls();
-                this.game.redrawTable();
-                this.isFoul = true;
-                this.x = 2000;
-                this.y = 2000;
-                this.v = new Vector(0, 0);
-                this.isMoving = false;
-            } else if (this.color === "black") {
-                this.remove();
-                this.game.ballIsBlack = true;
-                this.game.handleGameWon();
-            } else {
-                this.remove();
-                this.game.handleGameWon();
+            this.handleCushionCollision();
+
+            for (const ball of this.game.balls) {
+                if (this === ball) {
+                    continue;
+                }
+                this.handleBallCollision(ball);
             }
-        }
 
-        this.x += this.v.x;
-        this.y += this.v.y;
+            // hole collision:
+            const isInHole = this.checkHoleCollision();
+            if (isInHole) {
+                if (this.color === "white") {
+                    this.game.incrementFouls();
+                    this.game.redrawTable();
+                    this.isFoul = true;
+                    this.x = 2000;
+                    this.y = 2000;
+                    this.v = new Vector(0, 0);
+                    this.isMoving = false;
+                } else if (this.color === "black") {
+                    this.remove();
+                    this.game.ballIsBlack = true;
+                    this.game.handleGameWon();
+                } else {
+                    this.remove();
+                    this.game.handleGameWon();
+                }
+            }
+
+            this.x += this.v.x;
+            this.y += this.v.y;
+        }
         window.requestAnimationFrame(() => this.moveStep());
     }
 

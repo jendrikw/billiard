@@ -36,7 +36,7 @@ class Table {
 		this.context.fillStyle = "#ffb649";
     	this.context.fillText("Fouls: " + this.game.fouls, 40, 50);
     	this.context.fillText("Eingelochte Bälle: " + this.game.ballsInHole, this.context.canvas.width / 2 - 100, 50);
-    	this.context.fillText("Schläge: " + this.game.bumps, 500, 50);
+    	this.context.fillText("Stöße: " + this.game.bumps, 500, 50);
     	this.context.fillText("Score: " + this.game.score, this.context.canvas.width/2 - 55, 20);
 
         // top

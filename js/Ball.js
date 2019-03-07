@@ -133,7 +133,7 @@ class Ball {
     // Turns the speed-/direction verctor when the ball collides with the border.
     handleCushionCollision() {
     	if (this.x + this.v.x - Ball.RADIUS <= Table.X_LEFT || this.x + this.v.x + Ball.RADIUS >= Table.X_RIGHT) {
-            this.v.x *= -1;
+    		this.v.x *= -1;
         }
         if (this.y + this.v.y - Ball.RADIUS <= Table.Y_TOP || this.y + this.v.y + Ball.RADIUS >= Table.Y_BOTTOM) {
             this.v.y *= -1;

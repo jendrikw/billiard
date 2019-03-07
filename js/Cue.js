@@ -68,14 +68,16 @@ class Cue {
 
     // increase the distance while the mouse is pressed
     increaseDistance() {
-        this.distance += 0.5;
-        this.clear();
-        this.drawWithDistance(this.distance + Ball.RADIUS);
-        if (this.mouseDown) {
-            window.requestAnimationFrame(() => this.increaseDistance());
-        } else {
+    	if(this.distance <= 50) {
+    		this.distance += 0.5;
             this.clear();
-        }
+            this.drawWithDistance(this.distance + Ball.RADIUS);
+            if (this.mouseDown) {
+                window.requestAnimationFrame(() => this.increaseDistance());
+            } else {
+                this.clear();
+            }
+    	}
     }
 
     // shoot when the mouse is released
@@ -146,4 +148,4 @@ Cue.LENGTH = 150;
 Cue.BALL_CUE_DISTANCE = 20;
 Cue.IMG = null; // set in constructor
 Cue.WIDTH = null; // set in constructor
-Cue.CUE_POWER_TO_BALL_SPEED_FACTOR = 0.3;
+Cue.CUE_POWER_TO_BALL_SPEED_FACTOR = 0.25;

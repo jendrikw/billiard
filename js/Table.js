@@ -183,7 +183,7 @@ class Table {
         this.context.lineJoin = "round";
         this.context.lineWidth = 1.9 * Table.HOLE_RADIUS;
         this.context.beginPath();
-        this.context.moveTo(Table.X_MIDDLE + 0.3 * Table.HOLE_RADIUS, Table.Y_BOTTOM);
+        this.context.moveTo(Table.X_MIDDLE - 0.3 * Table.HOLE_RADIUS, Table.Y_BOTTOM);
         this.context.lineTo(Table.X_MIDDLE, Table.Y_BOTTOM + Table.HOLE_RADIUS);
         this.context.lineTo(Table.X_MIDDLE + 0.3 * Table.HOLE_RADIUS, Table.Y_BOTTOM);
         this.context.stroke();

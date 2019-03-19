@@ -26,8 +26,15 @@ class Table {
                 new Vector(Table.X_MIDDLE, Table.Y_BOTTOM),
                 new Vector(Table.X_RIGHT, Table.Y_BOTTOM),
             ];
-
-            Table.HOLED_BALLS_X = Table.X_MIDDLE - 7 * Ball.RADIUS;
+            
+            // ball storage for holed balls (background)
+            Table.HOLED_BALLS_HEIGHT = Ball.RADIUS * 4;
+            Table.HOLED_BALLS_WIDTH = (this.game.numberOfBalls - 1) * Table.HOLED_BALLS_HEIGHT;
+            Table.HOLED_BALLS_TOP_LEFT_X = Table.X_MIDDLE - Table.HOLED_BALLS_WIDTH / 2;
+            
+            Table.HOLED_BALLS_MIDDLE_Y = Table.HOLED_BALLS_TOP_LEFT_Y + Table.HOLED_BALLS_HEIGHT / 2;
+            Table.HOLED_BALLS_LEFT_GRADIENT_CENTER_X = Table.HOLED_BALLS_TOP_LEFT_X + Table.HOLED_BALLS_HEIGHT / 2;
+            Table.HOLED_BALLS_RIGHT_GRADIENT_CENTER_X = Table.HOLED_BALLS_TOP_LEFT_X + Table.HOLED_BALLS_WIDTH - Table.HOLED_BALLS_HEIGHT / 2;
         }
     }
 
@@ -222,11 +229,32 @@ class Table {
         this.context.fill();
 
         // draw are for ball that have been holed
-        const holedAreaGradient = this.context.createLinearGradient(0, Table.Y_BOTTOM + Table.BORDER_WIDTH, 0, Table.Y_BOTTOM);
-        holedAreaGradient.addColorStop(0, Table.BORDER_OUTER_COLOR);
+        const holedAreaGradient = this.context.createLinearGradient(0, Table.HOLED_BALLS_TOP_LEFT_Y, 0, Table.HOLED_BALLS_TOP_LEFT_Y + Table.HOLED_BALLS_HEIGHT);
+        holedAreaGradient.addColorStop(0, Table.BORDER_INNER_COLOR);
+        holedAreaGradient.addColorStop(0.5, Table.BORDER_HOLED_BALL_INNER_COLOR);
         holedAreaGradient.addColorStop(1, Table.BORDER_INNER_COLOR);
         this.context.fillStyle = holedAreaGradient;
-        this.context.fillRect(Table.HOLED_BALLS_X - 20, Table.HOLED_BALLS_Y, Table.WIDTH, Table.BORDER_WIDTH + 1); // 1 for antialiasing
+        this.context.fillRect(Table.HOLED_BALLS_LEFT_GRADIENT_CENTER_X, Table.HOLED_BALLS_TOP_LEFT_Y, Table.HOLED_BALLS_WIDTH - Table.HOLED_BALLS_HEIGHT, Table.HOLED_BALLS_HEIGHT);
+        
+        const holedAreaLeftGradient = this.context.createRadialGradient(Table.HOLED_BALLS_LEFT_GRADIENT_CENTER_X, Table.HOLED_BALLS_MIDDLE_Y, Table.HOLED_BALLS_HEIGHT / 2, Table.HOLED_BALLS_LEFT_GRADIENT_CENTER_X, Table.HOLED_BALLS_MIDDLE_Y, 0);
+        holedAreaLeftGradient.addColorStop(0.1, Table.BORDER_INNER_COLOR);
+        holedAreaLeftGradient.addColorStop(1, Table.BORDER_HOLED_BALL_INNER_COLOR);
+        this.context.fillStyle = holedAreaLeftGradient;
+        this.context.moveTo(Table.HOLED_BALLS_LEFT_GRADIENT_CENTER_X, Table.HOLED_BALLS_MIDDLE_Y);
+        this.context.lineTo(Table.HOLED_BALLS_LEFT_GRADIENT_CENTER_X, Table.HOLED_BALLS_TOP_LEFT_Y + Table.HOLED_BALLS_HEIGHT / 2);
+        this.context.arc(Table.HOLED_BALLS_LEFT_GRADIENT_CENTER_X, Table.HOLED_BALLS_MIDDLE_Y, Table.HOLED_BALLS_HEIGHT / 2, 0.5 * Math.PI, 1.5 * Math.PI);
+        this.context.lineTo(Table.HOLED_BALLS_LEFT_GRADIENT_CENTER_X, Table.HOLED_BALLS_MIDDLE_Y);
+        this.context.fill();
+        
+        const holedAreaRightGradient = this.context.createRadialGradient(Table.HOLED_BALLS_RIGHT_GRADIENT_CENTER_X, Table.HOLED_BALLS_MIDDLE_Y, Table.HOLED_BALLS_HEIGHT / 2, Table.HOLED_BALLS_RIGHT_GRADIENT_CENTER_X, Table.HOLED_BALLS_MIDDLE_Y, 0);
+        holedAreaRightGradient.addColorStop(0.1, Table.BORDER_INNER_COLOR);
+        holedAreaRightGradient.addColorStop(1, Table.BORDER_HOLED_BALL_INNER_COLOR);
+        this.context.fillStyle = holedAreaRightGradient;
+        this.context.moveTo(Table.HOLED_BALLS_RIGHT_GRADIENT_CENTER_X, Table.HOLED_BALLS_MIDDLE_Y);
+        this.context.lineTo(Table.HOLED_BALLS_RIGHT_GRADIENT_CENTER_X, Table.HOLED_BALLS_TOP_LEFT_Y);
+        this.context.arc(Table.HOLED_BALLS_RIGHT_GRADIENT_CENTER_X, Table.HOLED_BALLS_MIDDLE_Y, Table.HOLED_BALLS_HEIGHT / 2, 1.5 * Math.PI, 2.5 * Math.PI);
+        this.context.lineTo(Table.HOLED_BALLS_RIGHT_GRADIENT_CENTER_X, Table.HOLED_BALLS_MIDDLE_Y);
+        this.context.fill();
     }
 }
 
@@ -236,6 +264,7 @@ Table.HEIGHT = scaleRealCentimetersToPixel(270 / 2);
 Table.COLOR = "green";
 Table.BORDER_OUTER_COLOR = "#432918";
 Table.BORDER_INNER_COLOR = "#7d4e24";
+Table.BORDER_HOLED_BALL_INNER_COLOR = "#4F301C";
 Table.BORDER_WIDTH = 29;
 Table.HOLE_RADIUS = 1.9 * Ball.RADIUS; // this factor was found by some testing
 // set in constructor, because they are dependant on the canvas
@@ -246,6 +275,9 @@ Table.Y_TOP = null;
 Table.Y_BOTTOM = null;
 Table.HOLES = null;
 
-Table.HOLED_BALLS_X = null;
-Table.HOLED_BALLS_Y = 440;
+
+Table.HOLED_BALLS_MIDDLE_Y = null;
+Table.HOLED_BALLS_TOP_LEFT_X = null;
+Table.HOLED_BALLS_TOP_LEFT_Y = 440;
+Table.HOLED_BALLS_WIDTH = null;
 Table.HOLED_BALLS_HEIGHT = null;

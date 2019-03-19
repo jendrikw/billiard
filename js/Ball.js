@@ -216,8 +216,8 @@ class Ball {
     	// Remove the ball if it hits/falls in a hole:
     	// Remove says, that the ball can't reach impossible coordinats. Performance doesn't matter.
     	const xDistance = this.game.ballsInHole;
-    	this.x = (this.context.canvas.width/2 - 7*Ball.RADIUS - 90) + xDistance * 20; // The holed balls have to be lined up under the game-table.
-		this.y = 440;
+    	this.x = Table.HOLED_BALLS_TOP_LEFT_X + xDistance * Ball.RADIUS * 2; // The holed balls have to be lined up under the game-table.
+		this.y = Table.HOLED_BALLS_TOP_LEFT_Y + Table.HOLED_BALLS_HEIGHT / 2;
 		this.v = new Vector(0,0); // Besides the speed/direction has to be reset. Otherwise these balls would move under the table.
 	}
 

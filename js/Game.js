@@ -16,7 +16,7 @@ class Game {
         	this.balls[i] = new Ball(this, 0, 0, i);
         }
 
-		//every ball gets a number 
+		//every ball gets a number
         let ballNumbers = [9, 7, 12, 15, 8, 1, 6, 10, 3, 14, 11, 2, 13, 4, 5];
         let i = 0;
         for (let x = 0; x > -5; x--) {
@@ -42,23 +42,24 @@ class Game {
         this.afterGameText = document.getElementById("after-game-header");
         this.afterGameOptions.style.display = "none";
         this.afterGameText.style.display = "none";
-		
+
 		//get the score-button and add an eventlistener to it
         this.scoresButton = document.getElementById("scores");
         this.scoresButton.addEventListener("click", () => Game.redirectToScores());
-		
+
 		//get the playername and add an eventlistener to it
         this.playerNameInput = document.getElementById("playername");
-		
-		//add a eventlistener to the send button
+
+		//add an eventlistener to the send button
         this.saveScoreButton = document.getElementById("send");
         this.saveScoreButton.addEventListener("click", () => this.saveScore());
-		
-		//add e eventlistener to the pause button
+
+		//add an eventlistener to the pause button
         this.pauseButton = document.getElementById("pause");
-        this.pauseButton.addEventListener("click", () => this.togglePaused());
-		
-		//Button to start a new game
+        this.pauseButton.removeEventListener("click", this.internalTogglePaused);
+        this.pauseButton.addEventListener("click", this.internalTogglePaused = () => this.togglePaused());
+
+		//Buttons to start a new game
         this.startNewGameButtons = document.getElementsByClassName("new-game");
         for (let button of this.startNewGameButtons) {
             button.addEventListener("click", () => {
@@ -74,12 +75,12 @@ class Game {
         this.table.draw();
         this.isPaused = false;
         this.drawBalls();
-    }    
-    
+    }
+
     calculateScore() {
     	this.score = this.ballsInHole * 200 - (this.bumps*10 + this.fouls*50); // Negative score is allowed.
     }
-    
+
     drawBalls() {
         this.ballContext.clearRect(0, 0, this.ballContext.canvas.width, this.ballContext.canvas.height);
         for (let b of this.balls) {
@@ -115,7 +116,7 @@ class Game {
         }
         this.redrawTable();
     }
-    
+
     end() {
 		//operations to end the game and open the "game ended screen"
         this.calculateScore();
@@ -124,7 +125,7 @@ class Game {
         this.afterGameOptions.style.display = "block";
         this.afterGameText.style.display = "block";
     }
-    
+
     playNono() {
 		//Play meme when ball is in the hole
     	this.nonoSuckingSound.pause();
@@ -134,7 +135,7 @@ class Game {
         this.nonoSuckingGif.style.display = "block";
         this.nonoSuckingSound.addEventListener("ended", () => {this.nonoSuckingGif.style.display = "none";});
     }
-    
+
     startANewGame() {
         this.afterGameOptions.style.display = "block";
         for (let ball of this.balls) {
@@ -148,10 +149,10 @@ class Game {
     notifyBallStopped() {
     	if(!this.areAnyBallsMoving() && this.balls[0].isFoul) {
     		// reset white ball
-    		
+
     		this.balls[0].x = Table.WHITE_BALL_X;
     		this.balls[0].y = Table.Y_MIDDLE;
-    		
+
     		this.handleCollisionAfterReset();
     		this.balls[0].draw();
     		this.balls[0].isFoul = false;
@@ -162,7 +163,7 @@ class Game {
     	let isFoulCollision = false;
 		let whiteBallCantBeDrawn = true;
 		let yDelta = Ball.RADIUS * 1.5;
-		
+
 		//if the white ball had a foul and is resetting on the place and the place is not empty, than the ball is changing the place where it spawn
     	while(whiteBallCantBeDrawn) {
 			let counter = 0;
@@ -171,7 +172,7 @@ class Game {
     			isFoulCollision = this.balls[0].checkFoulCollision(ball);
     			if(this.balls[0].y >= Table.Y_BOTTOM) {
 					this.balls[0].y = Table.Y_MIDDLE;
-					yDelta *= -1; 
+					yDelta *= -1;
 				}
     			if(isFoulCollision) {
     				this.balls[0].y += yDelta;
@@ -182,10 +183,10 @@ class Game {
     		if(counter === 0) {
     			whiteBallCantBeDrawn = false;
     		}
-    		
+
 		}
     }
-    
+
     redrawTable() {
     	this.calculateScore();
         this.table.draw();

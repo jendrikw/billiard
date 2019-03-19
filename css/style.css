@@ -160,10 +160,12 @@ footer {
   background-image: url("../img/Pause.svg");
   background-size: 100%;
   border: 5px solid transparent;
+  cursor: pointer;
 }
 
 #pause.isPaused {
   border: 5px solid #ffb649;
+  cursor: pointer;
 }
 
 .site-cont {
@@ -179,6 +181,7 @@ footer {
   text-align: center;
   display: block;
   margin: auto;
+  cursor: pointer;
 }
 
 #table {
@@ -206,6 +209,7 @@ footer {
 
 .unmute {
   background-image: url("../img/mute.png");
+  cursor: pointer;
 }
 
 th {

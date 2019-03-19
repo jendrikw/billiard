@@ -6,7 +6,7 @@ class Ball {
     	this.game = game;
         this.context = getContext("ball-canvas");
         // the constructor for the white ball gets called with 3 arguments, because it has no number
-        if (number === undefined) { // The white ball doesn't have a color-number. For this reason this color is white. 
+        if (number === undefined) { // The white ball doesn't have a color-number. For this reason this color is white.
             this.color = "white";
         } else {
             this.color = Ball.getColorForNumber(number);
@@ -73,10 +73,10 @@ class Ball {
         const distance = Math.sqrt(dx * dx + dy * dy);
         return (distance <= 2 * Ball.RADIUS);
     }
-    
-    // One step for the ball when the ball is moving.  
+
+    // One step for the ball when the ball is moving.
     moveStep() {
-        if (!this.game.isPaused) { // if the game is paused, nothing should happends.
+        if (!this.game.isPaused) { // if the game is paused, nothing should happend.
             this.v.scale(0.99); // the ball becomes slower. It is a kind of friction.
 
             if (this.isBeingKilled || this.shouldStopMoving()) {
@@ -86,8 +86,8 @@ class Ball {
 
             this.handleCushionCollision(); // Checks the collision with the border.
 
-            for (const ball of this.game.balls) { 
-                if (this === ball) { // The white ball collides with itselfs every time. For this reason this collision has to be ignored.
+            for (const ball of this.game.balls) {
+                if (this === ball) { // The white ball collides with itself every time. For this reason this collision has to be ignored.
                     continue;
                 }
                 this.handleBallCollision(ball);
@@ -100,8 +100,8 @@ class Ball {
                     this.game.incrementFouls();
                     this.game.redrawTable();
                     this.isFoul = true;
-                    this.x = 2000; // For the time the other balls are moving, the white ball should not be on the table. 
-                    this.y = 2000; 
+                    this.x = 2000; // For the time the other balls are moving, the white ball should not be on the table.
+                    this.y = 2000;
                     this.v = new Vector(0, 0);
                     this.isMoving = false;
                 } else if (this.color === "black") {
@@ -122,7 +122,7 @@ class Ball {
 
     // The balls should stop when the speed is smaller than 0.1 pixel per frame. Otherwise the balls would stop very late.
     shouldStopMoving() {
-    	if (Math.abs(this.v.x) < 0.1 && Math.abs(this.v.y) < 0.1) {
+    	if (this.v.length() < 0.1) {
     	    this.v = new Vector(0, 0); // the speed-vector has to be reset to 0.
             this.isMoving = false;
             return true;
@@ -193,17 +193,13 @@ class Ball {
         }
     }
 
-    // Is called when the cue hits the white ball. The direction and power (speed) is calculated. 
+    // Is called when the cue hits the white ball. The direction and power (speed) is calculated.
     bump(theta, power) {
         this.isMoving = true;
 		this.v = new Vector(-Math.cos(theta), -Math.sin(theta));
 		this.v.scale(power);
-		try{
-			this.moveStep();
-		} catch(err) {
-			console.log("Ein Fehler in 'moveStep() in 'Ball.js' ist aufgetreten. " + err);
-		}
-		 this.game.redrawTable();
+		this.moveStep();
+		this.game.redrawTable();
 	}
 
     checkHoleCollision() {
@@ -222,11 +218,11 @@ class Ball {
     	const xDistance = this.game.ballsInHole;
     	this.x = (this.context.canvas.width/2 - 7*Ball.RADIUS - 90) + xDistance * 20; // The holed balls have to be lined up under the game-table.
 		this.y = 440;
-		this.v = new Vector(0,0); // Besides the speed/direction has to be reset. Otherwise these balls would move under the table.  
+		this.v = new Vector(0,0); // Besides the speed/direction has to be reset. Otherwise these balls would move under the table.
 	}
 
     // Remove balls from table.
-    kill() { 
+    kill() {
     	this.isBeingKilled = true;
     	this.isMoving = false;
     }

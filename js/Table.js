@@ -28,13 +28,13 @@ class Table {
             ];
 
             // ball storage for holed balls (background)
-            Table.HOLED_BALLS_HEIGHT = Ball.RADIUS * 4;
-            Table.HOLED_BALLS_WIDTH = (this.game.numberOfBalls - 1) * Table.HOLED_BALLS_HEIGHT;
-            Table.HOLED_BALLS_LEFT_X = Table.X_MIDDLE - Table.HOLED_BALLS_WIDTH / 2;
+            Table.BALL_STORAGE_HEIGHT = Ball.RADIUS * 4;
+            Table.BALL_STORAGE_WIDTH = (this.game.numberOfBalls - 1) * Table.BALL_STORAGE_HEIGHT;
+            Table.BALL_STORAGE_LEFT_X = Table.X_MIDDLE - Table.BALL_STORAGE_WIDTH / 2;
 
-            Table.HOLED_BALLS_MIDDLE_Y = Table.HOLED_BALLS_TOP_Y + Table.HOLED_BALLS_HEIGHT / 2;
-            Table.HOLED_BALLS_LEFT_GRADIENT_CENTER_X = Table.HOLED_BALLS_LEFT_X + Table.HOLED_BALLS_HEIGHT / 2;
-            Table.HOLED_BALLS_RIGHT_GRADIENT_CENTER_X = Table.HOLED_BALLS_LEFT_X + Table.HOLED_BALLS_WIDTH - Table.HOLED_BALLS_HEIGHT / 2;
+            Table.BALL_STORAGE_MIDDLE_Y = Table.BALL_STORAGE_TOP_Y + Table.BALL_STORAGE_HEIGHT / 2;
+            Table.BALL_STORAGE_LEFT_GRADIENT_CENTER_X = Table.BALL_STORAGE_LEFT_X + Table.BALL_STORAGE_HEIGHT / 2;
+            Table.BALL_STORAGE_RIGHT_GRADIENT_CENTER_X = Table.BALL_STORAGE_LEFT_X + Table.BALL_STORAGE_WIDTH - Table.BALL_STORAGE_HEIGHT / 2;
         }
     }
 
@@ -47,6 +47,38 @@ class Table {
     	this.context.fillText("Eingelochte Bälle: " + this.game.ballsInHole, this.context.canvas.width / 2 - 100, 50);
     	this.context.fillText("Stöße: " + this.game.bumps, 500, 50);
     	this.context.fillText("Score: " + this.game.score, this.context.canvas.width/2 - 55, 20);
+
+        // draw area for ball that have been holed
+        const holedAreaGradient = this.context.createLinearGradient(0, Table.BALL_STORAGE_TOP_Y, 0, Table.BALL_STORAGE_TOP_Y + Table.BALL_STORAGE_HEIGHT);
+        holedAreaGradient.addColorStop(0, Table.BORDER_INNER_COLOR);
+        holedAreaGradient.addColorStop(0.5, Table.BORDER_HOLED_BALL_INNER_COLOR);
+        holedAreaGradient.addColorStop(1, Table.BORDER_INNER_COLOR);
+        this.context.fillStyle = holedAreaGradient;
+        this.context.beginPath();
+        this.context.fillRect(Table.BALL_STORAGE_LEFT_GRADIENT_CENTER_X, Table.BALL_STORAGE_TOP_Y, Table.BALL_STORAGE_WIDTH - Table.BALL_STORAGE_HEIGHT, Table.BALL_STORAGE_HEIGHT);
+        this.context.closePath();
+
+        const holedAreaLeftGradient = this.context.createRadialGradient(Table.BALL_STORAGE_LEFT_GRADIENT_CENTER_X, Table.BALL_STORAGE_MIDDLE_Y, Table.BALL_STORAGE_HEIGHT / 2, Table.BALL_STORAGE_LEFT_GRADIENT_CENTER_X, Table.BALL_STORAGE_MIDDLE_Y, 0);
+        holedAreaLeftGradient.addColorStop(0.1, Table.BORDER_INNER_COLOR);
+        holedAreaLeftGradient.addColorStop(1, Table.BORDER_HOLED_BALL_INNER_COLOR);
+        this.context.fillStyle = holedAreaLeftGradient;
+        this.context.beginPath();
+        this.context.moveTo(Table.BALL_STORAGE_LEFT_GRADIENT_CENTER_X, Table.BALL_STORAGE_MIDDLE_Y);
+        this.context.lineTo(Table.BALL_STORAGE_LEFT_GRADIENT_CENTER_X, Table.BALL_STORAGE_TOP_Y + Table.BALL_STORAGE_HEIGHT / 2);
+        this.context.arc(Table.BALL_STORAGE_LEFT_GRADIENT_CENTER_X, Table.BALL_STORAGE_MIDDLE_Y, Table.BALL_STORAGE_HEIGHT / 2, 0.5 * Math.PI, 1.5 * Math.PI);
+        this.context.lineTo(Table.BALL_STORAGE_LEFT_GRADIENT_CENTER_X, Table.BALL_STORAGE_MIDDLE_Y);
+        this.context.fill();
+
+        const holedAreaRightGradient = this.context.createRadialGradient(Table.BALL_STORAGE_RIGHT_GRADIENT_CENTER_X, Table.BALL_STORAGE_MIDDLE_Y, Table.BALL_STORAGE_HEIGHT / 2, Table.BALL_STORAGE_RIGHT_GRADIENT_CENTER_X, Table.BALL_STORAGE_MIDDLE_Y, 0);
+        holedAreaRightGradient.addColorStop(0.1, Table.BORDER_INNER_COLOR);
+        holedAreaRightGradient.addColorStop(1, Table.BORDER_HOLED_BALL_INNER_COLOR);
+        this.context.fillStyle = holedAreaRightGradient;
+        this.context.beginPath();
+        this.context.moveTo(Table.BALL_STORAGE_RIGHT_GRADIENT_CENTER_X, Table.BALL_STORAGE_MIDDLE_Y);
+        this.context.lineTo(Table.BALL_STORAGE_RIGHT_GRADIENT_CENTER_X, Table.BALL_STORAGE_TOP_Y);
+        this.context.arc(Table.BALL_STORAGE_RIGHT_GRADIENT_CENTER_X, Table.BALL_STORAGE_MIDDLE_Y, Table.BALL_STORAGE_HEIGHT / 2, 1.5 * Math.PI, 2.5 * Math.PI);
+        this.context.lineTo(Table.BALL_STORAGE_RIGHT_GRADIENT_CENTER_X, Table.BALL_STORAGE_MIDDLE_Y);
+        this.context.fill();
 
         // top
         const topGradient = this.context.createLinearGradient(0, Table.Y_TOP - Table.BORDER_WIDTH, 0, Table.Y_TOP);
@@ -81,6 +113,7 @@ class Table {
         topLeftCornerGradient.addColorStop(0.1, Table.BORDER_OUTER_COLOR);
         topLeftCornerGradient.addColorStop(0.9, Table.BORDER_INNER_COLOR);
         this.context.fillStyle = topLeftCornerGradient;
+        this.context.beginPath();
         this.context.moveTo(Table.X_LEFT, Table.Y_TOP + 1);
         this.context.lineTo(Table.X_LEFT - Table.BORDER_WIDTH, Table.Y_TOP + 1);
         this.context.arcTo(Table.X_LEFT - Table.BORDER_WIDTH, Table.Y_TOP - Table.BORDER_WIDTH, Table.X_LEFT + 1, Table.Y_TOP - Table.BORDER_WIDTH, Table.BORDER_WIDTH);
@@ -216,7 +249,7 @@ class Table {
         this.context.arc(Table.X_LEFT, Table.Y_BOTTOM, Table.HOLE_RADIUS, 0, 2 * Math.PI);
         this.context.fill();
 
-        // draw line for white ball
+        // draw white dot for white ball
         this.context.fillStyle = "#AAAAAA80";
         this.context.beginPath();
         this.context.arc(Table.WHITE_BALL_X, Table.Y_MIDDLE, 2, 0, 2 * Math.PI);
@@ -226,34 +259,6 @@ class Table {
         this.context.fillStyle = "#AAAAAA80";
         this.context.beginPath();
         this.context.arc(Table.APEX_BALL_X, Table.Y_MIDDLE, 2, 0, 2 * Math.PI);
-        this.context.fill();
-
-        // draw are for ball that have been holed
-        const holedAreaGradient = this.context.createLinearGradient(0, Table.HOLED_BALLS_TOP_Y, 0, Table.HOLED_BALLS_TOP_Y + Table.HOLED_BALLS_HEIGHT);
-        holedAreaGradient.addColorStop(0, Table.BORDER_INNER_COLOR);
-        holedAreaGradient.addColorStop(0.5, Table.BORDER_HOLED_BALL_INNER_COLOR);
-        holedAreaGradient.addColorStop(1, Table.BORDER_INNER_COLOR);
-        this.context.fillStyle = holedAreaGradient;
-        this.context.fillRect(Table.HOLED_BALLS_LEFT_GRADIENT_CENTER_X, Table.HOLED_BALLS_TOP_Y, Table.HOLED_BALLS_WIDTH - Table.HOLED_BALLS_HEIGHT, Table.HOLED_BALLS_HEIGHT);
-
-        const holedAreaLeftGradient = this.context.createRadialGradient(Table.HOLED_BALLS_LEFT_GRADIENT_CENTER_X, Table.HOLED_BALLS_MIDDLE_Y, Table.HOLED_BALLS_HEIGHT / 2, Table.HOLED_BALLS_LEFT_GRADIENT_CENTER_X, Table.HOLED_BALLS_MIDDLE_Y, 0);
-        holedAreaLeftGradient.addColorStop(0.1, Table.BORDER_INNER_COLOR);
-        holedAreaLeftGradient.addColorStop(1, Table.BORDER_HOLED_BALL_INNER_COLOR);
-        this.context.fillStyle = holedAreaLeftGradient;
-        this.context.moveTo(Table.HOLED_BALLS_LEFT_GRADIENT_CENTER_X, Table.HOLED_BALLS_MIDDLE_Y);
-        this.context.lineTo(Table.HOLED_BALLS_LEFT_GRADIENT_CENTER_X, Table.HOLED_BALLS_TOP_Y + Table.HOLED_BALLS_HEIGHT / 2);
-        this.context.arc(Table.HOLED_BALLS_LEFT_GRADIENT_CENTER_X, Table.HOLED_BALLS_MIDDLE_Y, Table.HOLED_BALLS_HEIGHT / 2, 0.5 * Math.PI, 1.5 * Math.PI);
-        this.context.lineTo(Table.HOLED_BALLS_LEFT_GRADIENT_CENTER_X, Table.HOLED_BALLS_MIDDLE_Y);
-        this.context.fill();
-
-        const holedAreaRightGradient = this.context.createRadialGradient(Table.HOLED_BALLS_RIGHT_GRADIENT_CENTER_X, Table.HOLED_BALLS_MIDDLE_Y, Table.HOLED_BALLS_HEIGHT / 2, Table.HOLED_BALLS_RIGHT_GRADIENT_CENTER_X, Table.HOLED_BALLS_MIDDLE_Y, 0);
-        holedAreaRightGradient.addColorStop(0.1, Table.BORDER_INNER_COLOR);
-        holedAreaRightGradient.addColorStop(1, Table.BORDER_HOLED_BALL_INNER_COLOR);
-        this.context.fillStyle = holedAreaRightGradient;
-        this.context.moveTo(Table.HOLED_BALLS_RIGHT_GRADIENT_CENTER_X, Table.HOLED_BALLS_MIDDLE_Y);
-        this.context.lineTo(Table.HOLED_BALLS_RIGHT_GRADIENT_CENTER_X, Table.HOLED_BALLS_TOP_Y);
-        this.context.arc(Table.HOLED_BALLS_RIGHT_GRADIENT_CENTER_X, Table.HOLED_BALLS_MIDDLE_Y, Table.HOLED_BALLS_HEIGHT / 2, 1.5 * Math.PI, 2.5 * Math.PI);
-        this.context.lineTo(Table.HOLED_BALLS_RIGHT_GRADIENT_CENTER_X, Table.HOLED_BALLS_MIDDLE_Y);
         this.context.fill();
     }
 }
@@ -276,10 +281,10 @@ Table.Y_BOTTOM = null;
 Table.HOLES = null;
 
 
-Table.HOLED_BALLS_MIDDLE_Y = null;
-Table.HOLED_BALLS_LEFT_X = null;
-Table.HOLED_BALLS_TOP_Y = 440;
-Table.HOLED_BALLS_WIDTH = null;
-Table.HOLED_BALLS_HEIGHT = null;
-Table.HOLED_BALLS_LEFT_GRADIENT_CENTER_X = null;
-Table.HOLED_BALLS_RIGHT_GRADIENT_CENTER_X = null;
+Table.BALL_STORAGE_MIDDLE_Y = null;
+Table.BALL_STORAGE_LEFT_X = null;
+Table.BALL_STORAGE_TOP_Y = 440;
+Table.BALL_STORAGE_WIDTH = null;
+Table.BALL_STORAGE_HEIGHT = null;
+Table.BALL_STORAGE_LEFT_GRADIENT_CENTER_X = null;
+Table.BALL_STORAGE_RIGHT_GRADIENT_CENTER_X = null;

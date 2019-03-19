@@ -26,6 +26,8 @@ class Table {
                 new Vector(Table.X_MIDDLE, Table.Y_BOTTOM),
                 new Vector(Table.X_RIGHT, Table.Y_BOTTOM),
             ];
+
+            Table.HOLED_BALLS_X = Table.X_MIDDLE - 7 * Ball.RADIUS;
         }
     }
 
@@ -219,6 +221,12 @@ class Table {
         this.context.arc(Table.APEX_BALL_X, Table.Y_MIDDLE, 2, 0, 2 * Math.PI);
         this.context.fill();
 
+        // draw are for ball that have been holed
+        const holedAreaGradient = this.context.createLinearGradient(0, Table.Y_BOTTOM + Table.BORDER_WIDTH, 0, Table.Y_BOTTOM);
+        holedAreaGradient.addColorStop(0, Table.BORDER_OUTER_COLOR);
+        holedAreaGradient.addColorStop(1, Table.BORDER_INNER_COLOR);
+        this.context.fillStyle = holedAreaGradient;
+        this.context.fillRect(Table.HOLED_BALLS_X - 20, Table.HOLED_BALLS_Y, Table.WIDTH, Table.BORDER_WIDTH + 1); // 1 for antialiasing
     }
 }
 
@@ -237,3 +245,7 @@ Table.X_RIGHT = null;
 Table.Y_TOP = null;
 Table.Y_BOTTOM = null;
 Table.HOLES = null;
+
+Table.HOLED_BALLS_X = null;
+Table.HOLED_BALLS_Y = 440;
+Table.HOLED_BALLS_HEIGHT = null;

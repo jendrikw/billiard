@@ -58,12 +58,16 @@ class Game {
         this.pauseButton = document.getElementById("pause");
         this.pauseButton.removeEventListener("click", this.internalTogglePaused);
         this.pauseButton.addEventListener("click", this.internalTogglePaused = () => this.togglePaused());
-
+		if(this.isPaused){
+			togglePaused();
+		}
+		
 		//Buttons to start a new game
         this.startNewGameButtons = document.getElementsByClassName("new-game");
         for (let button of this.startNewGameButtons) {
             button.addEventListener("click", () => {
-                this.cue.kill();
+                
+				this.cue.kill();
                 this.startANewGame();
             });
         }

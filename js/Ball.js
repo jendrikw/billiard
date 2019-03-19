@@ -145,7 +145,6 @@ class Ball {
         const dy = ball.y - (this.y + this.v.y);
         const ballMidPointsDistance = Math.sqrt(dx * dx + dy * dy);
         if (ballMidPointsDistance <= 2 * Ball.RADIUS) {
-            console.log("[before collision]", "this.v.length()", this.v.length(), "this.v", this.v, "ball.v", ball.v);
             this.clickAudio.currentTime = 0;
             this.clickAudio.play();
 
@@ -185,8 +184,6 @@ class Ball {
             const ballV1 = tangentNormal.copy().scale(ballVTangent);
             const ballV2 = deltaVector.copy().scale(newBallVDelta);
             ball.v = ballV1.plus(ballV2);
-
-            console.log("[after collision]", "this.v.length()", this.v.length(), "ball.v.length()", ball.v.length(), "this.v", this.v, "ball.v", ball.v);
 
             ball.isMoving = true;
             ball.moveStep();

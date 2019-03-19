@@ -68,7 +68,7 @@ class Cue {
 
     // increase the distance while the mouse is pressed
     increaseDistance() {
-    	if(this.distance <= 50) {
+    	if(this.distance <= 200) {
     		this.distance += 0.5;
     	}
     	this.clear();

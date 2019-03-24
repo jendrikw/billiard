@@ -59,14 +59,14 @@ class Game {
         this.pauseButton.removeEventListener("click", this.internalTogglePaused);
         this.pauseButton.addEventListener("click", this.internalTogglePaused = () => this.togglePaused());
 		if(this.isPaused){
-			togglePaused();
+			this.togglePaused();
 		}
-		
+
 		//Buttons to start a new game
         this.startNewGameButtons = document.getElementsByClassName("new-game");
         for (let button of this.startNewGameButtons) {
             button.addEventListener("click", () => {
-                
+
 				this.cue.kill();
                 this.startANewGame();
             });
@@ -164,7 +164,7 @@ class Game {
     }
 
     handleCollisionAfterReset() {
-    	let isFoulCollision = false;
+        // this function finds a position for the white ball after a foul
 		let whiteBallCantBeDrawn = true;
 		let yDelta = Ball.RADIUS * 1.5;
 
@@ -173,21 +173,18 @@ class Game {
 			let counter = 0;
 			// Check collision after reset white ball.
     		for (let ball of this.balls) {
-    			isFoulCollision = this.balls[0].checkFoulCollision(ball);
-    			if(this.balls[0].y >= Table.Y_BOTTOM) {
+                if(this.balls[0].y >= Table.Y_BOTTOM) {
 					this.balls[0].y = Table.Y_MIDDLE;
 					yDelta *= -1;
 				}
-    			if(isFoulCollision) {
+    			if(this.balls[0].checkFoulCollision(ball)) {
     				this.balls[0].y += yDelta;
     				counter++;
     			}
-    			isFoulCollision = false;
 			}
     		if(counter === 0) {
     			whiteBallCantBeDrawn = false;
     		}
-
 		}
     }
 

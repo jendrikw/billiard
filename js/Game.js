@@ -6,17 +6,17 @@ class Game {
     }
 
     start() {
-		//initialisation from the balls on the Table
+        //initialisation from the balls on the Table
         this.numberOfBalls = 15;
         this.ballsInHole = 0;
         this.table = new Table(this);
         this.balls = [];
         this.balls[0] = new Ball(this, Table.WHITE_BALL_X, Table.Y_MIDDLE);
         for (let i = 1; i <= this.numberOfBalls; i++) {
-        	this.balls[i] = new Ball(this, 0, 0, i);
+            this.balls[i] = new Ball(this, 0, 0, i);
         }
 
-		//every ball gets a number
+        //every ball gets a number
         let ballNumbers = [9, 7, 12, 15, 8, 1, 6, 10, 3, 14, 11, 2, 13, 4, 5];
         let i = 0;
         for (let x = 0; x > -5; x--) {
@@ -30,7 +30,7 @@ class Game {
             }
         }
 
-		// cue spawns on the ball
+        // cue spawns on the ball
         this.cue = new Cue(this, this.balls[0]);
         this.nonoSuckingSound = document.getElementById("nono_sucking_audio");
         this.nonoSuckingSound.volume = 1.0;
@@ -43,31 +43,31 @@ class Game {
         this.afterGameOptions.style.display = "none";
         this.afterGameText.style.display = "none";
 
-		//get the score-button and add an eventlistener to it
+        //get the score-button and add an eventlistener to it
         this.scoresButton = document.getElementById("scores");
         this.scoresButton.addEventListener("click", () => Game.redirectToScores());
 
-		//get the playername and add an eventlistener to it
+        //get the playername and add an eventlistener to it
         this.playerNameInput = document.getElementById("playername");
 
-		//add an eventlistener to the send button
+        //add an eventlistener to the send button
         this.saveScoreButton = document.getElementById("send");
         this.saveScoreButton.addEventListener("click", () => this.saveScore());
 
-		//add an eventlistener to the pause button
+        //add an eventlistener to the pause button
         this.pauseButton = document.getElementById("pause");
         this.pauseButton.removeEventListener("click", this.internalTogglePaused);
         this.pauseButton.addEventListener("click", this.internalTogglePaused = () => this.togglePaused());
-		if(this.isPaused){
-			this.togglePaused();
-		}
+        if (this.isPaused) {
+            this.togglePaused();
+        }
 
-		//Buttons to start a new game
+        //Buttons to start a new game
         this.startNewGameButtons = document.getElementsByClassName("new-game");
         for (let button of this.startNewGameButtons) {
             button.addEventListener("click", () => {
 
-				this.cue.kill();
+                this.cue.kill();
                 this.startANewGame();
             });
         }
@@ -82,7 +82,7 @@ class Game {
     }
 
     calculateScore() {
-    	this.score = this.ballsInHole * 200 - (this.bumps*10 + this.fouls*50); // Negative score is allowed.
+        this.score = this.ballsInHole * 200 - (this.bumps * 10 + this.fouls * 50); // Negative score is allowed.
     }
 
     drawBalls() {
@@ -98,11 +98,11 @@ class Game {
     }
 
     incrementFouls() {
-    	this.fouls++;
+        this.fouls++;
     }
 
     incrementBumps() {
-    	this.bumps++;
+        this.bumps++;
     }
 
     handleGameWon() {
@@ -110,19 +110,19 @@ class Game {
         this.playNono(); // play a GIF
 
         // Check, game won or not (black ball):
-        if((this.ballsInHole < this.numberOfBalls) && (this.ballIsBlack)) {
-        	this.afterGameText.innerHTML = "Verloren";
-        	this.end();
+        if ((this.ballsInHole < this.numberOfBalls) && (this.ballIsBlack)) {
+            this.afterGameText.innerHTML = "Verloren";
+            this.end();
         }
         if (this.ballsInHole === this.numberOfBalls) {
-        	this.afterGameText.innerHTML = "Gewonnen";
+            this.afterGameText.innerHTML = "Gewonnen";
             this.end();
         }
         this.redrawTable();
     }
 
     end() {
-		//operations to end the game and open the "game ended screen"
+        //operations to end the game and open the "game ended screen"
         this.calculateScore();
         this.redrawTable();
         this.cue.kill();
@@ -131,13 +131,15 @@ class Game {
     }
 
     playNono() {
-		//Play meme when ball is in the hole
-    	this.nonoSuckingSound.pause();
+        //Play meme when ball is in the hole
+        this.nonoSuckingSound.pause();
         this.nonoSuckingSound.currentTime = 0;
         this.nonoSuckingSound.play();
 
         this.nonoSuckingGif.style.display = "block";
-        this.nonoSuckingSound.addEventListener("ended", () => {this.nonoSuckingGif.style.display = "none";});
+        this.nonoSuckingSound.addEventListener("ended", () => {
+            this.nonoSuckingGif.style.display = "none";
+        });
     }
 
     startANewGame() {
@@ -151,45 +153,45 @@ class Game {
 
     // For white ball. Foul. Wait until all balls are stopped:
     notifyBallStopped() {
-    	if(!this.areAnyBallsMoving() && this.balls[0].isFoul) {
-    		// reset white ball
+        if (!this.areAnyBallsMoving() && this.balls[0].isFoul) {
+            // reset white ball
 
-    		this.balls[0].x = Table.WHITE_BALL_X;
-    		this.balls[0].y = Table.Y_MIDDLE;
+            this.balls[0].x = Table.WHITE_BALL_X;
+            this.balls[0].y = Table.Y_MIDDLE;
 
-    		this.handleCollisionAfterReset();
-    		this.balls[0].draw();
-    		this.balls[0].isFoul = false;
-    	}
+            this.handleCollisionAfterReset();
+            this.balls[0].draw();
+            this.balls[0].isFoul = false;
+        }
     }
 
     handleCollisionAfterReset() {
         // this function finds a position for the white ball after a foul
-		let whiteBallCantBeDrawn = true;
-		let yDelta = Ball.RADIUS * 1.5;
+        let whiteBallCantBeDrawn = true;
+        let yDelta = Ball.RADIUS * 1.5;
 
-		//if the white ball had a foul and is resetting on the place and the place is not empty, than the ball is changing the place where it spawn
-    	while(whiteBallCantBeDrawn) {
-			let counter = 0;
-			// Check collision after reset white ball.
-    		for (let ball of this.balls) {
-                if(this.balls[0].y >= Table.Y_BOTTOM) {
-					this.balls[0].y = Table.Y_MIDDLE;
-					yDelta *= -1;
-				}
-    			if(this.balls[0].checkFoulCollision(ball)) {
-    				this.balls[0].y += yDelta;
-    				counter++;
-    			}
-			}
-    		if(counter === 0) {
-    			whiteBallCantBeDrawn = false;
-    		}
-		}
+        //if the white ball had a foul and is resetting on the place and the place is not empty, than the ball is changing the place where it spawn
+        while (whiteBallCantBeDrawn) {
+            let counter = 0;
+            // Check collision after reset white ball.
+            for (let ball of this.balls) {
+                if (this.balls[0].y >= Table.Y_BOTTOM) {
+                    this.balls[0].y = Table.Y_MIDDLE;
+                    yDelta *= -1;
+                }
+                if (this.balls[0].checkFoulCollision(ball)) {
+                    this.balls[0].y += yDelta;
+                    counter++;
+                }
+            }
+            if (counter === 0) {
+                whiteBallCantBeDrawn = false;
+            }
+        }
     }
 
     redrawTable() {
-    	this.calculateScore();
+        this.calculateScore();
         this.table.draw();
     }
 

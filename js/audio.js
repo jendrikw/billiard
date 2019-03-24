@@ -3,24 +3,23 @@
 function toggleMusic() {
     const music = document.getElementById('music');
     try {
-    	if (music.paused) {
+        if (music.paused) {
             music.play();
         } else {
             music.pause();
             music.currentTime = 0;
         }
-    } catch(err) {
-    	console.log("Es gab ein Problem mit der Musik. " + err);
+    } catch (err) {
+        console.log("Es gab ein Problem mit der Musik. " + err);
     }
 
 }
 
 function toggleClass() {
     const cm = document.getElementById('control-music');
-    if (cm.className === "mute"){
+    if (cm.className === "mute") {
         cm.className = "unmute";
-    }
-    else {
+    } else {
         cm.className = "mute";
     }
 }

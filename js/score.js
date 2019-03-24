@@ -1,11 +1,11 @@
 'use strict';
 
 function onload() {
-	// load score-data from local storage
+    // load score-data from local storage
     let scores = localStorage.getItem("scores");
 
-	// if scores don't exists use an empty array, if not parse the json data in an array
-	if (scores === null) {
+    // if scores don't exists use an empty array, if not parse the json data in an array
+    if (scores === null) {
         scores = {scores: []};
     } else {
         try {
@@ -16,7 +16,7 @@ function onload() {
         }
     }
 
-	// load the json file with the dummy scores
+    // load the json file with the dummy scores
     fetch('score.json')
         .then(response => response.json())
         .then(json => createTable(scores.scores.concat(json.scores)))

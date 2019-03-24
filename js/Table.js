@@ -15,8 +15,8 @@ class Table {
             Table.Y_BOTTOM = Table.Y_TOP + Table.HEIGHT;
             Table.Y_MIDDLE = Table.Y_TOP + Table.HEIGHT / 2;
 
-            Table.APEX_BALL_X = Table.X_LEFT + (1/4) * Table.WIDTH;
-            Table.WHITE_BALL_X = Table.X_LEFT + (3/4) * Table.WIDTH;
+            Table.APEX_BALL_X = Table.X_LEFT + (1 / 4) * Table.WIDTH;
+            Table.WHITE_BALL_X = Table.X_LEFT + (3 / 4) * Table.WIDTH;
 
             Table.HOLES = [
                 new Vector(Table.X_LEFT, Table.Y_TOP),
@@ -40,13 +40,13 @@ class Table {
 
     draw() {
         // draw the information texts
-    	this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height);
-    	this.context.font = "22px serif";
-		this.context.fillStyle = "#ffb649";
-    	this.context.fillText("Fouls: " + this.game.fouls, 40, 50);
-    	this.context.fillText("Eingelochte Bälle: " + this.game.ballsInHole, this.context.canvas.width / 2 - 100, 50);
-    	this.context.fillText("Stöße: " + this.game.bumps, 500, 50);
-    	this.context.fillText("Score: " + this.game.score, this.context.canvas.width/2 - 55, 20);
+        this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height);
+        this.context.font = "22px serif";
+        this.context.fillStyle = "#ffb649";
+        this.context.fillText("Fouls: " + this.game.fouls, 40, 50);
+        this.context.fillText("Eingelochte Bälle: " + this.game.ballsInHole, this.context.canvas.width / 2 - 100, 50);
+        this.context.fillText("Stöße: " + this.game.bumps, 500, 50);
+        this.context.fillText("Score: " + this.game.score, this.context.canvas.width / 2 - 55, 20);
 
         // draw area for ball that have been holed
         const holedAreaGradient = this.context.createLinearGradient(0, Table.BALL_STORAGE_TOP_Y, 0, Table.BALL_STORAGE_TOP_Y + Table.BALL_STORAGE_HEIGHT);

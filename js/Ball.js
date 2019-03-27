@@ -96,7 +96,7 @@ class Ball {
             // hole collision:
             const isInHole = this.checkHoleCollision();
             if (isInHole) {
-            	console.log("Holed one ball with the color: " + this.color);
+                console.log("Holed one ball with the color: " + this.color);
                 if (this.color === "white") {
                     this.game.incrementFouls();
                     this.game.redrawTable();
@@ -106,16 +106,16 @@ class Ball {
                     this.v = new Vector(0, 0);
                     this.isMoving = false;
                 } else if (this.color === "black") {
+                    console.log("This is the end of the game. You lost!");
                     this.remove();
-                    this.game.ballIsBlack = true;
-                    this.game.handleGameWon();
+                    this.game.handleGameWon(true);
                 } else {
                     this.remove();
-                    this.game.handleGameWon();
+                    this.game.handleGameWon(false);
                 }
             }
 
-            this.x += this.v.x; // The ball moves. The speed is a vector in x in y direction
+            this.x += this.v.x; // The ball moves. The speed is a vector in x and y direction
             this.y += this.v.y;
         }
         window.requestAnimationFrame(() => this.moveStep()); // Calls the "moveStep()" method again.

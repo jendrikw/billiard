@@ -128,7 +128,6 @@ class Cue {
     allowedToShoot() {
         // the player is not allowed to shoot if some balls are still moving or the game is paused
         const b = !this.game.areAnyBallsMoving() && !this.game.isPaused;
-        console.log("allowedToShoot", b);
         return b;
     }
 

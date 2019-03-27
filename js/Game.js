@@ -103,6 +103,7 @@ class Game {
 
     incrementBumps() {
         this.bumps++;
+        console.log("You shot.");
     }
 
     handleGameWon() {
@@ -113,10 +114,12 @@ class Game {
         if ((this.ballsInHole < this.numberOfBalls) && (this.ballIsBlack)) {
             this.afterGameText.innerHTML = "Verloren";
             this.end();
+            console.log("This is the end of the game. You lost!");
         }
         if (this.ballsInHole === this.numberOfBalls) {
             this.afterGameText.innerHTML = "Gewonnen";
             this.end();
+            console.log("This is the end of the game. You won!");
         }
         this.redrawTable();
     }
@@ -143,6 +146,7 @@ class Game {
     }
 
     startANewGame() {
+    	console.log("A new game was started.");
         this.afterGameOptions.style.display = "block";
         for (let ball of this.balls) {
             // requestAnimationFrame für die Bälle vom alten Spiel verhindern:
@@ -207,14 +211,17 @@ class Game {
         } else {
             scores = JSON.parse(scores);
         }
-        scores.scores.push({name, score: this.score});
+        const newScore = {name, score: this.score};
+        scores.scores.push(newScore);
         localStorage.setItem("scores", JSON.stringify(scores));
+        console.log("Saved score: ", newScore);
         Game.redirectToScores();
     }
 
     togglePaused() {
         this.isPaused = !this.isPaused;
         this.pauseButton.classList.toggle("isPaused");
+        console.log("Pause-button clicked.");
     }
 }
 

@@ -96,6 +96,7 @@ class Ball {
             // hole collision:
             const isInHole = this.checkHoleCollision();
             if (isInHole) {
+            	console.log("Holed one ball with the color: " + this.color);
                 if (this.color === "white") {
                     this.game.incrementFouls();
                     this.game.redrawTable();

@@ -3,7 +3,7 @@
 function onload() {
     // load score-data from local storage
     let scores = localStorage.getItem("scores");
-
+    console.log("Loaded scores: ", scores);
     // if scores don't exists use an empty array, if not parse the json data in an array
     if (scores === null) {
         scores = {scores: []};

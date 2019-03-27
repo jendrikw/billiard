@@ -33,7 +33,7 @@ class Game {
         // cue spawns on the ball
         this.cue = new Cue(this, this.balls[0]);
         this.nonoSuckingSound = document.getElementById("nono_sucking_audio");
-        if(nonoSuckingSound == null) {
+        if(this.nonoSuckingSound == null) {
         	throw new TypeError("Nono's sound is not available.", "Game.js","35");
         }
         this.nonoSuckingSound.volume = 1.0;

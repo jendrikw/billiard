@@ -34,7 +34,7 @@ class Game {
         this.cue = new Cue(this, this.balls[0]);
         this.nonoSuckingSound = document.getElementById("nono_sucking_audio");
         if(this.nonoSuckingSound == null) {
-        	throw new TypeError("Nono's sound is not available.", "Game.js","35");
+        	throw new TypeError("Nono's sound is not available.");
         }
         this.nonoSuckingSound.volume = 1.0;
 
@@ -49,7 +49,7 @@ class Game {
         //get the score-button and add an eventlistener to it
         this.scoresButton = document.getElementById("scores");
         if(this.scoresButton == null) {
-        	throw new TypeError("The score-button is not available.", "Game.js","25");
+        	throw new TypeError("The score-button is not available.");
         }
         this.scoresButton.addEventListener("click", () => Game.redirectToScores());
 
@@ -59,14 +59,14 @@ class Game {
         //add an eventlistener to the send button
         this.saveScoreButton = document.getElementById("send");
         if(this.scoresButton == null) {
-        	throw new TypeError("The save-score-button is not available.", "Game.js","62");
+        	throw new TypeError("The save-score-button is not available.");
         }
         this.saveScoreButton.addEventListener("click", () => this.saveScore());
 
         //add an eventlistener to the pause button
         this.pauseButton = document.getElementById("pause");
         if(this.pauseButton == null) {
-        	throw new TypeError("The pause-button is not available.", "Game.js","69");
+        	throw new TypeError("The pause-button is not available.");
         }
         this.pauseButton.removeEventListener("click", this.internalTogglePaused);
         this.pauseButton.addEventListener("click", this.internalTogglePaused = () => this.togglePaused());
@@ -76,7 +76,7 @@ class Game {
         //Buttons to start a new game
         this.startNewGameButtons = document.getElementsByClassName("new-game");
         if(this.startNewGameButtons == null) {
-        	throw new TypeError("The startNewGame-button is not available.", "Game.js","79");
+        	throw new TypeError("The startNewGame-button is not available.");
         }
         for (let button of this.startNewGameButtons) {
             button.addEventListener("click", () => {

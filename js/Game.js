@@ -66,7 +66,6 @@ class Game {
         this.startNewGameButtons = document.getElementsByClassName("new-game");
         for (let button of this.startNewGameButtons) {
             button.addEventListener("click", () => {
-
                 this.cue.kill();
                 this.startANewGame();
             });
@@ -114,7 +113,6 @@ class Game {
         if ((this.ballsInHole < this.numberOfBalls) && (this.ballIsBlack)) {
             this.afterGameText.innerHTML = "Verloren";
             this.end();
-            console.log("This is the end of the game. You lost!");
         }
         if (this.ballsInHole === this.numberOfBalls) {
             this.afterGameText.innerHTML = "Gewonnen";
@@ -146,7 +144,7 @@ class Game {
     }
 
     startANewGame() {
-    	console.log("A new game was started.");
+        console.log("A new game was started.");
         this.afterGameOptions.style.display = "block";
         for (let ball of this.balls) {
             // requestAnimationFrame für die Bälle vom alten Spiel verhindern:
@@ -221,7 +219,7 @@ class Game {
     togglePaused() {
         this.isPaused = !this.isPaused;
         this.pauseButton.classList.toggle("isPaused");
-        console.log("Pause-button clicked.");
+        console.log("Pause button clicked.");
     }
 }
 

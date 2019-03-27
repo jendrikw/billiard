@@ -96,7 +96,7 @@ class Ball {
             // hole collision:
             const isInHole = this.checkHoleCollision();
             if (isInHole) {
-            	console.log("Holed one ball with the color: " + this.color);
+                console.log("Holed one ball with the color: " + this.color);
                 if (this.color === "white") {
                     this.game.incrementFouls();
                     this.game.redrawTable();
@@ -106,6 +106,7 @@ class Ball {
                     this.v = new Vector(0, 0);
                     this.isMoving = false;
                 } else if (this.color === "black") {
+                    console.log("This is the end of the game. You lost!");
                     this.remove();
                     this.game.ballIsBlack = true;
                     this.game.handleGameWon();

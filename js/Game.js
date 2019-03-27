@@ -105,12 +105,12 @@ class Game {
         console.log("You shot.");
     }
 
-    handleGameWon() {
+    handleGameWon(lastHoledBallIsBlack) {
         this.ballsInHole++;
         this.playNono(); // play a GIF
 
         // Check, game won or not (black ball):
-        if ((this.ballsInHole < this.numberOfBalls) && (this.ballIsBlack)) {
+        if ((this.ballsInHole < this.numberOfBalls) && lastHoledBallIsBlack) {
             this.afterGameText.innerHTML = "Verloren";
             this.end();
         }

@@ -34,7 +34,7 @@ class Game {
         this.cue = new Cue(this, this.balls[0]);
         this.nonoSuckingSound = document.getElementById("nono_sucking_audio");
         if(this.nonoSuckingSound == null) {
-        	throw new TypeError("Nono's sound is not available.");
+            throw new TypeError("Nono's sound is not available.");
         }
         this.nonoSuckingSound.volume = 1.0;
 
@@ -59,14 +59,14 @@ class Game {
         //add an eventlistener to the send button
         this.saveScoreButton = document.getElementById("send");
         if(this.scoresButton == null) {
-        	throw new TypeError("The save-score-button is not available.");
+            throw new TypeError("The save-score-button is not available.");
         }
         this.saveScoreButton.addEventListener("click", () => this.saveScore());
 
         //add an eventlistener to the pause button
         this.pauseButton = document.getElementById("pause");
         if(this.pauseButton == null) {
-        	throw new TypeError("The pause-button is not available.");
+            throw new TypeError("The pause-button is not available.");
         }
         this.pauseButton.removeEventListener("click", this.internalTogglePaused);
         this.pauseButton.addEventListener("click", this.internalTogglePaused = () => this.togglePaused());
@@ -76,7 +76,7 @@ class Game {
         //Buttons to start a new game
         this.startNewGameButtons = document.getElementsByClassName("new-game");
         if(this.startNewGameButtons == null) {
-        	throw new TypeError("The startNewGame-button is not available.");
+            throw new TypeError("The startNewGame-button is not available.");
         }
         for (let button of this.startNewGameButtons) {
             button.addEventListener("click", () => {
@@ -124,15 +124,17 @@ class Game {
         this.playNono(); // play a GIF
 
         // Check, game won or not (black ball):
-        if ((this.ballsInHole < this.numberOfBalls) && lastHoledBallIsBlack) {
-            this.afterGameText.innerHTML = "Verloren";
-            this.end();
-        }
         if (this.ballsInHole === this.numberOfBalls) {
             this.afterGameText.innerHTML = "Gewonnen";
             this.end();
             console.log("This is the end of the game. You won!");
         }
+        if (this.ballsInHole < this.numberOfBalls && lastHoledBallIsBlack) {
+            this.afterGameText.innerHTML = "Verloren";
+            this.end();
+            console.log("This is the end of the game. You lost!");
+        }
+
         this.redrawTable();
     }
 

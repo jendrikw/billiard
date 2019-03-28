@@ -106,7 +106,6 @@ class Ball {
                     this.v = new Vector(0, 0);
                     this.isMoving = false;
                 } else if (this.color === "black") {
-                    console.log("This is the end of the game. You lost!");
                     this.remove();
                     this.game.handleGameWon(true);
                 } else {
